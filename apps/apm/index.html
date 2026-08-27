@@ -825,13 +825,15 @@ function buildReportText(){
   return t;
 }
 
+const ACTION_LABELS = {approve:'قبول الطلب', approve_exit:'موافقة على الخروج', return:'ارجاع الطلب', reject:'رفض الطلب'};
+function actionLabelAr(code){ return code? (ACTION_LABELS[code]||code) : 'لم يُتخذ أي إجراء'; }
 function scoreSingleAction(m){
   const a = state.flags.lastAction||{};
   const correctTarget = a.targetId===m.expected.targetId;
   const correctAction = a.actionType===m.expected.action;
   const items = [
     {label:'التصرف في الطلب الصحيح ('+lookupNameSeed(m.expected.targetId)+')', ok: correctTarget, detail: correctTarget?'':`تم التصرف في: ${lookupNameSeed(a.targetId)||'لا شيء'}`},
-    {label:'استخدام الإجراء الصحيح', ok: correctAction, detail: correctAction?'':`الإجراء المستخدم: ${a.actionType||'لم يُتخذ أي إجراء'}`}
+    {label:'استخدام الإجراء الصحيح ('+actionLabelAr(m.expected.action)+')', ok: correctAction, detail: correctAction?'':`الإجراء المستخدم: ${actionLabelAr(a.actionType)}`}
   ];
   if(m.expected.reason!==undefined){
     const correctReason = correctAction && fieldsMatch(a.reason, m.expected.reason);
