@@ -462,7 +462,7 @@ const MISSIONS = [
       ['الأخت الكبرى المطلوب ربطها','هبة الله كمال يوسف عطية'],
       ['الأخت الصغرى المطلوب ربطها','ياسمين علاء الدين محمود']
     ],
-    expected:{ bigName:'هبة الله كمال يوسف عطية', littleName:'ياسمين علاء الدين محمود' }
+    expected:{ bigId:'bs-heba', littleId:'ls-yasmin', bigName:'هبة الله كمال يوسف عطية', littleName:'ياسمين علاء الدين محمود' }
   },
   {
     id:'complete',
@@ -1143,12 +1143,12 @@ function scoreAddMission(kind, mission){
 function scoreLinkMission(mission){
   const exp = mission.expected;
   const links = state.data.links;
-  const correctPair = links.find(l=>l.bigName===exp.bigName && l.littleName===exp.littleName);
-  const extraWrong = links.filter(l=>!(l.bigName===exp.bigName && l.littleName===exp.littleName));
+  const correctPair = links.find(l=>l.bigId===exp.bigId && l.littleId===exp.littleId);
+  const extraWrong = links.filter(l=>!(l.bigId===exp.bigId && l.littleId===exp.littleId));
   const items = [
-    {label:'ربط الأخت الكبرى الصحيحة بالأخت الصغرى الصحيحة', ok: !!correctPair, detail: correctPair? '' : 'لم يتم إنشاء الربط المطلوب بين هبة الله وياسمين'},
-    {label:'عدم إنشاء روابط إضافية غير مطلوبة', ok: extraWrong.length===0, detail: extraWrong.length? `تم إنشاء ${extraWrong.length} رابط غير مطلوب` : ''},
-    {label:'تأكيد الربط (تأكيد الربط ✈)', ok: !!state.flags.linkConfirmed, detail: state.flags.linkConfirmed? '' : 'لم يتم الضغط على تأكيد الربط'}
+    {label:'ربط الأخت الكبرى الصحيحة بالأخت الصغرى الصحيحة', ok: !!correctPair, detail: correctPair? `تم ربط "${exp.bigName}" بـ"${exp.littleName}" بنجاح.` : `المطلوب: ربط "${exp.bigName}" بـ"${exp.littleName}". لم يتم إنشاء هذا الربط بالتحديد — تأكدي من اختيار نفس السجلين اللي سجّلتيهم في المهمتين السابقتين.`},
+    {label:'عدم إنشاء روابط إضافية غير مطلوبة', ok: extraWrong.length===0, detail: extraWrong.length? `تم إنشاء ${extraWrong.length} رابط إضافي (${extraWrong.map(l=>`"${l.bigName}" × "${l.littleName}"`).join('، ')}) غير مطلوب في هذه المهمة — الرابط المطلوب واحد بس.` : ''},
+    {label:'تأكيد الربط (تأكيد الربط ✈)', ok: !!state.flags.linkConfirmed, detail: state.flags.linkConfirmed? '' : 'تم إنشاء الرابط لكن لم يتم الضغط على «تأكيد الربط» — الربط لسه مش نهائي.'}
   ];
   let score = 0;
   if(correctPair) score += 55;
@@ -1393,7 +1393,7 @@ function wizardSubmit(){
     }
     toast(`تم ارسال طلب إضافة أخت كبرى "${rec.name}"، سوف يتم الرد عليكم في اقرب وقت`);
   } else {
-    const id = 'new-'+kind+'-'+Date.now();
+    const id = MISSIONS[state.missionIdx].resultId || ('new-'+kind+'-'+Date.now());
     const rec = Object.assign({id, status:'under_review', attachments}, finalData);
     if(kind==='big') state.data.bigSisters.push(rec); else state.data.littleSisters.push(rec);
     state.flags['submitted_'+missionId] = true;
