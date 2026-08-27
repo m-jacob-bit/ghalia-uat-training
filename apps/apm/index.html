@@ -242,6 +242,24 @@ tbody tr:hover{background:var(--surface-2)}
 .checklist-item .txt .t{font-weight:700;font-size:13.8px}
 .checklist-item .txt .d{font-size:12.8px;color:var(--text-muted);margin-top:2px}
 
+.report-mission{margin-bottom:26px;padding-bottom:22px;border-bottom:1px solid var(--border)}
+.report-mission:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.report-mission-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px}
+.report-mission-head .t{font-family:'Cairo',sans-serif;font-weight:700;font-size:15px}
+.report-mission-head .s{font-family:'Cairo',sans-serif;font-weight:800;font-size:15px}
+.report-actions{border-top:1px solid var(--border);padding-top:20px}
+
+@media print{
+  body *{visibility:hidden}
+  .print-area, .print-area *{visibility:visible}
+  .print-area{position:absolute;inset:0 auto auto 0;width:100%;margin:0;padding:0;max-width:none}
+  .no-print{display:none !important}
+  .card{box-shadow:none;border:none}
+  body{background:#fff;color:#000}
+  .checklist-item{break-inside:avoid;border-color:#ccc}
+  .report-mission{break-inside:avoid}
+}
+
 .mission-progress{display:flex;gap:6px;justify-content:center;margin-bottom:22px}
 .mp-dot{width:9px;height:9px;border-radius:50%;background:var(--surface-2)}
 .mp-dot.done{background:var(--success)}
@@ -300,7 +318,6 @@ tbody tr:hover{background:var(--surface-2)}
 'use strict';
 
 const ASSOCIATION_NAME = 'جمعية النور للتنمية';
-const GOOGLE_FORM_URL = 'https://forms.gle/GDMj5LD3DN5XDCyo9';
 
 const BIG_RETURN_REASONS = [
   'إقرار سياسة حماية الطفل غير موجود أو غير موقّع.',
@@ -474,7 +491,7 @@ function renderWelcome(){
         <div class="brand-text"><div class="ar">مشروع ابنتي الغالية</div><div class="en">Valuable Girl Project — UAT Assessment (APM)</div></div>
       </div>
       <h1>تقييم أداء مدير المنطقة (APM)</h1>
-      <p class="lead">هذا نظام تدريبي يحاكي نظام «غالية» الحقيقي. ستُطلب منكِ أداء ٥ مهام كما تدرّبتِ عليها بالضبط — أنتِ آخر مرحلة اعتماد قبل تفعيل الطلب فعليًا. ستشاهدين نتيجتكِ فور الانتهاء، مع خيار إرسالها للمنسّق.</p>
+      <p class="lead">هذا نظام تدريبي يحاكي نظام «غالية» الحقيقي. ستُطلب منكِ أداء ٥ مهام كما تدرّبتِ عليها بالضبط — أنتِ آخر مرحلة اعتماد قبل تفعيل الطلب فعليًا. ستشاهدين نتيجتكِ فور الانتهاء، مع خيار حفظ تقريرك كملف PDF وإرساله لمديرة/مدير البرنامج.</p>
       <div class="field-group">
         <label class="field-label">اسمكِ الرباعي <span class="req">*</span></label>
         <input type="text" id="trainee-name-input" data-field="traineeName" placeholder="مثال: إيرين إبراهيم شوقي" value="${esc(state.traineeName)}">
@@ -790,7 +807,7 @@ function renderFinalReport(){
   const overall = Math.round(state.missionResults.reduce((s,r)=>s+r.score,0)/state.missionResults.length);
   const verdict = overall>=85? 'أداء ممتاز — جاهزة للعمل على النظام الفعلي' : overall>=60? 'أداء جيد — يُنصح بمراجعة بعض الخطوات' : 'يحتاج إلى تدريب إضافي قبل استخدام النظام الفعلي';
   return `
-  <div class="result-shell"><div class="result-wrap">
+  <div class="result-shell no-print-bg"><div class="result-wrap print-area">
     <div class="card">
       <div class="score-hero">
         <div style="font-size:13px;color:var(--text-faint);font-weight:700;margin-bottom:4px">${esc(state.traineeName)} — التقرير النهائي</div>
@@ -803,26 +820,22 @@ function renderFinalReport(){
         <div class="score-label" style="margin-top:10px;font-weight:700;color:${scoreColor(overall)}">${esc(verdict)}</div>
       </div>
       <div class="card-pad" style="padding-top:0">
-        <div class="checklist">
-          ${MISSIONS.map((m,i)=>{
-            const r = state.missionResults[i];
-            return `<div class="checklist-item ${r.score>=60?'ok':'bad'}"><div class="ic">${r.score}</div><div class="txt"><div class="t">${esc(m.title)}</div><div class="d">النتيجة: ${r.score}%</div></div></div>`;
-          }).join('')}
-        </div>
+        ${MISSIONS.map((m,i)=>{
+          const r = state.missionResults[i];
+          return `<div class="report-mission">
+            <div class="report-mission-head"><span class="t">${esc(m.title)}</span><span class="s" style="color:${scoreColor(r.score)}">${r.score}%</span></div>
+            <div class="checklist">
+              ${r.items.map(it=>`<div class="checklist-item ${it.ok?'ok':'bad'}"><div class="ic">${it.ok?'✓':'✕'}</div><div class="txt"><div class="t">${esc(it.label)}</div>${it.detail?`<div class="d">${esc(it.detail)}</div>`:''}</div></div>`).join('')}
+            </div>
+          </div>`;
+        }).join('')}
       </div>
-      <div class="card-pad" style="padding-top:0">
-        <p style="font-size:13.5px;color:var(--text-muted);margin-bottom:10px">اضغطي الزر لفتح نموذج إرسال النتيجة، والصقي النص الموجود تحته في الحقل المخصص للنتيجة.</p>
-        <textarea readonly style="min-height:110px;margin-bottom:14px" onclick="this.select()">${esc(buildReportText())}</textarea>
-        <a class="btn btn-primary btn-block" href="${GOOGLE_FORM_URL}" target="_blank" rel="noopener">إرسال النتيجة للمنسّق ↗</a>
+      <div class="card-pad report-actions no-print">
+        <p style="font-size:13.5px;color:var(--text-muted);margin-bottom:12px">اضغطي الزر لحفظ هذا التقرير كملف PDF (من نافذة الطباعة اختاري «حفظ كـ PDF» بدل الطابعة)، وابعتي الملف لمديرة/مدير البرنامج.</p>
+        <button class="btn btn-primary btn-block" data-action="print-report">حفظ التقرير كملف PDF 🖨</button>
       </div>
     </div>
   </div></div>`;
-}
-function buildReportText(){
-  const overall = Math.round(state.missionResults.reduce((s,r)=>s+r.score,0)/state.missionResults.length);
-  let t = `تقرير تقييم APM — ${state.traineeName}\nالنتيجة الإجمالية: ${overall}%\n\n`;
-  MISSIONS.forEach((m,i)=>{ t += `${m.title}: ${state.missionResults[i].score}%\n`; });
-  return t;
 }
 
 const ACTION_LABELS = {approve:'قبول الطلب', approve_exit:'موافقة على الخروج', return:'ارجاع الطلب', reject:'رفض الطلب'};
@@ -832,12 +845,12 @@ function scoreSingleAction(m){
   const correctTarget = a.targetId===m.expected.targetId;
   const correctAction = a.actionType===m.expected.action;
   const items = [
-    {label:'التصرف في الطلب الصحيح ('+lookupNameSeed(m.expected.targetId)+')', ok: correctTarget, detail: correctTarget?'':`تم التصرف في: ${lookupNameSeed(a.targetId)||'لا شيء'}`},
-    {label:'استخدام الإجراء الصحيح ('+actionLabelAr(m.expected.action)+')', ok: correctAction, detail: correctAction?'':`الإجراء المستخدم: ${actionLabelAr(a.actionType)}`}
+    {label:'التصرف في الطلب الصحيح ('+lookupNameSeed(m.expected.targetId)+')', ok: correctTarget, detail: correctTarget?'':`تصرّفتِ في طلب «${lookupNameSeed(a.targetId)||'لا شيء'}» بدل الطلب المطلوب. راجعي بيانات الحالة (خصوصًا الرقم القومي) قبل اختيار السجل، خصوصًا لو في أكتر من طلب بنفس الاسم.`},
+    {label:'استخدام الإجراء الصحيح ('+actionLabelAr(m.expected.action)+')', ok: correctAction, detail: correctAction?'':`استخدمتِ إجراء «${actionLabelAr(a.actionType)}»، والإجراء الصحيح المطلوب في بيانات الحالة هو «${actionLabelAr(m.expected.action)}».`}
   ];
   if(m.expected.reason!==undefined){
     const correctReason = correctAction && fieldsMatch(a.reason, m.expected.reason);
-    items.push({label:'اختيار السبب الصحيح', ok: correctReason, detail: correctReason?'':`السبب المُختار: ${a.reason||'—'}`});
+    items.push({label:'اختيار السبب الصحيح', ok: correctReason, detail: correctReason?'':`اخترتِ السبب «${a.reason||'لم يُختر'}»، والسبب الصحيح المذكور في بيانات الحالة هو «${m.expected.reason}».`});
   }
   const score = Math.round(items.filter(i=>i.ok).length/items.length*100);
   return {score, items};
@@ -847,9 +860,18 @@ function scoreBulk(m){
   const actual = (state.flags.bulkApprovedIds||[]).slice().sort();
   const exact = expected.length===actual.length && expected.every((id,i)=>id===actual[i]);
   const usedBulk = !!state.flags.bulkUsed;
+  const missing = expected.filter(id=>!actual.includes(id)).map(lookupNameSeed);
+  const extra = actual.filter(id=>!expected.includes(id)).map(lookupNameSeed);
+  let bulkDetail = '';
+  if(!exact){
+    const parts=[];
+    if(missing.length) parts.push(`نسيتِ تحديد: ${missing.join('، ')}`);
+    if(extra.length) parts.push(`حدّدتِ بالخطأ طلبات غير مطلوبة: ${extra.join('، ')}`);
+    bulkDetail = parts.join(' — ') || `تم اختيار ${actual.length} من أصل ${expected.length} مطلوبين.`;
+  }
   const items = [
-    {label:'استخدام «الموافقة الجماعية» بدل الموافقة الفردية', ok: usedBulk, detail: usedBulk?'':'تم استخدام إجراء فردي أو لم يتم اتخاذ أي إجراء'},
-    {label:'تحديد كل الطلبات المعلّقة بالضبط (لا أكثر ولا أقل)', ok: exact, detail: exact?'':`تم اختيار ${actual.length} من أصل ${expected.length} مطلوبين`}
+    {label:'استخدام «الموافقة الجماعية» بدل الموافقة الفردية', ok: usedBulk, detail: usedBulk?'':'تم استخدام إجراء فردي أو لم يتم اتخاذ أي إجراء — بيانات الحالة تطلب تحديدًا استخدام الموافقة الجماعية لهذه الدفعة من الطلبات.'},
+    {label:'تحديد كل الطلبات المعلّقة بالضبط (لا أكثر ولا أقل)', ok: exact, detail: bulkDetail}
   ];
   const score = Math.round(items.filter(i=>i.ok).length/items.length*100);
   return {score, items};
@@ -1002,6 +1024,7 @@ appEl.addEventListener('click', e=>{
     case 'begin-mission': beginMission(); break;
     case 'next-mission': nextMission(); break;
     case 'go-final-report': state.screen='final-report'; render(); break;
+    case 'print-report': window.print(); break;
     case 'nav':
       state.appScreen = d.screen;
       state.kebabOpenFor=null;
