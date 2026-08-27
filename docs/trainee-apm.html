@@ -1,0 +1,101 @@
+<meta charset="utf-8">
+<title>تعليمات متدربة APM</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&family=Almarai:wght@400;500;700;800&display=swap">
+<style>
+:root{
+  --ink:#171b1a; --ink-soft:#454f4d; --ink-faint:#7c8886;
+  --paper:#faf0e4; --surface:#ffffff; --line:#e8cda3; --line-soft:#f1e0c4;
+  --amber:#a3540f; --amber-soft:#faf0e4;
+  --shadow:0 1px 2px rgba(23,27,26,.05),0 10px 30px -16px rgba(23,27,26,.25);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#f1ece2; --ink-soft:#cdbfa5; --ink-faint:#9b8a6c;
+    --paper:#1c150c; --surface:#241b10; --line:#4a3a22; --line-soft:#33280f;
+    --amber:#e0a35f;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -16px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#f1ece2; --ink-soft:#cdbfa5; --ink-faint:#9b8a6c;
+  --paper:#1c150c; --surface:#241b10; --line:#4a3a22; --line-soft:#33280f;
+  --amber:#e0a35f;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -16px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+html{direction:rtl}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Almarai','Cairo',sans-serif;font-size:16.5px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--line);color:var(--amber)}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+
+.wrap{max-width:640px;margin:0 auto;padding:44px 20px 70px}
+.badge{display:inline-flex;align-items:center;gap:7px;font-family:'Cairo',sans-serif;font-weight:700;font-size:12.5px;color:var(--amber);background:var(--surface);border:1px solid var(--line);padding:5px 12px;border-radius:999px;margin-bottom:16px}
+.badge .dot{width:6px;height:6px;border-radius:50%;background:var(--amber)}
+h1{font-family:'Cairo',sans-serif;font-weight:800;font-size:clamp(26px,6vw,34px);margin:0 0 6px;text-wrap:balance}
+.sub{color:var(--ink-faint);font-size:15px;margin-bottom:30px}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:20px}
+.card-pad{padding:26px 26px 8px}
+.link-btn{display:flex;align-items:center;justify-content:center;gap:9px;background:var(--amber);color:#fff;text-decoration:none;font-family:'Cairo',sans-serif;font-weight:700;font-size:16px;padding:16px;margin:22px 22px 26px}
+.link-btn:hover{opacity:.92}
+
+h2{font-family:'Cairo',sans-serif;font-size:17px;font-weight:700;margin:28px 0 12px}
+h2:first-of-type{margin-top:0}
+p{margin:0 0 14px;color:var(--ink-soft)}
+ol,ul{margin:0 0 14px;padding-inline-start:0;padding-inline-end:22px}
+li{margin-bottom:10px;color:var(--ink-soft)}
+li b{color:var(--ink)}
+
+.chip-row{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 22px}
+.chip{background:var(--paper);border:1px solid var(--line);color:var(--amber);font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;padding:7px 14px;border-radius:999px}
+
+.tip{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:0 22px 24px;font-size:14px;color:var(--ink-soft)}
+.foot{text-align:center;color:var(--ink-faint);font-size:12.5px;margin-top:26px}
+</style>
+
+<div class="wrap">
+  <span class="badge"><span class="dot"></span>تعليمات المتدربة</span>
+  <h1>تقييم غالية التجريبي</h1>
+  <div class="sub">لمديرات المناطق (APM)</div>
+
+  <div class="card">
+    <div class="card-pad">
+      <p>هذا نظام تدريبي يحاكي نظام «ابنتي الغالية» الحقيقي اللي اتدربتِ عليه. هتقومي بـ٥ مهام لمراجعة طلبات اعتمدتها منسّقات الميدان، واتخاذ القرار النهائي عليها. النظام هيقيّم أداءك تلقائيًا.</p>
+
+      <h2>إزاي تبدئي؟</h2>
+      <ol>
+        <li><b>افتحي الرابط تحت</b>، واكتبي اسمك الرباعي.</li>
+        <li>هتشوفي <b>قصة</b> قصيرة و<b>بيانات الحالة</b> — اقرئيها كويس قبل ما تبدئي.</li>
+        <li>اضغطي «ابدئي المهمة» ونفّذي المطلوب في النظام <b>بالظبط زي ما اتدربتِ</b>.</li>
+        <li>هتشوفي نتيجتك في نفس اللحظة اللي تخلّصي فيها كل مهمة.</li>
+        <li>كرري نفس الخطوات لباقي المهام الخمسة.</li>
+      </ol>
+
+      <h2>المهام الخمسة</h2>
+      <div class="chip-row">
+        <span class="chip">١ الموافقة النهائية على طلب دخول أخت كبرى</span>
+        <span class="chip">٢ إرجاع طلب دخول أخت صغرى للتعديل</span>
+        <span class="chip">٣ الموافقة النهائية على طلب خروج أخت كبرى</span>
+        <span class="chip">٤ رفض طلب انضمام عضو لفريق العمل</span>
+        <span class="chip">٥ الموافقة الجماعية على طلبات أخوات صغريات</span>
+      </div>
+
+      <h2>مهم قبل ما تبدئي</h2>
+      <ul>
+        <li>لو في أكتر من طلب أو اسم شبه بعض في القائمة، <b>تأكدي إنك بتتصرفي في الطلب المطلوب في بيانات الحالة</b> بالظبط — مش أي طلب تاني.</li>
+        <li>لكل موقف إجراء واحد صحيح فقط — «قبول الطلب» غير «ارجاع الطلب» غير «رفض الطلب». اختاري الإجراء المطلوب في بيانات الحالة بالتحديد.</li>
+        <li>لو الموقف يطلب إرجاع أو رفض طلب، <b>اختاري السبب المكتوب في بيانات الحالة بالظبط</b> من القائمة.</li>
+        <li>في مهمة الموافقة الجماعية، حددي كل الطلبات المطلوبة بالظبط قبل الضغط على «قبول الكل».</li>
+        <li>خلّصي كل مهمة لحد ما تضغطي زرار الإرسال أو التأكيد النهائي — مجرد فتح الطلب أو حفظه كمسودة مش هيتحسب إنجاز كامل.</li>
+        <li>مفيش وقت محدد، وخدي وقتك في القراءة قبل التنفيذ.</li>
+        <li>في آخر التقييم، هتشوفي تقريرك الكامل واضغطي «إرسال النتيجة للمنسّق» عشان يوصل للمسؤول عن التدريب.</li>
+      </ul>
+    </div>
+    <a class="link-btn" href="https://m-jacob-bit.github.io/ghalia-uat-training/apps/apm/" target="_blank" rel="noopener">ابدئي التقييم ←</a>
+    <div class="tip">لو حصل أي عطل أو الصفحة معلّقة، جرّبي تحدّثي الصفحة (Refresh) وابدئي من جديد.</div>
+  </div>
+
+  <div class="foot">غالية (مشروع ابنتي الغالية) — تعليمات مديرة المنطقة (APM)</div>
+</div>
