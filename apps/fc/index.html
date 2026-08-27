@@ -314,7 +314,6 @@ tbody tr:hover{background:var(--surface-2)}
 'use strict';
 
 const ASSOCIATION_NAME = 'جمعية النور للتنمية';
-/* TODO(Michael): paste your Google Form URL here once created — see docs/coordinator-manual.html for the 2 fields to add. */
 
 const TEAM_ROLES = ['منسق الجمعية','إداري الجمعية'];
 const TEAM_EXIT_REASONS = [
@@ -366,13 +365,13 @@ function freshSeed(){
 const MISSIONS = [
   {
     id:'approve-bs-entry',
-    title:'مهمة ١ — تقديم طلب دخول أخت كبرى لمدير المنطقة',
+    title:'مهمة ١ — تقديم طلب دخول أخت كبرى لمديرة المنطقة',
     eyebrow:'الطلبات ← طلبات الأخت الكبرى',
-    story:'وصل طلب تسجيل «هبة الله كمال يوسف عطية» من الجمعية. راجعي بياناتها، وإذا كانت مكتملة قدّمي الطلب لمدير المنطقة للاعتماد النهائي — احذري وجود طلبات أخرى في القائمة لسن جزءًا من هذه المهمة.',
+    story:'وصل طلب تسجيل «هبة الله كمال يوسف عطية» من الجمعية. راجعي بياناتها، وإذا كانت مكتملة قدّمي الطلب لمديرة المنطقة للاعتماد النهائي — احذري وجود طلبات أخرى في القائمة لسن جزءًا من هذه المهمة.',
     startAppScreen:'requests-big',
     caseFile:[
       ['الأخت الكبرى المطلوب مراجعتها','هبة الله كمال يوسف عطية'],
-      ['الإجراء المطلوب','تقديم الطلب لمدير المنطقة (وليس إرجاعه)']
+      ['الإجراء المطلوب','تقديم الطلب لمديرة المنطقة (وليس إرجاعه)']
     ],
     expected:{ targetId:'bs-heba', action:'forward' }
   },
@@ -392,7 +391,7 @@ const MISSIONS = [
     id:'approve-bs-exit',
     title:'مهمة ٣ — الموافقة على طلب خروج أخت كبرى',
     eyebrow:'الطلبات ← طلبات الأخت الكبرى',
-    story:'قدّمت الجمعية طلب خروج لـ«نيفين رمزي إبراهيم صليب». راجعي السبب والتاريخ، ثم وافقي على الطلب لتحويله لمدير المنطقة — احذري وجود طلب خروج آخر في نفس القائمة.',
+    story:'قدّمت الجمعية طلب خروج لـ«نيفين رمزي إبراهيم صليب». راجعي السبب والتاريخ، ثم وافقي على الطلب لتحويله لمديرة المنطقة — احذري وجود طلب خروج آخر في نفس القائمة.',
     startAppScreen:'requests-big',
     caseFile:[
       ['الأخت الكبرى','نيفين رمزي إبراهيم صليب'],
@@ -479,7 +478,7 @@ function render(){
   else if(state.screen==='app'){ html += renderAppShell(); }
   else if(state.screen==='mission-result'){ html += renderMissionResult(); }
   else if(state.screen==='final-report'){ html += renderFinalReport(); }
-  if(state.modal==='confirm-forward') html += renderConfirmModal('قبول الطلب','هل أنتِ متأكدة من تقديم الطلب لمدير المنطقة؟', lookupName(state.activeTargetId), 'confirm-forward');
+  if(state.modal==='confirm-forward') html += renderConfirmModal('قبول الطلب','هل أنتِ متأكدة من تقديم الطلب لمديرة المنطقة؟', lookupName(state.activeTargetId), 'confirm-forward');
   if(state.modal==='confirm-approve-exit') html += renderConfirmModal('قبول الطلب','هل أنتِ متأكدة من قبول طلب خروج أخت كبرى؟', lookupName(state.activeTargetId), 'confirm-approve-exit');
   if(state.modal==='confirm-team-add') html += renderConfirmModal('ارسال الطلب','هل أنتِ متأكدة من تأكيد ارسال طلب إضافة عضو؟ مع العلم أنه لا يمكنكِ إلغاء الطلب بعد التأكيد', normalize(wd('teamName')), 'confirm-team-add');
   if(state.modal==='confirm-team-exit') html += renderConfirmModal('ارسال الطلب','هل أنتِ متأكدة من تأكيد ارسال طلب خروج العضو؟ مع العلم أنه لا يمكنكِ إلغاء الطلب بعد التأكيد', lookupName(state.activeTargetId), 'confirm-team-exit');
@@ -601,7 +600,7 @@ function renderDashboard(){
 function badgeFor(status){
   const map = {
     new:['badge-review','جديد'],
-    pending_apm:['badge-review','قيد مراجعة مدير المنطقة'],
+    pending_apm:['badge-review','قيد مراجعة مديرة المنطقة'],
     returned:['badge-returned','معاد للتعديل للجمعية'],
     active:['badge-approved','نشط']
   };
@@ -1101,7 +1100,7 @@ function confirmForward(){
   if(rec){
     rec.status='pending_apm';
     state.flags.lastAction = {targetId:rec.id, actionType:'forward'};
-    toast('تم تقديم الطلب لمدير المنطقة');
+    toast('تم تقديم الطلب لمديرة المنطقة');
   }
   state.modal=null; state.drawer=null;
   render();

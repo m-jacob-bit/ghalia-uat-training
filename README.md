@@ -6,7 +6,7 @@ Trainees are given a short scenario per task, perform it in a clickable mock of 
 
 ## Live pages
 
-- **Manuals:** [`docs/coordinator-manual.html`](docs/coordinator-manual.html) (for the coordinator) · [`docs/trainee-cda.html`](docs/trainee-cda.html) (CDA Staff trainees) · [`docs/trainee-fc.html`](docs/trainee-fc.html) (FC trainees) · [`docs/trainee-apm.html`](docs/trainee-apm.html) (APM trainees)
+- **Manuals:** [`docs/coordinator-manual.html`](docs/coordinator-manual.html) (for the program manager) · [`docs/trainee-cda.html`](docs/trainee-cda.html) (CDA Staff trainees) · [`docs/trainee-fc.html`](docs/trainee-fc.html) (FC trainees) · [`docs/trainee-apm.html`](docs/trainee-apm.html) (APM trainees)
 - **Apps:** [`apps/cda-staff/`](apps/cda-staff/) (ready) · [`apps/fc/`](apps/fc/) (ready) · [`apps/apm/`](apps/apm/) (ready) · `apps/bs/` (planned)
 
 Everything above is live at **https://m-jacob-bit.github.io/ghalia-uat-training/** — see the root `index.html` for a linked landing page.
@@ -21,14 +21,14 @@ FC can also originate its own requests (association work-team management) that g
 
 ## Setup
 
-- [x] Google Form connected to all three live assessments for collecting trainee names and result summaries.
+- [x] Final report on all three live assessments: full per-mission checklist with constructive detail text, plus a print-to-PDF button — trainees save their own report and send it to the program manager (no Google Form, no copy/paste).
 - [x] GitHub Pages enabled (branch `main`, folder `/`).
 
 ## Repo layout
 
 ```
 apps/<role>/index.html   — the mock UAT app for one role (self-contained, no build step)
-docs/                     — manuals (coordinator + per-role trainee sheets)
+docs/                     — manuals (program manager + per-role trainee sheets)
 index.html                — landing page linking everything
 ```
 
