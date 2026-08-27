@@ -1,0 +1,243 @@
+<meta charset="utf-8">
+<title>دليل المنسّق — تقييم غالية</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&family=Almarai:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ink:#171b1a; --ink-soft:#454f4d; --ink-faint:#7c8886;
+  --paper:#f6f8f7; --surface:#ffffff; --line:#dde3e1; --line-soft:#e9edec;
+  --teal:#0d6e63; --teal-soft:#e3f1ee; --teal-line:#bcd9d3;
+  --amber:#a3540f; --amber-soft:#faf0e4; --amber-line:#e8cda3;
+  --danger:#b3261e; --danger-soft:#fbeae9;
+  --code-bg:#101615; --code-fg:#d8ece7;
+  --shadow:0 1px 2px rgba(23,27,26,.05),0 10px 30px -16px rgba(23,27,26,.25);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#e9efed; --ink-soft:#b6c2bf; --ink-faint:#7f8d8a;
+    --paper:#121615; --surface:#181e1c; --line:#2b3634; --line-soft:#232b29;
+    --teal:#5fbfae; --teal-soft:#152724; --teal-line:#2c4c45;
+    --amber:#e0a35f; --amber-soft:#2a2015; --amber-line:#4a3a22;
+    --danger:#e0837c; --danger-soft:#2c1a19;
+    --code-bg:#0b0f0e; --code-fg:#bfe3d9;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -16px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#e9efed; --ink-soft:#b6c2bf; --ink-faint:#7f8d8a;
+  --paper:#121615; --surface:#181e1c; --line:#2b3634; --line-soft:#232b29;
+  --teal:#5fbfae; --teal-soft:#152724; --teal-line:#2c4c45;
+  --amber:#e0a35f; --amber-soft:#2a2015; --amber-line:#4a3a22;
+  --danger:#e0837c; --danger-soft:#2c1a19;
+  --code-bg:#0b0f0e; --code-fg:#bfe3d9;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -16px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+html{direction:rtl}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Almarai','Cairo',sans-serif;font-size:16.5px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--teal-soft);color:var(--teal)}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+a{color:var(--teal)}
+.mono{font-family:'IBM Plex Mono',monospace;direction:ltr;unicode-bidi:isolate}
+code.mono{background:var(--line-soft);padding:2px 7px;border-radius:5px;font-size:.85em}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+
+.wrap{max-width:760px;margin:0 auto;padding:0 24px 100px}
+.masthead{padding:56px 0 34px;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:'Cairo',sans-serif;font-weight:700;font-size:13px;color:var(--teal);display:flex;align-items:center;gap:8px}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0}
+h1.title{font-family:'Cairo',sans-serif;font-weight:800;font-size:clamp(28px,5vw,40px);line-height:1.28;margin:14px 0 16px;text-wrap:balance}
+.dek{color:var(--ink-soft);font-size:17px;max-width:60ch;margin:0}
+.dek em{color:var(--ink);font-style:normal;font-weight:700}
+.link-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:8px;font-weight:700;font-size:15px;text-decoration:none;border:1.5px solid transparent;font-family:'Cairo',sans-serif}
+.btn-teal{background:var(--teal);color:#fff}
+.btn-teal:hover{opacity:.92}
+.btn-line{border-color:var(--line);color:var(--ink)}
+.btn-line:hover{background:var(--surface)}
+
+.quicknav{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);padding:12px 0}
+.quicknav .wrap{display:flex;gap:8px;padding-top:0;padding-bottom:0;overflow-x:auto}
+.qn-link{flex-shrink:0;font-size:13.5px;font-weight:700;font-family:'Cairo',sans-serif;padding:7px 15px;border-radius:999px;text-decoration:none;color:var(--ink-soft);border:1px solid var(--line);white-space:nowrap}
+
+.zone{padding:52px 0}
+h2.zone-title{font-family:'Cairo',sans-serif;font-weight:800;font-size:26px;margin:0 0 6px;text-wrap:balance}
+.zone-sub{color:var(--ink-faint);font-size:14.5px;margin-bottom:36px}
+h3{font-family:'Cairo',sans-serif;font-weight:700;font-size:20px;margin:44px 0 14px;text-wrap:balance}
+h3:first-of-type{margin-top:0}
+p{margin:0 0 14px;max-width:66ch;color:var(--ink-soft)}
+ul,ol{margin:0 0 14px;padding-inline-start:0;padding-inline-end:24px;max-width:66ch}
+li{margin-bottom:9px;color:var(--ink-soft)}
+strong{color:var(--ink);font-weight:800}
+
+.flow{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface);margin:18px 0 28px}
+.flow-step{display:flex;gap:16px;padding:16px 18px;border-bottom:1px solid var(--line-soft)}
+.flow-step:last-child{border-bottom:none}
+.flow-num{font-family:'IBM Plex Mono',monospace;direction:ltr;font-size:13px;color:var(--teal);font-weight:600;flex-shrink:0;width:24px;padding-top:2px}
+.flow-body b{display:block;font-family:'Cairo',sans-serif;font-size:15px;font-weight:700;margin-bottom:3px;color:var(--ink)}
+.flow-body span{font-size:14px;color:var(--ink-faint)}
+
+.callout{border-radius:10px;padding:16px 18px;margin:18px 0 26px;border:1px solid;display:flex;gap:12px}
+.callout-icon{flex-shrink:0;font-size:16px;line-height:1.5}
+.callout-warn{background:var(--danger-soft);border-color:color-mix(in srgb, var(--danger) 35%, transparent)}
+.callout-warn .callout-title{color:var(--danger)}
+.callout-note{background:var(--teal-soft);border-color:var(--teal-line)}
+.callout-note .callout-title{color:var(--teal)}
+.callout-title{font-family:'Cairo',sans-serif;font-weight:700;font-size:14px;margin-bottom:5px}
+.callout p{margin:0;font-size:14.5px;max-width:none}
+.callout p+p{margin-top:9px}
+
+.grade-table{width:100%;border-collapse:collapse;margin:18px 0 28px;font-size:14.5px;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.grade-table th{text-align:start;padding:11px 14px;background:var(--line-soft);font-size:12.5px;color:var(--ink-faint);font-weight:700;font-family:'Cairo',sans-serif}
+.grade-table td{padding:13px 14px;border-top:1px solid var(--line-soft);color:var(--ink-soft);vertical-align:top}
+.grade-table td.m{color:var(--ink);font-weight:700;font-family:'Cairo',sans-serif;white-space:nowrap}
+.grade-table td.m small{display:block;font-weight:400;color:var(--ink-faint);font-family:'Almarai',sans-serif;margin-top:2px}
+
+.access-box{display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--code-bg);color:var(--code-fg);border-radius:10px;padding:16px 20px;margin:18px 0 28px;flex-wrap:wrap}
+.access-box .label{font-family:'Cairo',sans-serif;font-size:13px;color:#8fada5;margin-bottom:5px;font-weight:700}
+.access-box .code{font-family:'IBM Plex Mono',monospace;direction:ltr;font-size:20px;font-weight:600;letter-spacing:.03em}
+.access-box .hint{font-size:13px;color:#8fada5;max-width:32ch}
+
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0 28px}
+@media (max-width:560px){.role-grid{grid-template-columns:1fr}}
+.role-card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.role-card.done{border-color:var(--teal-line)}
+.role-card .rc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.role-card .rc-name{font-family:'Cairo',sans-serif;font-weight:700;font-size:15px}
+.role-card .rc-status{font-family:'Cairo',sans-serif;font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:999px}
+.role-card.done .rc-status{background:var(--teal-soft);color:var(--teal)}
+.role-card.pending .rc-status{background:var(--line-soft);color:var(--ink-faint)}
+.role-card p{font-size:13.5px;margin:0}
+
+.chain{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:18px 0 28px;justify-content:center;direction:ltr}
+.chain-node{font-family:'Cairo',sans-serif;font-weight:700;font-size:14px;background:var(--surface);border:1.5px solid var(--line);border-radius:9px;padding:10px 16px;text-align:center;direction:rtl}
+.chain-node small{display:block;font-weight:400;color:var(--ink-faint);font-size:11.5px;margin-top:2px;font-family:'Almarai',sans-serif}
+.chain-node.origin{border-color:var(--teal-line);background:var(--teal-soft);color:var(--teal)}
+.chain-arrow{color:var(--ink-faint);font-size:16px}
+
+.colophon{padding:40px 0 0;border-top:1px solid var(--line);margin-top:20px;color:var(--ink-faint);font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+@media (max-width:600px){
+  .wrap{padding:0 16px 80px}
+  .masthead{padding:40px 0 26px}
+  .zone{padding:38px 0}
+  .access-box{flex-direction:column;align-items:flex-start}
+}
+</style>
+
+<div class="quicknav">
+  <div class="wrap">
+    <a class="qn-link" href="#overview">نظرة عامة</a>
+    <a class="qn-link" href="#cycle">دورة الموافقات</a>
+    <a class="qn-link" href="#flow">آلية الجلسة</a>
+    <a class="qn-link" href="#grading">التقييم</a>
+    <a class="qn-link" href="#dashboard">جمع النتائج</a>
+    <a class="qn-link" href="#status">حالة الأدوار</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <header class="masthead" id="overview">
+    <div class="eyebrow"><span class="dot"></span>دليل المنسّق &middot; تقييم غالية التجريبي</div>
+    <h1 class="title">دليل المنسّق — تشغيل ومتابعة التقييم</h1>
+    <p class="dek">هذا الدليل ليك إنت، بصفتك المسؤول عن التقييم بالكامل. دليل واحد بس، لأن الفكرة والآلية واحدة بغض النظر عن أي دور بتشتغل عليه — النظام بيديك موقف، إنت بتنفذه، والنظام بيقيّم أداءك. كل دور ليه ورقة تعليمات منفصلة خاصة بالمتدربين بتاعته.</p>
+    <div class="link-row">
+      <a class="btn btn-teal" href="https://claude.ai/code/artifact/0aa38b8d-9ee7-4926-ac68-adad5c283cd4" target="_blank" rel="noopener">افتح تقييم موظف الجمعية (CDA Staff) ←</a>
+    </div>
+  </header>
+
+  <section class="zone" id="cycle">
+    <h2 class="zone-title">دورة الموافقات في النظام</h2>
+    <p class="zone-sub">فهم الدورة دي أساسي، لأن أي دور بتشتغل عليه هيكون جزء منها.</p>
+
+    <div class="chain">
+      <div class="chain-node origin">الأخت الكبرى<small>وظائف محدودة جدًا</small></div>
+      <div class="chain-arrow">←</div>
+      <div class="chain-node origin">موظف الجمعية<small>CDA Staff</small></div>
+      <div class="chain-arrow">←</div>
+      <div class="chain-node">FC<small>موافقة / رجوع / رفض</small></div>
+      <div class="chain-arrow">←</div>
+      <div class="chain-node">APM<small>موافقة / رجوع / رفض</small></div>
+      <div class="chain-arrow">←</div>
+      <div class="chain-node" style="opacity:.5">المكتب المركزي<small>مش داخل في النطاق حاليًا</small></div>
+    </div>
+
+    <ul>
+      <li><strong>الأخت الكبرى (BS):</strong> أقل مستوى في السلسلة، وظائفها قليلة جدًا (أساسًا تفعيل حسابها ومتابعته). أي حاجة تبدأ من عندها بتوصل لموظف الجمعية.</li>
+      <li><strong>موظف الجمعية (CDA Staff):</strong> هو اللي بيبدأ معظم الطلبات — تسجيل دخول، طلبات خروج، ربط الأخوات. كل طلباته بتروح لـFC.</li>
+      <li><strong>FC:</strong> بيراجع طلبات موظف الجمعية (موافقة / رجوع للتعديل / رفض). وكمان بيقدر يبدأ طلباته الخاصة (زي إدارة فريق العمل) واللي بتروح على طول لـAPM من غير ما تمر بموظف الجمعية.</li>
+      <li><strong>APM:</strong> المرحلة الأخيرة حاليًا. بيراجع كل حاجة FC وافق عليها (موافقة نهائية / رجوع / رفض).</li>
+      <li>بعد APM في مرحلة "المكتب" لسه مش داخلة في النطاق الحالي.</li>
+    </ul>
+
+    <div class="callout callout-note">
+      <div class="callout-icon">ℹ</div>
+      <div>
+        <div class="callout-title">ليه ده مهم لبناء التقييم</div>
+        <p>لما نبني تقييم FC، الموقف اللي هيتقيّم عليه المتدرب هيكون طلب "وصل" من موظف جمعية. ولما نبني تقييم APM، الموقف هيكون طلب "FC وافق عليه". يعني المهام مش منفصلة عن بعض — كل دور بيكمل اللي قبله في نفس السلسلة.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="zone" id="flow">
+    <h2 class="zone-title">إزاي جلسة التقييم بتمشي</h2>
+    <p class="zone-sub">نفس الآلية، مهما كان الدور.</p>
+    <div class="flow">
+      <div class="flow-step"><div class="flow-num">01</div><div class="flow-body"><b>المتدرب بيفتح رابط الدور بتاعه ويكتب اسمه.</b><span>مفيش باسورد ولا حساب — بس خانة اسم، عشان النتيجة تترتبط بيه.</span></div></div>
+      <div class="flow-step"><div class="flow-num">02</div><div class="flow-body"><b>كل مهمة بتفتح بموقف و«ملف حالة».</b><span>سيناريو قصير بالعربي، مع كارت بيانات فيه التفاصيل المطلوبة بالظبط — زي استمارة أو طلب حقيقي هيتعامل معاه.</span></div></div>
+      <div class="flow-body"></div>
+      <div class="flow-step"><div class="flow-num">03</div><div class="flow-body"><b>المتدرب بينفذ المهمة في النظام التجريبي.</b><span>تنقل حقيقي، استمارات حقيقية، وتحقق حقيقي — بنفس أسماء الحقول ورسايل الخطأ اللي في النظام الأصلي.</span></div></div>
+      <div class="flow-step"><div class="flow-num">04</div><div class="flow-body"><b>النتيجة بتظهر فورًا بعد كل مهمة.</b><span>نسبة مئوية + قائمة تفصيلية: إيه اللي كان صح، إيه اللي كان غلط، وإيه كانت الإجابة الصح.</span></div></div>
+      <div class="flow-step"><div class="flow-num">05</div><div class="flow-body"><b>تقرير نهائي بيجمع متوسط كل المهام.</b><span>المتدرب يقدر يضغط «إرسال النتيجة للمنسّق» عشان توصلك.</span></div></div>
+    </div>
+  </section>
+
+  <section class="zone" id="grading">
+    <h2 class="zone-title">إزاي التقييم بيتحسب فعليًا</h2>
+    <p>مش اختبار تنقل بس — دقة إدخال البيانات بتتحسب برضه، وهي عامل كبير في مهام التسجيل. في نوعين من المهام، بيتقيّموا بشكل مختلف:</p>
+    <table class="grade-table">
+      <thead><tr><th>نوع المهمة</th><th>إيه اللي بيتحقق منه</th></tr></thead>
+      <tbody>
+        <tr><td class="m">مهام التسجيل والإدخال<small>(مثال: إضافة أخت كبرى/صغرى)</small></td><td>كل حقل بيتقارن بالقيمة المكتوبة بالظبط في ملف الحالة — الاسم، الرقم القومي، رقم التليفون، الإيميل، التواريخ، وكل اختيار من القوائم. رقم قومي فيه رقم واحد غلط بيتحسب غلط. المطابقة بتتجاهل المسافات الزيادة، بس مش المحتوى.</td></tr>
+        <tr><td class="m">مهام المراجعة والموافقة<small>(الربط، استكمال طلب، موافقة/رجوع/رفض)</small></td><td>قائمة السجلات دايمًا فيها أسماء تانية شبيهة كمصايد. التقييم بيتحقق: هل اتصرف على السجل الصح؛ هل استخدم الإجراء الصح من القائمة؛ هل السبب أو التاريخ صح لو محتاج؛ وهل فعلاً أكمل الإجراء مش بس حفظه كمسودة أو ساب الشاشة.</td></tr>
+      </tbody>
+    </table>
+    <p>نتيجة كل مهمة هي النسبة المئوية للنقط اللي اتحققت. التقرير النهائي هو المتوسط البسيط لكل مهام الدور.</p>
+  </section>
+
+  <section class="zone" id="dashboard">
+    <h2 class="zone-title">تشوف نتايج الكل — نموذج جوجل</h2>
+    <p>الأداة مستضافة على GitHub Pages بتاعتك، فمفيش تسجيل دخول ولا حساب Claude مطلوب من أي متدرب — الرابط بيشتغل على أي متصفح لأي حد. تجميع النتائج بيتم عن طريق <strong>نموذج جوجل (Google Form)</strong> بدل لوحة داخل الأداة نفسها.</p>
+    <p>في نهاية التقييم، المتدرب بيشوف تقريره الكامل كنص جاهز للنسخ، وبيضغط زرار بيفتح نموذج جوجل في تبويب جديد، وبيلصق النص في الحقل المخصص. كل النتائج بتوصلك تلقائيًا في Google Sheet واحد مربوط بالنموذج.</p>
+    <div class="callout callout-note">
+      <div class="callout-icon">✎</div>
+      <div>
+        <div class="callout-title">خطوة لازم تعملها إنت</div>
+        <p>لسه محتاجة تعملي نموذج Google Form فيه حقلين بس:</p>
+        <ol style="margin-top:8px">
+          <li><strong>الاسم</strong> — نص قصير (Short answer)</li>
+          <li><strong>نتيجة التقييم (الصقيه هنا)</strong> — نص طويل (Paragraph)</li>
+        </ol>
+        <p>بعد ما تعمليه، انسخي رابط المشاركة بتاعه، وحطيه مكان <code class="mono">GOOGLE_FORM_URL</code> في أول ملف <code class="mono">apps/*/index.html</code> لكل دور — أو ابعتيه ليا وأنا أظبطه.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="zone" id="status">
+    <h2 class="zone-title">حالة كل دور</h2>
+    <p class="zone-sub">النطاق الكامل بيغطي أربع أدوار مرتبطة بنفس دورة الموافقات.</p>
+    <div class="role-grid">
+      <div class="role-card done"><div class="rc-head"><span class="rc-name">موظف الجمعية (CDA Staff)</span><span class="rc-status">جاهز</span></div><p>٥ مهام: تسجيل أخت كبرى/صغرى، الربط، استكمال طلب راجع، طلب خروج.</p></div>
+      <div class="role-card pending"><div class="rc-head"><span class="rc-name">FC</span><span class="rc-status">جاري البناء</span></div><p>مراجعة طلبات موظف الجمعية + إدارة فريق العمل الخاص به.</p></div>
+      <div class="role-card pending"><div class="rc-head"><span class="rc-name">APM</span><span class="rc-status">جاري البناء</span></div><p>المراجعة النهائية لكل حاجة FC وافق عليها.</p></div>
+      <div class="role-card pending"><div class="rc-head"><span class="rc-name">الأخت الكبرى (BS)</span><span class="rc-status">جاري البناء</span></div><p>وظائف محدودة — أساسًا تفعيل الحساب.</p></div>
+    </div>
+  </section>
+
+  <div class="colophon">
+    <span>غالية (مشروع ابنتي الغالية) — دليل المنسّق</span>
+    <span>مبني من فيديوهات التسجيل بتاعتك</span>
+  </div>
+
+</div>

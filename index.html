@@ -1,0 +1,64 @@
+<!doctype html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8">
+<title>غالية — تقييم تجريبي</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&family=Almarai:wght@400;500;700&display=swap">
+<style>
+:root{
+  --ink:#171b1a; --ink-soft:#454f4d; --ink-faint:#7c8886;
+  --paper:#f6f8f7; --surface:#ffffff; --line:#dde3e1; --line-soft:#e9edec;
+  --teal:#0d6e63; --teal-soft:#e3f1ee; --teal-line:#bcd9d3;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#e9efed; --ink-soft:#b6c2bf; --ink-faint:#7f8d8a;
+    --paper:#121615; --surface:#181e1c; --line:#2b3634; --line-soft:#232b29;
+    --teal:#5fbfae; --teal-soft:#152724; --teal-line:#2c4c45;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#e9efed; --ink-soft:#b6c2bf; --ink-faint:#7f8d8a;
+  --paper:#121615; --surface:#181e1c; --line:#2b3634; --line-soft:#232b29;
+  --teal:#5fbfae; --teal-soft:#152724; --teal-line:#2c4c45;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Almarai','Cairo',sans-serif;font-size:16px;line-height:1.8}
+.wrap{max-width:640px;margin:0 auto;padding:60px 22px 80px}
+.eyebrow{font-family:'Cairo',sans-serif;font-weight:700;font-size:13px;color:var(--teal)}
+h1{font-family:'Cairo',sans-serif;font-weight:800;font-size:clamp(26px,5vw,34px);margin:10px 0 8px}
+.sub{color:var(--ink-faint);font-size:15px;margin-bottom:36px}
+.group{margin-bottom:30px}
+.group-label{font-family:'Cairo',sans-serif;font-size:12.5px;font-weight:700;color:var(--ink-faint);margin-bottom:10px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:15px 18px;margin-bottom:8px;text-decoration:none;color:var(--ink)}
+.row:hover{border-color:var(--teal-line)}
+.row .name{font-family:'Cairo',sans-serif;font-weight:700;font-size:15px}
+.row .desc{font-size:13px;color:var(--ink-faint);margin-top:2px}
+.pill{font-family:'Cairo',sans-serif;font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:999px;flex-shrink:0}
+.pill.ready{background:var(--teal-soft);color:var(--teal)}
+.pill.soon{background:var(--line-soft);color:var(--ink-faint)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">مشروع ابنتي الغالية · تقييم تجريبي</div>
+  <h1>غالية — نظام التقييم التجريبي</h1>
+  <div class="sub">اختاري الدور، أو افتحي الدليل المناسب.</div>
+
+  <div class="group">
+    <div class="group-label">التقييمات</div>
+    <a class="row" href="apps/cda-staff/"><div><div class="name">موظف الجمعية (CDA Staff)</div><div class="desc">٥ مهام: تسجيل، ربط، استكمال طلب، خروج</div></div><span class="pill ready">جاهز</span></a>
+    <div class="row" style="opacity:.6;cursor:default"><div><div class="name">FC</div><div class="desc">مراجعة طلبات موظف الجمعية + فريق العمل</div></div><span class="pill soon">قريبًا</span></div>
+    <div class="row" style="opacity:.6;cursor:default"><div><div class="name">APM</div><div class="desc">المراجعة النهائية</div></div><span class="pill soon">قريبًا</span></div>
+    <div class="row" style="opacity:.6;cursor:default"><div><div class="name">الأخت الكبرى (BS)</div><div class="desc">تفعيل الحساب</div></div><span class="pill soon">قريبًا</span></div>
+  </div>
+
+  <div class="group">
+    <div class="group-label">الأدلة</div>
+    <a class="row" href="docs/coordinator-manual.html"><div><div class="name">دليل المنسّق</div><div class="desc">كيفية التشغيل والمتابعة</div></div></a>
+    <a class="row" href="docs/trainee-cda.html"><div><div class="name">تعليمات متدربة موظف الجمعية</div><div class="desc">جاهزة للإرسال</div></div></a>
+  </div>
+</div>
+</body>
+</html>
