@@ -6,8 +6,8 @@ Trainees are given a short scenario per task, perform it in a clickable mock of 
 
 ## Live pages
 
-- **Manuals:** [`docs/coordinator-manual.html`](docs/coordinator-manual.html) (for the coordinator) · [`docs/trainee-cda.html`](docs/trainee-cda.html) (CDA Staff trainees) · [`docs/trainee-fc.html`](docs/trainee-fc.html) (FC trainees)
-- **Apps:** [`apps/cda-staff/`](apps/cda-staff/) (ready) · [`apps/fc/`](apps/fc/) (ready) · `apps/apm/`, `apps/bs/` (in progress)
+- **Manuals:** [`docs/coordinator-manual.html`](docs/coordinator-manual.html) (for the coordinator) · [`docs/trainee-cda.html`](docs/trainee-cda.html) (CDA Staff trainees) · [`docs/trainee-fc.html`](docs/trainee-fc.html) (FC trainees) · [`docs/trainee-apm.html`](docs/trainee-apm.html) (APM trainees)
+- **Apps:** [`apps/cda-staff/`](apps/cda-staff/) (ready) · [`apps/fc/`](apps/fc/) (ready) · [`apps/apm/`](apps/apm/) (ready) · `apps/bs/` (planned)
 
 Everything above is live at **https://m-jacob-bit.github.io/ghalia-uat-training/** — see the root `index.html` for a linked landing page.
 
@@ -19,9 +19,9 @@ Big Sister (BS) → CDA Staff → FC (approve / return / reject) → APM (approv
 
 FC can also originate its own requests (association work-team management) that go straight to APM, skipping CDA Staff. Each role's mock missions reflect this — an FC mission reviews a request a CDA Staff trainee would have submitted; an APM mission reviews a request FC already validated.
 
-## Setup still needed
+## Setup
 
-- [ ] Create a Google Form (two fields: Name, Result — paste box) for collecting trainee results, and paste its URL into the `GOOGLE_FORM_URL` constant near the top of each `apps/*/index.html`.
+- [x] Google Form connected to all three live assessments for collecting trainee names and result summaries.
 - [x] GitHub Pages enabled (branch `main`, folder `/`).
 
 ## Repo layout
