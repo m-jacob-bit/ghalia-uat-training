@@ -443,25 +443,62 @@ const MISSIONS = [
   }
 ];
 
-let state = {
-  screen:'welcome',
-  traineeName:'',
-  missionIdx:0,
-  data: freshSeed(),
-  appScreen:'dashboard',
-  navRequestsOpen:true,
-  kebabOpenFor:null,
-  drawer:null,
-  activeTargetId:null,
-  reviewReturnMode:false,
-  reviewForm:{reason:'',comment:''},
-  wizardData:{},
-  teamExitForm:{},
-  modal:null,
-  toast:null,
-  missionResults:[],
-  flags:{}
-};
+function initialState(){
+  return {
+    screen:'welcome',
+    traineeName:'',
+    missionIdx:0,
+    data: freshSeed(),
+    appScreen:'dashboard',
+    navRequestsOpen:true,
+    kebabOpenFor:null,
+    drawer:null,
+    activeTargetId:null,
+    reviewReturnMode:false,
+    reviewForm:{reason:'',comment:''},
+    wizardData:{},
+    teamExitForm:{},
+    modal:null,
+    toast:null,
+    missionResults:[],
+    flags:{}
+  };
+}
+let state = initialState();
+
+/* ---------- progress persistence (survives accidental refresh) ---------- */
+const STORAGE_KEY = 'ghalia-progress-fc-v1';
+function saveProgress(){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      screen: state.screen,
+      traineeName: state.traineeName,
+      missionIdx: state.missionIdx,
+      data: state.data,
+      missionResults: state.missionResults,
+      flags: state.flags
+    }));
+  }catch(e){}
+}
+function loadProgress(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return false;
+    const saved = JSON.parse(raw);
+    if(!saved || !saved.traineeName) return false;
+    Object.assign(state, saved);
+    return true;
+  }catch(e){ return false; }
+}
+function clearProgress(){
+  try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+}
+function startOver(){
+  if(!confirm('هل أنتِ متأكدة من بدء تقييم جديد؟ هيتم حذف كل تقدمك الحالي.')) return;
+  clearProgress();
+  state = initialState();
+  render();
+}
 
 function esc(s){
   return String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -495,6 +532,7 @@ function render(){
   if(state.modal==='confirm-team-add') html += renderConfirmModal('ارسال الطلب','هل أنتِ متأكدة من تأكيد ارسال طلب إضافة عضو؟ مع العلم أنه لا يمكنكِ إلغاء الطلب بعد التأكيد', normalize(wd('teamName')), 'confirm-team-add');
   if(state.modal==='confirm-team-exit') html += renderConfirmModal('ارسال الطلب','هل أنتِ متأكدة من تأكيد ارسال طلب خروج العضو؟ مع العلم أنه لا يمكنكِ إلغاء الطلب بعد التأكيد', lookupName(state.activeTargetId), 'confirm-team-exit');
   appEl.innerHTML = html;
+  saveProgress();
 }
 
 function renderWelcome(){
@@ -595,7 +633,7 @@ function renderAppShell(){
     <div class="main">
       <div class="topbar">
         <div class="topbar-brand"><div class="brand-mark" style="width:30px;height:30px;font-size:12px">غ</div><span style="font-weight:800;font-size:13.5px">مشروع ابنتي الغالية</span></div>
-        <div class="user-chip"><span style="font-size:13.5px;font-weight:700">${esc(state.traineeName)}</span><div class="avatar">${esc(initials)}</div></div>
+        <div class="user-chip"><button data-action="start-over" title="بدء تقييم جديد (يحذف تقدمك الحالي)" style="background:none;border:none;cursor:pointer;font-size:15px;color:var(--text-faint);padding:4px">🔄</button><span style="font-size:13.5px;font-weight:700">${esc(state.traineeName)}</span><div class="avatar">${esc(initials)}</div></div>
       </div>
       <div class="content"><div class="content-inner">${body}</div></div>
     </div>
@@ -1257,10 +1295,11 @@ appEl.addEventListener('click', e=>{
     case 'confirm-team-exit': confirmTeamExit(); break;
     case 'toggle-attachment': toggleAttachment(d.key); break;
     case 'dismiss-toast': state.toast=null; render(); break;
+    case 'start-over': startOver(); break;
   }
 });
 
-function init(){ render(); }
+function init(){ loadProgress(); render(); }
 init();
 </script>
 </body>

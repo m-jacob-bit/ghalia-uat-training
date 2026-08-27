@@ -509,29 +509,66 @@ const MISSIONS = [
 ];
 
 /* ---------- state ---------- */
-let state = {
-  screen:'welcome',
-  traineeName:'',
-  cdaName:'جمعية النور للتنمية',
-  missionIdx:0,
-  data: freshSeed(),
-  girlsTab:'big',
-  requestsTab:'big',
-  sidebarOpen:true,
-  navRequestsOpen:true,
-  kebabOpenFor:null,
-  drawer:null,
-  drawerStep:1,
-  wizardData:{},
-  wizardErrors:{},
-  activeTargetId:null,
-  linkPicker:{ bigQuery:'', littleQuery:'', bigOpen:false, littleOpen:false, bigId:null, littleId:null, pairs:[] },
-  exitForm:{},
-  modal:null,
-  toast:null,
-  missionResults:[],
-  flags:{}
-};
+function initialState(){
+  return {
+    screen:'welcome',
+    traineeName:'',
+    cdaName:'جمعية النور للتنمية',
+    missionIdx:0,
+    data: freshSeed(),
+    girlsTab:'big',
+    requestsTab:'big',
+    sidebarOpen:true,
+    navRequestsOpen:true,
+    kebabOpenFor:null,
+    drawer:null,
+    drawerStep:1,
+    wizardData:{},
+    wizardErrors:{},
+    activeTargetId:null,
+    linkPicker:{ bigQuery:'', littleQuery:'', bigOpen:false, littleOpen:false, bigId:null, littleId:null, pairs:[] },
+    exitForm:{},
+    modal:null,
+    toast:null,
+    missionResults:[],
+    flags:{}
+  };
+}
+let state = initialState();
+
+/* ---------- progress persistence (survives accidental refresh) ---------- */
+const STORAGE_KEY = 'ghalia-progress-cda-staff-v1';
+function saveProgress(){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      screen: state.screen,
+      traineeName: state.traineeName,
+      missionIdx: state.missionIdx,
+      data: state.data,
+      missionResults: state.missionResults,
+      flags: state.flags
+    }));
+  }catch(e){}
+}
+function loadProgress(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return false;
+    const saved = JSON.parse(raw);
+    if(!saved || !saved.traineeName) return false;
+    Object.assign(state, saved);
+    return true;
+  }catch(e){ return false; }
+}
+function clearProgress(){
+  try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+}
+function startOver(){
+  if(!confirm('هل أنتِ متأكدة من بدء تقييم جديد؟ هيتم حذف كل تقدمك الحالي.')) return;
+  clearProgress();
+  state = initialState();
+  render();
+}
 
 function esc(s){
   return String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -563,6 +600,7 @@ function render(){
   if(state.modal==='confirm-exit') html += renderExitConfirmModal();
   if(state.modal==='confirm-link') html += renderLinkConfirmModal();
   appEl.innerHTML = html;
+  saveProgress();
   if(state._focusAfterRender){
     const el = document.getElementById(state._focusAfterRender);
     if(el){ el.focus(); if(el.value) el.setSelectionRange(el.value.length, el.value.length); }
@@ -693,6 +731,7 @@ function renderAppShell(){
           <span style="font-weight:800;font-size:13.5px">مشروع ابنتي الغالية</span>
         </div>
         <div class="user-chip">
+          <button data-action="start-over" title="بدء تقييم جديد (يحذف تقدمك الحالي)" style="background:none;border:none;cursor:pointer;font-size:15px;color:var(--text-faint);padding:4px">🔄</button>
           <span style="font-size:13.5px;font-weight:700">${esc(state.traineeName)}</span>
           <div class="avatar">${esc(initials)}</div>
         </div>
@@ -1633,11 +1672,13 @@ appEl.addEventListener('click', e=>{
     case 'confirm-link-attempt': confirmLinkAttempt(); break;
     case 'confirm-link-final': confirmLinkFinal(); break;
     case 'dismiss-toast': state.toast=null; render(); break;
+    case 'start-over': startOver(); break;
   }
 });
 
 /* ---------- init ---------- */
 function init(){
+  loadProgress();
   render();
 }
 init();
