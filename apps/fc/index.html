@@ -1,0 +1,1233 @@
+<!doctype html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8">
+<title>تقييم مشروع ابنتي الغالية — FC</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Almarai:wght@300;400;700;800&display=swap">
+<style id="app-style">
+:root{
+  --bg:#f7f7fb;
+  --surface:#ffffff;
+  --surface-2:#f1f1f8;
+  --border:#e3e3ee;
+  --text:#1c1b29;
+  --text-muted:#6b6b7f;
+  --text-faint:#9a99ad;
+  --primary:#4338ca;
+  --primary-hover:#3730a3;
+  --primary-soft:#eef0fd;
+  --amber:#f59e0b;
+  --success:#16a34a;
+  --success-soft:#dcfce7;
+  --warning:#d97706;
+  --warning-soft:#fef3c7;
+  --danger:#dc2626;
+  --danger-soft:#fee2e2;
+  --neutral:#6b7280;
+  --neutral-soft:#e5e7eb;
+  --shadow:0 1px 2px rgba(28,27,41,.06),0 8px 24px -12px rgba(28,27,41,.18);
+  --radius:10px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#131220;
+    --surface:#1b1a2c;
+    --surface-2:#211f36;
+    --border:#312e4d;
+    --text:#eeedf7;
+    --text-muted:#a6a4c0;
+    --text-faint:#7d7b98;
+    --primary:#8385f5;
+    --primary-hover:#9698ff;
+    --primary-soft:#26234a;
+    --amber:#fbbf24;
+    --success:#4ade80;
+    --success-soft:#153524;
+    --warning:#fbbf24;
+    --warning-soft:#3a2c0c;
+    --danger:#f87171;
+    --danger-soft:#3b1a1a;
+    --neutral:#9c9bb5;
+    --neutral-soft:#2a2843;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 28px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#131220;
+  --surface:#1b1a2c;
+  --surface-2:#211f36;
+  --border:#312e4d;
+  --text:#eeedf7;
+  --text-muted:#a6a4c0;
+  --text-faint:#7d7b98;
+  --primary:#8385f5;
+  --primary-hover:#9698ff;
+  --primary-soft:#26234a;
+  --amber:#fbbf24;
+  --success:#4ade80;
+  --success-soft:#153524;
+  --warning:#fbbf24;
+  --warning-soft:#3a2c0c;
+  --danger:#f87171;
+  --danger-soft:#3b1a1a;
+  --neutral:#9c9bb5;
+  --neutral-soft:#2a2843;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 28px -12px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Almarai','Cairo',sans-serif;
+  font-size:15px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+#app{min-height:100vh}
+h1,h2,h3,h4{font-family:'Cairo','Almarai',sans-serif;text-wrap:balance;margin:0}
+button{font-family:inherit}
+a{color:var(--primary)}
+::selection{background:var(--primary-soft)}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:4px}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+
+.center-page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px 16px}
+.panel{width:100%;max-width:560px;background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);padding:36px 32px}
+.brand-row{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.brand-mark{width:42px;height:42px;border-radius:11px;background:linear-gradient(135deg,var(--primary),#7c3aed);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Cairo',sans-serif;font-weight:800;font-size:18px;flex-shrink:0}
+.brand-text .ar{font-family:'Cairo',sans-serif;font-weight:800;font-size:16px;color:var(--text)}
+.brand-text .en{font-size:12px;color:var(--text-faint);letter-spacing:.03em}
+.panel h1{font-size:22px;font-weight:800;margin-bottom:8px}
+.panel .lead{color:var(--text-muted);margin-bottom:22px;font-size:14.5px}
+.field-group{margin-bottom:16px}
+.field-label{display:block;font-size:13.5px;font-weight:700;margin-bottom:6px;color:var(--text)}
+.field-label .opt{font-weight:400;color:var(--text-faint);font-size:12px}
+.field-label .req{color:var(--danger);margin-inline-start:2px}
+.field-hint{font-size:12px;color:var(--text-faint);margin-top:4px}
+.field-error{font-size:12.5px;color:var(--danger);margin-top:5px;display:flex;align-items:center;gap:5px}
+input[type=text],input[type=email],input[type=tel],input[type=number],input[type=date],select,textarea{
+  width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;background:var(--surface);
+  color:var(--text);font-size:14.5px;font-family:inherit;transition:border-color .12s;
+}
+select{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236b6b7f' stroke-width='2.5'><path d='M6 9l6 6 6-6'/></svg>");background-repeat:no-repeat;background-position:left 12px center;padding-inline-start:34px}
+textarea{resize:vertical;min-height:80px}
+input:focus,select:focus,textarea:focus{border-color:var(--primary);outline:none;box-shadow:0 0 0 3px var(--primary-soft)}
+input.error,select.error{border-color:var(--danger);box-shadow:0 0 0 3px var(--danger-soft)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 20px;border-radius:9px;font-size:14.5px;font-weight:700;border:1.5px solid transparent;cursor:pointer;transition:transform .06s,background .12s,border-color .12s;font-family:'Cairo','Almarai',sans-serif;white-space:nowrap}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:var(--primary-hover)}
+.btn-primary:disabled{background:var(--primary-soft);color:var(--text-faint);cursor:not-allowed}
+.btn-outline{background:transparent;color:var(--text);border-color:var(--border)}
+.btn-outline:hover{background:var(--surface-2)}
+.btn-ghost{background:transparent;color:var(--text-muted);border-color:transparent;padding:8px 12px}
+.btn-ghost:hover{background:var(--surface-2);color:var(--text)}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-danger:hover{filter:brightness(1.08)}
+.btn-block{width:100%}
+.btn-sm{padding:6px 12px;font-size:13px}
+
+.shell{display:flex;min-height:100vh}
+.sidebar{width:220px;flex-shrink:0;background:var(--surface);border-inline-start:1px solid var(--border);display:flex;flex-direction:column;padding:16px 12px;gap:2px}
+.sidebar.collapsed{width:64px}
+.sidebar-brand{display:flex;align-items:center;gap:10px;padding:6px 8px 18px;border-bottom:1px solid var(--border);margin-bottom:12px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:9px;color:var(--text-muted);cursor:pointer;font-size:14px;font-weight:600;border:none;background:none;width:100%;text-align:right;font-family:inherit}
+.nav-item:hover{background:var(--surface-2);color:var(--text)}
+.nav-item.active{background:var(--primary);color:#fff}
+.nav-item .ic{width:18px;height:18px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.nav-sub{padding-inline-start:20px;display:flex;flex-direction:column;gap:2px;margin-top:2px;margin-bottom:4px}
+.nav-sub .nav-item{font-size:13.5px;padding:8px 12px}
+.nav-group-toggle{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:9px;color:var(--text-muted);cursor:pointer;font-size:14px;font-weight:600;user-select:none}
+.nav-group-toggle:hover{background:var(--surface-2)}
+.nav-chevron{transition:transform .15s}
+.nav-chevron.open{transform:rotate(90deg)}
+
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.topbar{height:60px;border-bottom:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:space-between;padding:0 22px;flex-shrink:0}
+.topbar-brand{display:flex;align-items:center;gap:10px}
+.user-chip{display:flex;align-items:center;gap:9px}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--amber);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-family:'Cairo',sans-serif;font-size:13px;flex-shrink:0}
+.content{flex:1;padding:26px 30px;overflow-x:auto}
+.content-inner{max-width:1080px}
+
+.page-title-row{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+.page-title{font-size:20px;font-weight:800}
+.tab-toggle{display:inline-flex;background:var(--surface-2);border-radius:9px;padding:3px;gap:2px}
+.tab-toggle button{border:none;background:none;padding:8px 16px;border-radius:7px;font-weight:700;font-size:13.5px;color:var(--text-muted);cursor:pointer;font-family:'Cairo',sans-serif}
+.tab-toggle button.active{background:var(--primary);color:#fff}
+
+.chips-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.chip{padding:6px 14px;border-radius:999px;background:var(--surface-2);color:var(--text-muted);font-size:13px;font-weight:700;border:1.5px solid transparent;cursor:default}
+.chip .n{font-variant-numeric:tabular-nums;margin-inline-start:4px;opacity:.75}
+.chip.active{background:var(--primary-soft);color:var(--primary);border-color:var(--primary)}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+.card-pad{padding:22px}
+.search-row{display:flex;gap:10px;margin-bottom:14px;align-items:center}
+.search-row input{flex:1}
+
+table{width:100%;border-collapse:collapse;font-size:13.8px}
+th{text-align:right;padding:11px 14px;color:var(--text-faint);font-weight:700;font-size:12.5px;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:13px 14px;border-bottom:1px solid var(--border);white-space:nowrap}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--surface-2)}
+.name-cell{font-weight:700}
+.empty-state{padding:56px 20px;text-align:center;color:var(--text-faint)}
+.empty-state .ic{font-size:34px;margin-bottom:10px;opacity:.5}
+
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:999px;font-size:12px;font-weight:700}
+.badge .dot{width:6px;height:6px;border-radius:50%}
+.badge-approved{background:var(--success-soft);color:var(--success)}
+.badge-approved .dot{background:var(--success)}
+.badge-review{background:var(--warning-soft);color:var(--warning)}
+.badge-review .dot{background:var(--warning)}
+.badge-returned{background:var(--warning-soft);color:var(--warning)}
+.badge-returned .dot{background:var(--danger)}
+.badge-rejected{background:var(--danger-soft);color:var(--danger)}
+.badge-rejected .dot{background:var(--danger)}
+.badge-draft{background:var(--neutral-soft);color:var(--neutral)}
+.badge-draft .dot{background:var(--neutral)}
+
+.kebab-wrap{position:relative;display:inline-block}
+.kebab-btn{width:30px;height:30px;border-radius:7px;border:none;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:18px}
+.kebab-btn:hover{background:var(--surface-2)}
+.kebab-menu{position:absolute;left:0;top:34px;background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow);z-index:40;min-width:210px;padding:6px;text-align:right}
+.kebab-menu button{display:flex;align-items:center;gap:9px;width:100%;padding:9px 10px;border:none;background:none;text-align:right;border-radius:7px;font-size:13.5px;font-weight:600;color:var(--text);cursor:pointer;font-family:inherit}
+.kebab-menu button:hover{background:var(--surface-2)}
+.kebab-menu button.danger{color:var(--danger)}
+
+.modal-overlay{position:fixed;inset:0;background:rgba(15,14,25,.5);display:flex;align-items:center;justify-content:center;z-index:100;padding:20px}
+.modal{background:var(--surface);border-radius:16px;width:100%;max-width:460px;box-shadow:var(--shadow);overflow:hidden}
+.modal-header{display:flex;align-items:center;gap:10px;padding:18px 20px;border-bottom:1px solid var(--border)}
+.modal-icon{width:34px;height:34px;border-radius:9px;background:var(--primary-soft);color:var(--primary);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.modal-body{padding:18px 20px;font-size:14px;color:var(--text-muted);line-height:1.7}
+.modal-body strong{color:var(--text)}
+.modal-footer{display:flex;gap:10px;padding:16px 20px;border-top:1px solid var(--border);justify-content:flex-end}
+
+.drawer-overlay{position:fixed;inset:0;background:rgba(15,14,25,.42);z-index:90;display:flex;justify-content:flex-end}
+.drawer{background:var(--surface);width:100%;max-width:640px;height:100%;display:flex;flex-direction:column;box-shadow:var(--shadow)}
+.drawer-header{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--border);flex-shrink:0}
+.drawer-title{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px}
+.close-x{width:30px;height:30px;border-radius:8px;border:none;background:none;cursor:pointer;color:var(--text-muted);font-size:18px}
+.close-x:hover{background:var(--surface-2)}
+.drawer-body{flex:1;overflow-y:auto;padding:22px}
+.drawer-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px 22px;border-top:1px solid var(--border);flex-shrink:0}
+
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:560px){.field-grid{grid-template-columns:1fr}}
+.readonly-field{background:var(--surface-2);border-radius:9px;padding:10px 12px;font-size:14px;color:var(--text-muted)}
+
+.upload-grid{display:flex;flex-direction:column;gap:10px}
+.upload-box{border:1.5px dashed var(--border);border-radius:10px;padding:13px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;background:var(--surface-2)}
+.upload-box.done{border-style:solid;border-color:var(--success);background:var(--success-soft)}
+.upload-label{font-size:13.5px;font-weight:700}
+.upload-label .req{color:var(--danger)}
+.upload-status{font-size:12px;color:var(--text-faint);display:flex;align-items:center;gap:6px}
+.upload-box.done .upload-status{color:var(--success);font-weight:700}
+.upload-remove{width:22px;height:22px;border-radius:6px;border:none;background:none;color:var(--danger);cursor:pointer;font-size:15px;flex-shrink:0}
+
+.toast{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:200;background:var(--success-soft);color:var(--success);border:1px solid var(--success);border-radius:10px;padding:13px 18px;font-size:13.8px;font-weight:700;display:flex;align-items:center;gap:9px;box-shadow:var(--shadow);max-width:520px}
+.toast .close-x{color:var(--success)}
+
+.score-hero{text-align:center;padding:30px 20px}
+.score-ring{width:130px;height:130px;margin:0 auto 14px;position:relative}
+.score-num{font-family:'Cairo',sans-serif;font-weight:800;font-size:30px}
+.score-label{font-size:13px;color:var(--text-muted);margin-top:4px}
+.checklist{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+.checklist-item{display:flex;align-items:flex-start;gap:11px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.checklist-item .ic{width:22px;height:22px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;margin-top:1px}
+.checklist-item.ok .ic{background:var(--success)}
+.checklist-item.bad .ic{background:var(--danger)}
+.checklist-item .txt .t{font-weight:700;font-size:13.8px}
+.checklist-item .txt .d{font-size:12.8px;color:var(--text-muted);margin-top:2px}
+
+.mission-progress{display:flex;gap:6px;justify-content:center;margin-bottom:22px}
+.mp-dot{width:9px;height:9px;border-radius:50%;background:var(--surface-2)}
+.mp-dot.done{background:var(--success)}
+.mp-dot.current{background:var(--primary)}
+
+.story-shell{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px 16px}
+.story-card{max-width:640px;width:100%;background:var(--surface);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+.story-head{background:linear-gradient(135deg,var(--primary),#7c3aed);color:#fff;padding:26px 30px}
+.story-eyebrow{font-size:12px;font-weight:800;letter-spacing:.06em;opacity:.85;text-transform:uppercase}
+.story-title{font-size:23px;font-weight:800;margin-top:6px}
+.story-body{padding:26px 30px}
+.story-text{font-size:14.5px;line-height:1.85;color:var(--text)}
+.casefile{background:var(--surface-2);border-radius:12px;padding:16px 18px;margin-top:18px}
+.casefile-title{font-size:12.5px;font-weight:800;color:var(--text-faint);margin-bottom:10px;letter-spacing:.02em}
+.casefile-row{display:flex;justify-content:space-between;gap:14px;padding:7px 0;border-bottom:1px dashed var(--border);font-size:13.5px}
+.casefile-row:last-child{border-bottom:none}
+.casefile-row .k{color:var(--text-muted)}
+.casefile-row .v{font-weight:700;font-variant-numeric:tabular-nums}
+.story-foot{padding:20px 30px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px}
+
+.result-shell{min-height:100vh;padding:32px 16px;display:flex;justify-content:center}
+.result-wrap{max-width:640px;width:100%}
+.roster-table-wrap{overflow-x:auto}
+
+@media (max-width:760px){
+  .shell{flex-direction:column;min-height:100vh}
+  .sidebar{width:100% !important;flex-direction:row;align-items:center;overflow-x:auto;padding:8px 10px;border-inline-end:none;border-bottom:1px solid var(--border);gap:6px;flex-shrink:0}
+  .sidebar-brand{display:none}
+  .nav-item{flex-shrink:0;white-space:nowrap;padding:8px 12px}
+  .nav-group-toggle{flex-shrink:0;white-space:nowrap;padding:8px 12px}
+  .nav-chevron{display:none}
+  .nav-sub{flex-direction:row;padding-inline-start:0;margin:0}
+  .content{padding:16px}
+  .card-pad{padding:16px}
+  .topbar{padding:0 14px}
+  .page-title-row{align-items:flex-start}
+  .page-title{font-size:17px}
+  .drawer{max-width:100%}
+  .drawer-body{padding:16px}
+  .drawer-footer{flex-wrap:wrap;gap:8px}
+  .field-grid{grid-template-columns:1fr}
+  .panel{padding:26px 20px}
+  .story-head,.story-body,.story-foot{padding-left:20px;padding-right:20px}
+  table{font-size:12.8px}
+  th,td{padding:9px 10px}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script id="app-logic">
+'use strict';
+
+const ASSOCIATION_NAME = 'جمعية النور للتنمية';
+/* TODO(Michael): paste your Google Form URL here once created — see docs/coordinator-manual.html for the 2 fields to add. */
+const GOOGLE_FORM_URL = 'https://forms.google.com/REPLACE_ME';
+
+const TEAM_ROLES = ['منسق الجمعية','إداري الجمعية'];
+const TEAM_EXIT_REASONS = [
+  'إنهاء خدمة بسبب مخالفة',
+  'استقالة',
+  'انتهاء العقد',
+  'ظروف طبية أو شخصية',
+  'نقل لمشروع أو جهة أخرى'
+];
+const BIG_RETURN_REASONS = [
+  'إقرار سياسة حماية الطفل غير موجود أو غير موقّع.',
+  'البيانات المدخلة إلكترونياً لا تطابق الوثائق الرسمية المرفقة.',
+  'بطاقة الرقم القومي غير موجودة.',
+  'كارنيه الكلية/ شهادة الترشيح في بداية الدراسة الجامعية/نتيجة السنة السابقة غير موجود.',
+  'نموذج إقرار ولي الأمر غير موجود أو غير موقّع.',
+  'نموذج الإقرار غير موجود أو غير موقّع.',
+  'نموذج موافقة التصوير/الفيديو غير موجود أو غير موقّع.'
+];
+const LITTLE_RETURN_REASONS = [
+  'البيانات المدخلة إلكترونياً لا تطابق الوثائق الرسمية المرفقة.',
+  'بطاقة ولي الأمر غير موجودة.',
+  'شهادة الميلاد غير موجودة.',
+  'موافقة ولي الأمر الخطية غير موجودة أو غير موقّعة.',
+  'نموذج موافقة التصوير للقاصرات غير موجود أو غير موقّع.'
+];
+
+function freshSeed(){
+  return {
+    bigSisters: [
+      {id:'bs-heba', name:'هبة الله كمال يوسف عطية', nationalId:'29511150210335', dob:'1995-11-15', phone:'01098765432', email:'hebakamal95@gmail.com', entryDate:'2026-09-01', governorate:'أسيوط', center:'ديروط', village:'الحواتكة', association:ASSOCIATION_NAME, requestType:'entry', status:'new', requestDate:'2026-09-02'},
+      {id:'bs-maram', name:'مرام حسني توفيق شحاته', nationalId:'29408120210221', dob:'1994-08-12', phone:'01234567891', email:'maram.h@example.com', entryDate:'2026-09-02', governorate:'المنيا', center:'مغاغة', village:'نزلة بلهاسة', association:ASSOCIATION_NAME, requestType:'entry', status:'new', requestDate:'2026-09-02'},
+      {id:'bs-dalia', name:'داليا عماد فؤاد جرجس', nationalId:'29306100210998', dob:'1993-06-10', phone:'01276543210', email:'dalia.f@example.com', entryDate:'2026-08-20', governorate:'أسيوط', center:'أسيوط', village:'—', association:ASSOCIATION_NAME, requestType:'entry', status:'pending_apm', requestDate:'2026-08-20'},
+      {id:'bs-niveen-exit', name:'نيفين رمزي إبراهيم صليب', nationalId:'29403122200187', dob:'1994-03-12', phone:'01122334455', email:'niveen.r@example.com', entryDate:'2025-02-10', governorate:'أسيوط', center:'ديروط', village:'الحواتكة', association:ASSOCIATION_NAME, requestType:'exit', status:'new', requestDate:'2026-09-19', exitReason:'الزواج', exitDate:'2026-09-30'},
+      {id:'bs-sara-exit', name:'سارة فؤاد لملوم جرجس', nationalId:'29208030200456', dob:'1992-08-03', phone:'01055667788', email:'sara.fouad@example.com', entryDate:'2025-01-20', governorate:'المنيا', center:'مغاغة', village:'نزلة بلهاسة', association:ASSOCIATION_NAME, requestType:'exit', status:'new', requestDate:'2026-09-18', exitReason:'عدم الالتزام بمتطلبات التطوع فى المشروع (الانتظام فى الجلسات، الالتزام بالخطة الشهرية)', exitDate:'2026-10-10'}
+    ],
+    littleSisters: [
+      {id:'ls-yasmin', name:'ياسمين علاء الدين محمود', nationalId:'31606080210789', dob:'2016-06-08', phone:'01212345678', entryDate:'2026-09-01', governorate:'أسيوط', center:'ديروط', village:'الحواتكة', association:ASSOCIATION_NAME, status:'new', requestDate:'2026-09-02'},
+      {id:'ls-nour', name:'نور محمد سيد إبراهيم', nationalId:'31705030210556', dob:'2017-05-03', phone:'', entryDate:'2026-09-02', governorate:'المنيا', center:'مغاغة', village:'نزلة بلهاسة', association:ASSOCIATION_NAME, status:'new', requestDate:'2026-09-02'},
+      {id:'ls-dina', name:'دينا مينا لوقا جرجس', nationalId:'31805020200456', dob:'2018-05-02', phone:'01166778899', entryDate:'2025-02-01', governorate:'أسيوط', center:'ديروط', village:'الحمامية', association:ASSOCIATION_NAME, status:'pending_apm', requestDate:'2025-02-01'}
+    ],
+    teamMembers: [
+      {id:'team-ola', name:'علا عادل رمزي', role:'منسق الجمعية', phone:'01277101111', email:'ola.adel@example.com', nationalId:'29001010200111', dob:'1990-01-01', entryDate:'2026-09-03', association:ASSOCIATION_NAME, status:'active'},
+      {id:'team-mariam', name:'مريم جرجس صبحي', role:'إداري الجمعية', phone:'01277102222', email:'mariam.g@example.com', nationalId:'28905050200222', dob:'1989-05-05', entryDate:'2026-09-03', association:ASSOCIATION_NAME, status:'active'},
+      {id:'team-rana', name:'رنا وجيه لطفي', role:'منسق الجمعية', phone:'01277103333', email:'rana.wageh@example.com', nationalId:'29202020200333', dob:'1992-02-02', entryDate:'2026-09-04', association:ASSOCIATION_NAME, status:'active'}
+    ]
+  };
+}
+
+const MISSIONS = [
+  {
+    id:'approve-bs-entry',
+    title:'مهمة ١ — تقديم طلب دخول أخت كبرى لمدير المنطقة',
+    eyebrow:'الطلبات ← طلبات الأخت الكبرى',
+    story:'وصل طلب تسجيل «هبة الله كمال يوسف عطية» من الجمعية. راجعي بياناتها، وإذا كانت مكتملة قدّمي الطلب لمدير المنطقة للاعتماد النهائي — احذري وجود طلبات أخرى في القائمة لسن جزءًا من هذه المهمة.',
+    startAppScreen:'requests-big',
+    caseFile:[
+      ['الأخت الكبرى المطلوب مراجعتها','هبة الله كمال يوسف عطية'],
+      ['الإجراء المطلوب','تقديم الطلب لمدير المنطقة (وليس إرجاعه)']
+    ],
+    expected:{ targetId:'bs-heba', action:'forward' }
+  },
+  {
+    id:'return-ls-entry',
+    title:'مهمة ٢ — إرجاع طلب دخول أخت صغرى للتعديل',
+    eyebrow:'الطلبات ← طلبات الأخت الصغرى',
+    story:'طلب تسجيل «ياسمين علاء الدين محمود» ناقص — شهادة الميلاد غير مرفقة. أرجعي الطلب للجمعية بالسبب الصحيح من القائمة.',
+    startAppScreen:'requests-little',
+    caseFile:[
+      ['الأخت الصغرى المطلوب مراجعتها','ياسمين علاء الدين محمود'],
+      ['سبب الإرجاع','شهادة الميلاد غير موجودة.']
+    ],
+    expected:{ targetId:'ls-yasmin', action:'return', reason:'شهادة الميلاد غير موجودة.' }
+  },
+  {
+    id:'approve-bs-exit',
+    title:'مهمة ٣ — الموافقة على طلب خروج أخت كبرى',
+    eyebrow:'الطلبات ← طلبات الأخت الكبرى',
+    story:'قدّمت الجمعية طلب خروج لـ«نيفين رمزي إبراهيم صليب». راجعي السبب والتاريخ، ثم وافقي على الطلب لتحويله لمدير المنطقة — احذري وجود طلب خروج آخر في نفس القائمة.',
+    startAppScreen:'requests-big',
+    caseFile:[
+      ['الأخت الكبرى','نيفين رمزي إبراهيم صليب'],
+      ['الإجراء المطلوب','الموافقة على طلب الخروج']
+    ],
+    expected:{ targetId:'bs-niveen-exit', action:'approve_exit' }
+  },
+  {
+    id:'add-team-member',
+    title:'مهمة ٤ — إضافة عضو جديد لفريق عمل الجمعية',
+    eyebrow:'فريق عمل الجمعية',
+    story:'انضمت موظفة جديدة للجمعية. سجّلي بياناتها كعضو في فريق العمل بالضبط كما وردت، وأرفقي المستندات المطلوبة.',
+    startAppScreen:'team',
+    caseFile:[
+      ['اسم الموظفة رباعي','علياء منير بشرى فهيم'],
+      ['الرقم القومي','29403151234567'],
+      ['تاريخ الميلاد','١٥ / ٠٣ / ١٩٩٤'],
+      ['رقم التواصل','01123456789'],
+      ['البريد الإلكتروني','aliaa.fahim@example.com'],
+      ['الدور','إداري الجمعية'],
+      ['تاريخ الدخول','٠٥ / ٠٩ / ٢٠٢٦']
+    ],
+    expected:{ name:'علياء منير بشرى فهيم', nationalId:'29403151234567', dob:'1994-03-15', phone:'01123456789', email:'aliaa.fahim@example.com', role:'إداري الجمعية', entryDate:'2026-09-05' }
+  },
+  {
+    id:'exit-team-member',
+    title:'مهمة ٥ — طلب خروج عضو من فريق العمل',
+    eyebrow:'فريق عمل الجمعية',
+    story:'أبلغتك «مريم جرجس صبحي» برغبتها في الاستقالة. قدّمي طلب خروجها بالسبب والتاريخ الصحيحين — احذري وجود أعضاء آخرين في القائمة.',
+    startAppScreen:'team',
+    caseFile:[
+      ['العضو','مريم جرجس صبحي'],
+      ['سبب الخروج','استقالة'],
+      ['تاريخ الخروج','١٥ / ١٠ / ٢٠٢٦']
+    ],
+    expected:{ targetId:'team-mariam', reason:'استقالة', exitDate:'2026-10-15' }
+  }
+];
+
+let state = {
+  screen:'welcome',
+  traineeName:'',
+  missionIdx:0,
+  data: freshSeed(),
+  appScreen:'dashboard',
+  navRequestsOpen:true,
+  kebabOpenFor:null,
+  drawer:null,
+  activeTargetId:null,
+  reviewReturnMode:false,
+  reviewForm:{reason:'',comment:''},
+  wizardData:{},
+  teamExitForm:{},
+  modal:null,
+  toast:null,
+  missionResults:[],
+  flags:{}
+};
+
+function esc(s){
+  return String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function fmtDate(iso){
+  if(!iso) return '—';
+  const [y,m,d]=iso.split('-');
+  return d+' / '+m+' / '+y;
+}
+function normalize(s){ return String(s==null?'':s).trim().replace(/\s+/g,' '); }
+function fieldsMatch(a,b){ return normalize(a)===normalize(b) && normalize(a)!==''; }
+function wd(field, def){ return state.wizardData[field]!==undefined ? state.wizardData[field] : (def||''); }
+function inCycle(d){ return !!d && d>='2026-09-01' && d<='2029-04-30'; }
+function lookupName(id){
+  const all = [...state.data.bigSisters, ...state.data.littleSisters, ...state.data.teamMembers];
+  const r = all.find(x=>x.id===id);
+  return r? r.name : null;
+}
+
+const appEl = document.getElementById('app');
+function render(){
+  let html='';
+  if(state.toast) html += `<div class="toast" role="status"><span>✓</span><span>${esc(state.toast)}</span><button class="close-x" data-action="dismiss-toast" style="margin-inline-start:6px">✕</button></div>`;
+  if(state.screen==='welcome'){ html += renderWelcome(); }
+  else if(state.screen==='mission-intro'){ html += renderMissionIntro(); }
+  else if(state.screen==='app'){ html += renderAppShell(); }
+  else if(state.screen==='mission-result'){ html += renderMissionResult(); }
+  else if(state.screen==='final-report'){ html += renderFinalReport(); }
+  if(state.modal==='confirm-forward') html += renderConfirmModal('قبول الطلب','هل أنتِ متأكدة من تقديم الطلب لمدير المنطقة؟', lookupName(state.activeTargetId), 'confirm-forward');
+  if(state.modal==='confirm-approve-exit') html += renderConfirmModal('قبول الطلب','هل أنتِ متأكدة من قبول طلب خروج أخت كبرى؟', lookupName(state.activeTargetId), 'confirm-approve-exit');
+  if(state.modal==='confirm-team-add') html += renderConfirmModal('ارسال الطلب','هل أنتِ متأكدة من تأكيد ارسال طلب إضافة عضو؟ مع العلم أنه لا يمكنكِ إلغاء الطلب بعد التأكيد', normalize(wd('teamName')), 'confirm-team-add');
+  if(state.modal==='confirm-team-exit') html += renderConfirmModal('ارسال الطلب','هل أنتِ متأكدة من تأكيد ارسال طلب خروج العضو؟ مع العلم أنه لا يمكنكِ إلغاء الطلب بعد التأكيد', lookupName(state.activeTargetId), 'confirm-team-exit');
+  appEl.innerHTML = html;
+}
+
+function renderWelcome(){
+  return `
+  <div class="center-page">
+    <div class="panel">
+      <div class="brand-row">
+        <div class="brand-mark">غ</div>
+        <div class="brand-text"><div class="ar">مشروع ابنتي الغالية</div><div class="en">Valuable Girl Project — UAT Assessment (FC)</div></div>
+      </div>
+      <h1>تقييم أداء منسّقة الميدان (FC)</h1>
+      <p class="lead">هذا نظام تدريبي يحاكي نظام «غالية» الحقيقي. ستُطلب منكِ أداء ٥ مهام كما تدرّبتِ عليها بالضبط. أدائكِ يُسجَّل تلقائيًا، وستشاهدين نتيجتكِ فور الانتهاء، مع خيار إرسالها للمنسّق.</p>
+      <div class="field-group">
+        <label class="field-label">اسمكِ الرباعي <span class="req">*</span></label>
+        <input type="text" id="trainee-name-input" data-field="traineeName" placeholder="مثال: مارلين جرجس فوزي" value="${esc(state.traineeName)}">
+      </div>
+      <button class="btn btn-primary btn-block" data-action="start-assessment">ابدئي التقييم</button>
+    </div>
+  </div>`;
+}
+
+function renderMissionIntro(){
+  const m = MISSIONS[state.missionIdx];
+  const dots = MISSIONS.map((mm,i)=>{
+    const cls = i<state.missionIdx?'done':(i===state.missionIdx?'current':'');
+    return `<div class="mp-dot ${cls}"></div>`;
+  }).join('');
+  return `
+  <div class="story-shell">
+    <div class="result-wrap" style="max-width:640px">
+      <div class="mission-progress">${dots}</div>
+      <div class="story-card">
+        <div class="story-head">
+          <div class="story-eyebrow">${esc(m.eyebrow)} · مهمة ${state.missionIdx+1} من ${MISSIONS.length}</div>
+          <div class="story-title">${esc(m.title)}</div>
+        </div>
+        <div class="story-body">
+          <p class="story-text">${esc(m.story)}</p>
+          <div class="casefile">
+            <div class="casefile-title">بيانات الحالة</div>
+            ${m.caseFile.map(([k,v])=>`<div class="casefile-row"><span class="k">${esc(k)}</span><span class="v">${esc(v)}</span></div>`).join('')}
+          </div>
+        </div>
+        <div class="story-foot">
+          <button class="btn btn-primary" data-action="begin-mission">ابدئي المهمة →</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function navIcon(name){
+  const icons = {
+    home:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>',
+    team:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="7" r="3.2"/><circle cx="16" cy="8.5" r="2.6"/><path d="M3.5 21v-2.2C3.5 16 6 14.4 9 14.4s5.5 1.6 5.5 4.4V21"/><path d="M14.8 14.9c2.4.3 4.2 1.7 4.2 3.9V21"/></svg>',
+    requests:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 1 2.6 6.3"/><path d="M3 21v-5h5"/></svg>'
+  };
+  return icons[name]||'';
+}
+function sectionOf(screen){
+  if(screen==='dashboard') return 'dashboard';
+  if(screen==='team') return 'team';
+  if(screen==='requests-big') return 'requests-big';
+  if(screen==='requests-little') return 'requests-little';
+  return '';
+}
+function renderSidebar(activeSection){
+  const req = state.navRequestsOpen;
+  return `
+  <div class="sidebar">
+    <div class="sidebar-brand"><div class="brand-mark" style="width:34px;height:34px;font-size:14px">غ</div><div class="brand-text"><div class="ar" style="font-size:13.5px">ابنتي الغالية</div></div></div>
+    <button class="nav-item ${activeSection==='dashboard'?'active':''}" data-action="nav" data-screen="dashboard"><span class="ic">${navIcon('home')}</span>الرئيسية</button>
+    <button class="nav-item ${activeSection==='team'?'active':''}" data-action="nav" data-screen="team"><span class="ic">${navIcon('team')}</span>فريق عمل الجمعية</button>
+    <div class="nav-group-toggle" data-action="toggle-requests-nav"><span style="display:flex;align-items:center;gap:11px"><span class="ic">${navIcon('requests')}</span>الطلبات</span><span class="nav-chevron ${req?'open':''}">‹</span></div>
+    ${req?`<div class="nav-sub">
+      <button class="nav-item ${activeSection==='requests-big'?'active':''}" data-action="nav" data-screen="requests-big">طلبات الأخت الكبرى</button>
+      <button class="nav-item ${activeSection==='requests-little'?'active':''}" data-action="nav" data-screen="requests-little">طلبات الأخت الصغرى</button>
+    </div>`:''}
+  </div>`;
+}
+function renderAppShell(){
+  const initials = state.traineeName.trim().charAt(0) || 'م';
+  let body='';
+  if(state.appScreen==='dashboard') body = renderDashboard();
+  else if(state.appScreen==='team') body = renderTeam();
+  else if(state.appScreen==='requests-big') body = renderRequestsBig();
+  else if(state.appScreen==='requests-little') body = renderRequestsLittle();
+  else body = renderDashboard();
+
+  let drawerHtml='';
+  if(state.drawer==='review-big-entry'||state.drawer==='review-big-exit'||state.drawer==='review-little-entry') drawerHtml = renderReviewDrawer();
+  else if(state.drawer==='team-add') drawerHtml = renderTeamAddDrawer();
+  else if(state.drawer==='team-exit') drawerHtml = renderTeamExitDrawer();
+
+  return `
+  <div class="shell">
+    ${renderSidebar(sectionOf(state.appScreen))}
+    <div class="main">
+      <div class="topbar">
+        <div class="topbar-brand"><div class="brand-mark" style="width:30px;height:30px;font-size:12px">غ</div><span style="font-weight:800;font-size:13.5px">مشروع ابنتي الغالية</span></div>
+        <div class="user-chip"><span style="font-size:13.5px;font-weight:700">${esc(state.traineeName)}</span><div class="avatar">${esc(initials)}</div></div>
+      </div>
+      <div class="content"><div class="content-inner">${body}</div></div>
+    </div>
+  </div>
+  ${drawerHtml}`;
+}
+function renderDashboard(){
+  return `<div class="card card-pad" style="text-align:center;padding:60px 20px">
+    <div style="font-size:15px;margin-bottom:6px">مرحباً ${esc(state.traineeName)} 👋</div>
+    <div style="color:var(--text-faint);font-size:13.5px">الرئيسية قريباً</div>
+  </div>`;
+}
+
+function badgeFor(status){
+  const map = {
+    new:['badge-review','جديد'],
+    pending_apm:['badge-review','قيد مراجعة مدير المنطقة'],
+    returned:['badge-returned','معاد للتعديل للجمعية'],
+    active:['badge-approved','نشط']
+  };
+  const [cls,label]=map[status]||['badge-draft',status];
+  return `<span class="badge ${cls}"><span class="dot"></span>${label}</span>`;
+}
+
+function renderRequestsBig(){
+  const rows = state.data.bigSisters;
+  return `
+  <div class="page-title-row"><div class="page-title">طلبات الأخت الكبرى</div></div>
+  <div class="card"><div class="roster-table-wrap"><table>
+    <thead><tr><th>اسم الأخت</th><th>نوع الطلب</th><th>المدينة/القرية</th><th>تاريخ الطلب</th><th>الحالة</th><th></th></tr></thead>
+    <tbody>${rows.map(renderBigRow).join('')}</tbody>
+  </table></div>
+  ${!rows.length?`<div class="empty-state"><div class="ic">🗂️</div>لا توجد طلبات</div>`:''}
+  </div>`;
+}
+function renderBigRow(r){
+  const open = state.kebabOpenFor===r.id;
+  let menu = `<button data-action="row-menu-click" data-id="${r.id}" data-menu="details">👁 عرض التفاصيل</button>`;
+  if(r.status==='new' && r.requestType==='entry'){
+    menu += `<button data-action="row-menu-click" data-id="${r.id}" data-menu="forward">↻ تقديم للمدير</button>`;
+    menu += `<button class="danger" data-action="row-menu-click" data-id="${r.id}" data-menu="return-big">↩ ارجاع الطلب</button>`;
+  } else if(r.status==='new' && r.requestType==='exit'){
+    menu += `<button data-action="row-menu-click" data-id="${r.id}" data-menu="approve-exit">✓ موافقة</button>`;
+  }
+  const typeLabel = r.requestType==='exit'? 'خروج':'دخول';
+  return `<tr>
+    <td class="name-cell">${esc(r.name)}</td>
+    <td><span class="chip">${typeLabel}</span></td>
+    <td>${esc(r.governorate)} / ${esc(r.village)}</td>
+    <td>${fmtDate(r.requestDate)}</td>
+    <td>${badgeFor(r.status)}</td>
+    <td><div class="kebab-wrap"><button class="kebab-btn" data-action="toggle-kebab" data-id="${r.id}">⋮</button>${open?`<div class="kebab-menu">${menu}</div>`:''}</div></td>
+  </tr>`;
+}
+function renderRequestsLittle(){
+  const rows = state.data.littleSisters;
+  return `
+  <div class="page-title-row"><div class="page-title">طلبات الأخت الصغرى</div></div>
+  <div class="card"><div class="roster-table-wrap"><table>
+    <thead><tr><th>اسم الطالبة</th><th>المدينة/القرية</th><th>تاريخ الطلب</th><th>الحالة</th><th></th></tr></thead>
+    <tbody>${rows.map(renderLittleRow).join('')}</tbody>
+  </table></div>
+  ${!rows.length?`<div class="empty-state"><div class="ic">🗂️</div>لا توجد طلبات</div>`:''}
+  </div>`;
+}
+function renderLittleRow(r){
+  const open = state.kebabOpenFor===r.id;
+  let menu = `<button data-action="row-menu-click" data-id="${r.id}" data-menu="details">👁 عرض التفاصيل</button>`;
+  if(r.status==='new'){
+    menu += `<button data-action="row-menu-click" data-id="${r.id}" data-menu="forward-little">↻ تقديم للمدير</button>`;
+    menu += `<button class="danger" data-action="row-menu-click" data-id="${r.id}" data-menu="return-little">↩ ارجاع الطلب</button>`;
+  }
+  return `<tr>
+    <td class="name-cell">${esc(r.name)}</td>
+    <td>${esc(r.governorate)} / ${esc(r.village)}</td>
+    <td>${fmtDate(r.requestDate)}</td>
+    <td>${badgeFor(r.status)}</td>
+    <td><div class="kebab-wrap"><button class="kebab-btn" data-action="toggle-kebab" data-id="${r.id}">⋮</button>${open?`<div class="kebab-menu">${menu}</div>`:''}</div></td>
+  </tr>`;
+}
+
+function renderReviewDrawer(){
+  const kind = state.drawer;
+  const isLittle = kind==='review-little-entry';
+  const isExit = kind==='review-big-exit';
+  const list = isLittle? state.data.littleSisters : state.data.bigSisters;
+  const rec = list.find(r=>r.id===state.activeTargetId);
+  if(!rec) return '';
+  const reasons = isLittle? LITTLE_RETURN_REASONS : BIG_RETURN_REASONS;
+  const title = isExit? 'طلب خروج أخت كبرى' : (isLittle? 'طلب إضافة أخت صغرى':'طلب إضافة أخت كبرى');
+  let body = `
+    <div class="field-grid" style="margin-bottom:16px">
+      <div class="field-group"><label class="field-label">اسم الجمعية</label><div class="readonly-field">${esc(rec.association)}</div></div>
+      <div class="field-group"><label class="field-label">تاريخ الطلب</label><div class="readonly-field">${fmtDate(rec.requestDate)}</div></div>
+      <div class="field-group"><label class="field-label">الرقم القومي</label><div class="readonly-field">${esc(rec.nationalId)}</div></div>
+      <div class="field-group"><label class="field-label">تاريخ الميلاد</label><div class="readonly-field">${fmtDate(rec.dob)}</div></div>
+      <div class="field-group"><label class="field-label">المحافظة/المركز/القرية</label><div class="readonly-field">${esc(rec.governorate)} / ${esc(rec.center)} / ${esc(rec.village)}</div></div>
+      <div class="field-group"><label class="field-label">رقم التواصل</label><div class="readonly-field">${esc(rec.phone||'—')}</div></div>
+    </div>`;
+  if(isExit){
+    body += `<div class="field-grid" style="margin-bottom:16px">
+      <div class="field-group"><label class="field-label">سبب الخروج</label><div class="readonly-field">${esc(rec.exitReason)}</div></div>
+      <div class="field-group"><label class="field-label">تاريخ الخروج</label><div class="readonly-field">${fmtDate(rec.exitDate)}</div></div>
+    </div>`;
+  }
+  if(!isExit && state.reviewReturnMode){
+    body += `
+    <div class="field-group"><label class="field-label">سبب الارجاع <span class="req">*</span></label>
+      <select data-field="review_reason"><option value="">اختر سبب</option>${reasons.map(r=>`<option value="${esc(r)}" ${r===state.reviewForm.reason?'selected':''}>${esc(r)}</option>`).join('')}</select>
+    </div>
+    <div class="field-group"><label class="field-label">تعليق <span class="opt">(اختياري)</span></label>
+      <textarea data-field="review_comment" placeholder="اكتب تعليق...">${esc(state.reviewForm.comment||'')}</textarea>
+      <div class="field-hint">يجب الكتابة باللغة العربية فقط</div>
+    </div>`;
+  }
+  let footer;
+  if(isExit){
+    footer = `<div><button class="btn btn-outline" data-action="close-drawer">إلغاء</button></div><button class="btn btn-primary" data-action="review-approve-exit">موافقة</button>`;
+  } else if(state.reviewReturnMode){
+    footer = `<div><button class="btn btn-outline" data-action="review-cancel-return">رجوع</button></div><button class="btn btn-primary" data-action="review-submit-return" ${state.reviewForm.reason?'':'disabled'}>ارجاع</button>`;
+  } else {
+    footer = `<div><button class="btn btn-danger" data-action="review-show-return">ارجاع الطلب</button></div><button class="btn btn-primary" data-action="review-forward">تقديم للمدير</button>`;
+  }
+  return `
+  <div class="drawer-overlay" data-action="noop">
+    <div class="drawer">
+      <div class="drawer-header"><div class="drawer-title">📋 ${esc(title)}</div><button class="close-x" data-action="close-drawer">✕</button></div>
+      <div class="drawer-body">${body}</div>
+      <div class="drawer-footer">${footer}</div>
+    </div>
+  </div>`;
+}
+
+function inputRow(label, field, opts){
+  opts = opts||{};
+  const val = esc(wd(field, opts.default||''));
+  const type = opts.type||'text';
+  return `<div class="field-group">
+    <label class="field-label">${esc(label)}${opts.required?' <span class="req">*</span>':' <span class="opt">(اختياري)</span>'}</label>
+    <input type="${type}" data-field="${field}" value="${val}" placeholder="${esc(opts.placeholder||'')}">
+  </div>`;
+}
+function selectRow(label, field, options, opts){
+  opts = opts||{};
+  const val = wd(field, '');
+  return `<div class="field-group">
+    <label class="field-label">${esc(label)}${opts.required?' <span class="req">*</span>':''}</label>
+    <select data-field="${field}">
+      <option value="">${esc(opts.placeholder||'اختر...')}</option>
+      ${options.map(o=>`<option value="${esc(o)}" ${o===val?'selected':''}>${esc(o)}</option>`).join('')}
+    </select>
+  </div>`;
+}
+function dateRow(label, field, opts){
+  opts=opts||{};
+  const val = wd(field,'');
+  return `<div class="field-group">
+    <label class="field-label">${esc(label)}${opts.required?' <span class="req">*</span>':''}</label>
+    <input type="date" data-field="${field}" value="${esc(val)}" ${opts.min?`min="${opts.min}"`:''} ${opts.max?`max="${opts.max}"`:''}>
+  </div>`;
+}
+function attachmentBox(key,label,required){
+  const done = !!wd('att_'+key,false);
+  return `<div class="upload-box ${done?'done':''}" data-action="toggle-attachment" data-key="${key}">
+    <div class="upload-label">${esc(label)}${required?' <span class="req">*</span>':''}</div>
+    <div class="upload-status">${done?`✓ تم إرفاق الملف`:'اضغط لإرفاق ملف'}${done?`<button class="upload-remove" data-action="toggle-attachment" data-key="${key}" title="إزالة">✕</button>`:''}</div>
+  </div>`;
+}
+
+function renderTeam(){
+  const rows = state.data.teamMembers;
+  return `
+  <div class="page-title-row"><div class="page-title">فريق عمل الجمعية</div>
+    <button class="btn btn-primary" data-action="open-team-add">+ اضافة عضو</button>
+  </div>
+  <div class="card"><div class="roster-table-wrap"><table>
+    <thead><tr><th>اسم العضو</th><th>الدور</th><th>رقم التواصل</th><th>تاريخ الدخول</th><th>الحالة</th><th></th></tr></thead>
+    <tbody>${rows.map(renderTeamRow).join('')}</tbody>
+  </table></div></div>`;
+}
+function renderTeamRow(r){
+  const open = state.kebabOpenFor===r.id;
+  let menu = `<button data-action="team-menu-click" data-id="${r.id}" data-menu="details">👁 عرض التفاصيل</button>`;
+  if(r.status==='active'){
+    menu += `<button data-action="team-menu-click" data-id="${r.id}" data-menu="resend">✉ إعادة إرسال رسالة التفعيل</button>`;
+    menu += `<button class="danger" data-action="team-menu-click" data-id="${r.id}" data-menu="exit">🚪 خروج من الجمعية</button>`;
+  }
+  return `<tr>
+    <td class="name-cell">${esc(r.name)}</td>
+    <td>${esc(r.role)}</td>
+    <td>${esc(r.phone||'—')}</td>
+    <td>${fmtDate(r.entryDate)}</td>
+    <td>${badgeFor(r.status)}</td>
+    <td><div class="kebab-wrap"><button class="kebab-btn" data-action="toggle-kebab" data-id="${r.id}">⋮</button>${open?`<div class="kebab-menu">${menu}</div>`:''}</div></td>
+  </tr>`;
+}
+function teamAddValid(){
+  const name = normalize(wd('teamName',''));
+  const words = name.split(/\s+/).filter(Boolean);
+  if(name.length<11 || words.length<4) return false;
+  if(!/^\d{14}$/.test(normalize(wd('teamNationalId','')))) return false;
+  if(!wd('teamDob','')) return false;
+  if(!/^\d{11}$/.test(normalize(wd('teamPhone','')))) return false;
+  const email = normalize(wd('teamEmail',''));
+  if(!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email)) return false;
+  if(!wd('teamRole','')) return false;
+  if(!inCycle(wd('teamEntryDate',''))) return false;
+  if(!wd('att_teamIdFront',false) || !wd('att_teamIdBack',false) || !wd('att_teamContract',false)) return false;
+  return true;
+}
+function renderTeamAddDrawer(){
+  return `
+  <div class="drawer-overlay" data-action="noop">
+    <div class="drawer">
+      <div class="drawer-header"><div class="drawer-title">👤 إضافة عضو جديد</div><button class="close-x" data-action="close-drawer">✕</button></div>
+      <div class="drawer-body">
+        <div class="field-group"><label class="field-label">اسم الجمعية</label><div class="readonly-field">${esc(ASSOCIATION_NAME)}</div></div>
+        ${inputRow('اسم الموظفة رباعي','teamName',{required:true,placeholder:'ادخل الاسم رباعي'})}
+        ${inputRow('الرقم القومي','teamNationalId',{required:true,placeholder:'ادخل الرقم القومي (14 رقم)'})}
+        ${dateRow('تاريخ الميلاد','teamDob',{required:true})}
+        ${inputRow('رقم التواصل','teamPhone',{required:true,placeholder:'ادخل رقم التواصل (11 رقم)'})}
+        ${inputRow('البريد الإلكتروني','teamEmail',{required:true,type:'email',placeholder:'name@example.com'})}
+        ${selectRow('الدور','teamRole',TEAM_ROLES,{required:true})}
+        ${dateRow('تاريخ الدخول','teamEntryDate',{required:true,min:'2026-09-01',max:'2029-04-30'})}
+        <div class="field-hint" style="margin:-10px 0 16px">يجب أن يكون داخل دورة المشروع (01-09-2026 → 30-04-2029)</div>
+        <div class="upload-grid">
+          ${attachmentBox('teamIdFront','صورة بطاقة الرقم القومي — وجه البطاقة',true)}
+          ${attachmentBox('teamIdBack','صورة بطاقة الرقم القومي — ظهر البطاقة',true)}
+          ${attachmentBox('teamContract','عقد العمل',true)}
+        </div>
+      </div>
+      <div class="drawer-footer">
+        <div><button class="btn btn-ghost" data-action="close-drawer">حفظ كمسودة</button></div>
+        <button class="btn btn-primary" data-action="team-add-submit" ${teamAddValid()?'':'disabled'}>اضافة</button>
+      </div>
+    </div>
+  </div>`;
+}
+function renderTeamExitDrawer(){
+  const rec = state.data.teamMembers.find(m=>m.id===state.activeTargetId);
+  if(!rec) return '';
+  const reason = state.teamExitForm.reason||'';
+  const exitDate = state.teamExitForm.exitDate||'';
+  const canSubmit = !!reason && inCycle(exitDate);
+  return `
+  <div class="drawer-overlay" data-action="noop">
+    <div class="drawer" style="max-width:480px">
+      <div class="drawer-header"><div class="drawer-title">🚪 طلب خروج عضو</div><button class="close-x" data-action="close-drawer">✕</button></div>
+      <div class="drawer-body">
+        <div class="field-grid" style="margin-bottom:16px">
+          <div class="field-group"><label class="field-label">اسم الجمعية</label><div class="readonly-field">${esc(rec.association)}</div></div>
+          <div class="field-group"><label class="field-label">الدور</label><div class="readonly-field">${esc(rec.role)}</div></div>
+        </div>
+        <div class="field-group"><label class="field-label">سبب الخروج <span class="req">*</span></label>
+          <select data-field="team_exit_reason"><option value="">اختر السبب</option>${TEAM_EXIT_REASONS.map(r=>`<option value="${esc(r)}" ${r===reason?'selected':''}>${esc(r)}</option>`).join('')}</select>
+        </div>
+        <div class="field-group"><label class="field-label">تاريخ الخروج <span class="req">*</span></label>
+          <input type="date" data-field="team_exit_date" value="${esc(exitDate)}" min="2026-09-01" max="2029-04-30">
+          <div class="field-hint">يجب أن يكون داخل دورة المشروع (01-09-2026 → 30-04-2029)</div>
+        </div>
+        <div class="field-group"><label class="field-label">ملاحظات <span class="opt">(اختياري)</span></label>
+          <textarea data-field="team_exit_notes" placeholder="أدخل ملاحظاتك (اختياري)">${esc(state.teamExitForm.notes||'')}</textarea>
+        </div>
+      </div>
+      <div class="drawer-footer">
+        <div><button class="btn btn-outline" data-action="close-drawer">إلغاء</button></div>
+        <button class="btn btn-primary" data-action="team-exit-submit" ${canSubmit?'':'disabled'}>إرسال</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderConfirmModal(title, body, name, confirmAction){
+  return `<div class="modal-overlay" data-action="noop"><div class="modal">
+    <div class="modal-header"><div class="modal-icon">✓</div><strong>${esc(title)}</strong></div>
+    <div class="modal-body">${esc(body)}${name?`<br><div style="margin-top:10px">الاسم: <strong>${esc(name)}</strong></div>`:''}</div>
+    <div class="modal-footer"><button class="btn btn-outline" data-action="close-modal">إلغاء</button><button class="btn btn-primary" data-action="${confirmAction}">تأكيد القبول</button></div>
+  </div></div>`;
+}
+
+function scoreColor(score){
+  if(score>=85) return 'var(--success)';
+  if(score>=60) return 'var(--warning)';
+  return 'var(--danger)';
+}
+function ringSvg(score, size){
+  size = size||130;
+  const r = size/2 - 9;
+  const c = 2*Math.PI*r;
+  const off = c - (score/100)*c;
+  const color = scoreColor(score);
+  return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+    <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="var(--surface-2)" stroke-width="9"/>
+    <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${color}" stroke-width="9" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${off}" transform="rotate(-90 ${size/2} ${size/2})"/>
+  </svg>`;
+}
+function renderMissionResult(){
+  const idx = state.missionIdx;
+  const m = MISSIONS[idx];
+  const res = state.missionResults[idx];
+  const isLast = idx===MISSIONS.length-1;
+  return `
+  <div class="result-shell"><div class="result-wrap">
+    <div class="mission-progress">${MISSIONS.map((mm,i)=>`<div class="mp-dot ${i<idx?'done':(i===idx?'current':'')}"></div>`).join('')}</div>
+    <div class="card">
+      <div class="score-hero">
+        <div style="font-size:13px;color:var(--text-faint);font-weight:700;margin-bottom:10px">${esc(m.title)}</div>
+        <div class="score-ring" style="position:relative">
+          ${ringSvg(res.score)}
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+            <div class="score-num" style="color:${scoreColor(res.score)}">${res.score}%</div>
+          </div>
+        </div>
+        <div class="score-label">نتيجة هذه المهمة</div>
+      </div>
+      <div class="card-pad" style="padding-top:0">
+        <div class="checklist">
+          ${res.items.map(it=>`<div class="checklist-item ${it.ok?'ok':'bad'}"><div class="ic">${it.ok?'✓':'✕'}</div><div class="txt"><div class="t">${esc(it.label)}</div>${it.detail?`<div class="d">${esc(it.detail)}</div>`:''}</div></div>`).join('')}
+        </div>
+      </div>
+      <div class="story-foot">
+        <button class="btn btn-primary" data-action="${isLast?'go-final-report':'next-mission'}">${isLast?'عرض التقرير النهائي':'المهمة التالية →'}</button>
+      </div>
+    </div>
+  </div></div>`;
+}
+function renderFinalReport(){
+  const overall = Math.round(state.missionResults.reduce((s,r)=>s+r.score,0)/state.missionResults.length);
+  const verdict = overall>=85? 'أداء ممتاز — جاهزة للعمل على النظام الفعلي' : overall>=60? 'أداء جيد — يُنصح بمراجعة بعض الخطوات' : 'يحتاج إلى تدريب إضافي قبل استخدام النظام الفعلي';
+  return `
+  <div class="result-shell"><div class="result-wrap">
+    <div class="card">
+      <div class="score-hero">
+        <div style="font-size:13px;color:var(--text-faint);font-weight:700;margin-bottom:4px">${esc(state.traineeName)} — التقرير النهائي</div>
+        <div class="score-ring" style="position:relative;margin-top:10px">
+          ${ringSvg(overall,150)}
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+            <div class="score-num" style="font-size:34px;color:${scoreColor(overall)}">${overall}%</div>
+          </div>
+        </div>
+        <div class="score-label" style="margin-top:10px;font-weight:700;color:${scoreColor(overall)}">${esc(verdict)}</div>
+      </div>
+      <div class="card-pad" style="padding-top:0">
+        <div class="checklist">
+          ${MISSIONS.map((m,i)=>{
+            const r = state.missionResults[i];
+            return `<div class="checklist-item ${r.score>=60?'ok':'bad'}"><div class="ic">${r.score}</div><div class="txt"><div class="t">${esc(m.title)}</div><div class="d">النتيجة: ${r.score}%</div></div></div>`;
+          }).join('')}
+        </div>
+      </div>
+      <div class="card-pad" style="padding-top:0">
+        <p style="font-size:13.5px;color:var(--text-muted);margin-bottom:10px">اضغطي الزر لفتح نموذج إرسال النتيجة، والصقي النص الموجود تحته في الحقل المخصص للنتيجة.</p>
+        <textarea readonly style="min-height:110px;margin-bottom:14px" onclick="this.select()">${esc(buildReportText())}</textarea>
+        <a class="btn btn-primary btn-block" href="${GOOGLE_FORM_URL}" target="_blank" rel="noopener">إرسال النتيجة للمنسّق ↗</a>
+      </div>
+    </div>
+  </div></div>`;
+}
+function buildReportText(){
+  const overall = Math.round(state.missionResults.reduce((s,r)=>s+r.score,0)/state.missionResults.length);
+  let t = `تقرير تقييم FC — ${state.traineeName}\nالنتيجة الإجمالية: ${overall}%\n\n`;
+  MISSIONS.forEach((m,i)=>{ t += `${m.title}: ${state.missionResults[i].score}%\n`; });
+  return t;
+}
+
+function scoreReviewForward(m){
+  const a = state.flags.lastAction||{};
+  const correctTarget = a.targetId===m.expected.targetId;
+  const correctAction = a.actionType==='forward';
+  const items = [
+    {label:'التصرف في الطلب الصحيح ('+lookupNameSeed(m.expected.targetId)+')', ok: correctTarget, detail: correctTarget?'':`تم التصرف في: ${lookupNameSeed(a.targetId)||'لا شيء'}`},
+    {label:'استخدام «تقديم للمدير» كإجراء نهائي', ok: correctAction, detail: correctAction?'':`الإجراء المستخدم: ${a.actionType==='return'?'ارجاع الطلب':(a.actionType||'لم يُتخذ أي إجراء')}`}
+  ];
+  const score = Math.round(items.filter(i=>i.ok).length/items.length*100);
+  return {score, items};
+}
+function scoreReviewReturn(m){
+  const a = state.flags.lastAction||{};
+  const correctTarget = a.targetId===m.expected.targetId;
+  const correctAction = a.actionType==='return';
+  const correctReason = correctAction && fieldsMatch(a.reason, m.expected.reason);
+  const items = [
+    {label:'التصرف في الطلب الصحيح ('+lookupNameSeed(m.expected.targetId)+')', ok: correctTarget, detail: correctTarget?'':`تم التصرف في: ${lookupNameSeed(a.targetId)||'لا شيء'}`},
+    {label:'استخدام «ارجاع الطلب» كإجراء', ok: correctAction, detail: correctAction?'':`الإجراء المستخدم: ${a.actionType==='forward'?'تقديم للمدير':(a.actionType||'لم يُتخذ أي إجراء')}`},
+    {label:'اختيار سبب الإرجاع الصحيح', ok: correctReason, detail: correctReason?'':`السبب المُختار: ${a.reason||'—'}`}
+  ];
+  const score = Math.round(items.filter(i=>i.ok).length/items.length*100);
+  return {score, items};
+}
+function scoreReviewExitApprove(m){
+  const a = state.flags.lastAction||{};
+  const correctTarget = a.targetId===m.expected.targetId;
+  const correctAction = a.actionType==='approve_exit';
+  const items = [
+    {label:'الموافقة على طلب الخروج الصحيح ('+lookupNameSeed(m.expected.targetId)+')', ok: correctTarget, detail: correctTarget?'':`تم التصرف في: ${lookupNameSeed(a.targetId)||'لا شيء'}`},
+    {label:'استخدام «موافقة» كإجراء نهائي', ok: correctAction, detail: correctAction?'':'لم تتم الموافقة على الطلب'}
+  ];
+  const score = Math.round(items.filter(i=>i.ok).length/items.length*100);
+  return {score, items};
+}
+function scoreTeamAdd(m){
+  const exp = m.expected;
+  const submitted = !!state.flags.submitted_addteam;
+  const finalData = state.flags.finalData_addteam || {};
+  const fields = [['name','الاسم رباعي'],['nationalId','الرقم القومي'],['dob','تاريخ الميلاد'],['phone','رقم التواصل'],['email','البريد الإلكتروني'],['role','الدور'],['entryDate','تاريخ الدخول']];
+  let correct=0;
+  const items = fields.map(([f,label])=>{
+    const ok = submitted && fieldsMatch(finalData[f], exp[f]);
+    if(ok) correct++;
+    return {label, ok, detail: ok?'':`المتوقع: ${exp[f]}${submitted?` — المُدخل: ${finalData[f]||'فارغ'}`:''}`};
+  });
+  const accuracyPct = Math.round(correct/fields.length*100);
+  items.push({label:'إرسال الطلب فعليًا', ok:submitted, detail: submitted?'':'لم يتم إرسال طلب إضافة العضو'});
+  const score = submitted? Math.round(accuracyPct*0.85 + 15) : Math.round(accuracyPct*0.5);
+  return {score, items};
+}
+function scoreTeamExit(m){
+  const exp = m.expected;
+  const correctTarget = !!state.flags.teamExitCorrectTarget;
+  const correctReason = fieldsMatch(state.flags.teamExitReasonUsed, exp.reason);
+  const correctDate = state.flags.teamExitDateUsed===exp.exitDate;
+  const submitted = !!state.flags.teamExitSubmitted;
+  const items = [
+    {label:'اختيار العضو الصحيح ('+lookupNameSeed(exp.targetId)+')', ok: correctTarget, detail: correctTarget?'':'تم تقديم الطلب لعضو مختلف'},
+    {label:'اختيار سبب الخروج الصحيح ('+exp.reason+')', ok: correctReason, detail: correctReason?'':`السبب المُختار: ${state.flags.teamExitReasonUsed||'لم يُختر'}`},
+    {label:'إدخال تاريخ الخروج الصحيح', ok: correctDate, detail: correctDate?'':`التاريخ المُدخل: ${fmtDate(state.flags.teamExitDateUsed)}`},
+    {label:'إرسال الطلب وتأكيده', ok: submitted, detail: submitted?'':'لم يتم تأكيد إرسال الطلب'}
+  ];
+  const score = Math.round(items.filter(i=>i.ok).length/items.length*100);
+  return {score, items};
+}
+function lookupNameSeed(id){
+  const seed = freshSeed();
+  const all = [...seed.bigSisters, ...seed.littleSisters, ...seed.teamMembers];
+  const r = all.find(x=>x.id===id);
+  return r? r.name : (id||'');
+}
+function computeMissionScore(idx){
+  const m = MISSIONS[idx];
+  if(m.id==='approve-bs-entry') return scoreReviewForward(m);
+  if(m.id==='return-ls-entry') return scoreReviewReturn(m);
+  if(m.id==='approve-bs-exit') return scoreReviewExitApprove(m);
+  if(m.id==='add-team-member') return scoreTeamAdd(m);
+  if(m.id==='exit-team-member') return scoreTeamExit(m);
+}
+
+function toast(msg){ state.toast = msg; render(); setTimeout(()=>{ if(state.toast===msg){ state.toast=null; render(); } }, 4500); }
+
+function startAssessment(){
+  if(!normalize(state.traineeName)){ toast('برجاء إدخال الاسم أولاً'); return; }
+  state.screen='mission-intro';
+  state.missionIdx=0;
+  render();
+}
+function beginMission(){
+  const m = MISSIONS[state.missionIdx];
+  state.screen='app';
+  state.appScreen=m.startAppScreen;
+  state.drawer=null;
+  render();
+}
+function finishCurrentMission(){
+  const res = computeMissionScore(state.missionIdx);
+  state.missionResults[state.missionIdx]=res;
+  state.screen='mission-result';
+  render();
+}
+function nextMission(){
+  state.missionIdx++;
+  state.drawer=null; state.wizardData={};
+  state.screen='mission-intro';
+  render();
+}
+
+function toggleKebab(id){ state.kebabOpenFor = state.kebabOpenFor===id? null: id; render(); }
+function openReview(kind, id, returnMode){
+  state.drawer = kind;
+  state.activeTargetId = id;
+  state.reviewReturnMode = !!returnMode;
+  state.reviewForm = {reason:'', comment:''};
+  state.kebabOpenFor = null;
+  render();
+}
+function rowMenuClick(id, menu){
+  if(menu==='details'){ state.kebabOpenFor=null; toast('عرض التفاصيل: '+(lookupName(id)||'')); return; }
+  if(menu==='forward'){ openReview('review-big-entry', id, false); return; }
+  if(menu==='return-big'){ openReview('review-big-entry', id, true); return; }
+  if(menu==='approve-exit'){ openReview('review-big-exit', id, false); return; }
+  if(menu==='forward-little'){ openReview('review-little-entry', id, false); return; }
+  if(menu==='return-little'){ openReview('review-little-entry', id, true); return; }
+  state.kebabOpenFor=null; render();
+}
+function closeDrawer(){ state.drawer=null; state.wizardData={}; render(); }
+function reviewShowReturn(){ state.reviewReturnMode=true; render(); }
+function reviewCancelReturn(){ state.reviewReturnMode=false; render(); }
+function reviewForward(){ state.modal='confirm-forward'; render(); }
+function reviewApproveExit(){ state.modal='confirm-approve-exit'; render(); }
+function reviewSubmitReturn(){
+  if(!state.reviewForm.reason) return;
+  const isBig = state.drawer==='review-big-entry';
+  const list = isBig? state.data.bigSisters : state.data.littleSisters;
+  const rec = list.find(r=>r.id===state.activeTargetId);
+  if(rec){
+    rec.status='returned';
+    rec.returnReason = state.reviewForm.reason;
+    state.flags.lastAction = {targetId:rec.id, actionType:'return', reason: state.reviewForm.reason};
+    toast('تم ارجاع الطلب');
+  }
+  state.drawer=null;
+  render();
+  setTimeout(finishCurrentMission,900);
+}
+function confirmForward(){
+  const isBig = state.drawer==='review-big-entry';
+  const list = isBig? state.data.bigSisters : state.data.littleSisters;
+  const rec = list.find(r=>r.id===state.activeTargetId);
+  if(rec){
+    rec.status='pending_apm';
+    state.flags.lastAction = {targetId:rec.id, actionType:'forward'};
+    toast('تم تقديم الطلب لمدير المنطقة');
+  }
+  state.modal=null; state.drawer=null;
+  render();
+  setTimeout(finishCurrentMission,900);
+}
+function confirmApproveExit(){
+  const rec = state.data.bigSisters.find(r=>r.id===state.activeTargetId);
+  if(rec){
+    rec.status='pending_apm';
+    state.flags.lastAction = {targetId:rec.id, actionType:'approve_exit'};
+    toast('تمت الموافقة على طلب الخروج');
+  }
+  state.modal=null; state.drawer=null;
+  render();
+  setTimeout(finishCurrentMission,900);
+}
+
+function openTeamAdd(){ state.drawer='team-add'; state.wizardData={}; render(); }
+function openTeamExit(id){ state.drawer='team-exit'; state.activeTargetId=id; state.teamExitForm={}; state.kebabOpenFor=null; render(); }
+function teamMenuClick(id, menu){
+  if(menu==='details'){ state.kebabOpenFor=null; toast('عرض التفاصيل: '+(lookupName(id)||'')); return; }
+  if(menu==='resend'){ state.kebabOpenFor=null; toast('تم إعادة إرسال رمز التحقق بنجاح'); return; }
+  if(menu==='exit'){ openTeamExit(id); return; }
+  state.kebabOpenFor=null; render();
+}
+function toggleAttachment(key){
+  const cur = !!wd('att_'+key, false);
+  state.wizardData['att_'+key] = !cur;
+  render();
+}
+function teamAddSubmit(){ if(!teamAddValid()) return; state.modal='confirm-team-add'; render(); }
+function confirmTeamAdd(){
+  const rec = {
+    id:'team-new-'+Date.now(),
+    name: normalize(wd('teamName')),
+    role: wd('teamRole'),
+    phone: wd('teamPhone'),
+    email: wd('teamEmail'),
+    nationalId: wd('teamNationalId'),
+    dob: wd('teamDob'),
+    entryDate: wd('teamEntryDate'),
+    association: ASSOCIATION_NAME,
+    status:'pending_apm'
+  };
+  state.data.teamMembers.push(rec);
+  const missionId = MISSIONS[state.missionIdx].id;
+  if(missionId==='add-team-member'){
+    state.flags.submitted_addteam = true;
+    state.flags.finalData_addteam = {name:rec.name,nationalId:rec.nationalId,dob:rec.dob,phone:rec.phone,email:rec.email,role:rec.role,entryDate:rec.entryDate};
+  }
+  toast(`تم إرسال طلب إضافة عضو "${rec.name}"، سوف يتم الرد عليكم في أقرب وقت`);
+  state.modal=null; state.drawer=null;
+  render();
+  setTimeout(finishCurrentMission,900);
+}
+function teamExitSubmit(){ state.modal='confirm-team-exit'; render(); }
+function confirmTeamExit(){
+  const rec = state.data.teamMembers.find(m=>m.id===state.activeTargetId);
+  if(rec){
+    rec.status='pending_apm';
+    rec.exitReason = state.teamExitForm.reason;
+    rec.exitDate = state.teamExitForm.exitDate;
+    const missionId = MISSIONS[state.missionIdx].id;
+    const exp = MISSIONS[state.missionIdx].expected;
+    if(missionId==='exit-team-member'){
+      state.flags.teamExitCorrectTarget = (rec.id === exp.targetId);
+      state.flags.teamExitReasonUsed = state.teamExitForm.reason;
+      state.flags.teamExitDateUsed = state.teamExitForm.exitDate;
+      state.flags.teamExitSubmitted = true;
+    }
+    toast(`تم ارسال طلب خروج العضو "${rec.name}". سوف يتم الرد عليكم في أقرب وقت`);
+  }
+  state.modal=null; state.drawer=null;
+  render();
+  setTimeout(finishCurrentMission,900);
+}
+
+appEl.addEventListener('input', e=>{
+  const f = e.target.dataset.field;
+  if(!f) return;
+  if(f==='traineeName'){ state.traineeName = e.target.value; return; }
+  if(f==='review_comment'){ state.reviewForm.comment = e.target.value; return; }
+  if(f==='team_exit_notes'){ state.teamExitForm.notes = e.target.value; return; }
+  state.wizardData[f] = e.target.value;
+});
+appEl.addEventListener('change', e=>{
+  const f = e.target.dataset.field;
+  if(!f) return;
+  if(f==='review_reason'){ state.reviewForm.reason = e.target.value; render(); return; }
+  if(f==='team_exit_reason'){ state.teamExitForm.reason = e.target.value; render(); return; }
+  if(f==='team_exit_date'){ state.teamExitForm.exitDate = e.target.value; render(); return; }
+  state.wizardData[f] = e.target.value;
+  render();
+});
+document.addEventListener('click', e=>{
+  const kebab = e.target.closest && e.target.closest('.kebab-wrap');
+  if(!kebab && state.kebabOpenFor){ state.kebabOpenFor=null; render(); }
+});
+appEl.addEventListener('click', e=>{
+  const t = e.target.closest('[data-action]');
+  if(!t) return;
+  const action = t.dataset.action;
+  const d = t.dataset;
+  if(action==='noop' && e.target===t) return;
+  if(t.disabled) return;
+  switch(action){
+    case 'start-assessment': startAssessment(); break;
+    case 'begin-mission': beginMission(); break;
+    case 'next-mission': nextMission(); break;
+    case 'go-final-report': state.screen='final-report'; render(); break;
+    case 'nav':
+      state.appScreen = d.screen;
+      state.kebabOpenFor=null;
+      render();
+      break;
+    case 'toggle-requests-nav': state.navRequestsOpen=!state.navRequestsOpen; render(); break;
+    case 'toggle-kebab': toggleKebab(d.id); break;
+    case 'row-menu-click': rowMenuClick(d.id, d.menu); break;
+    case 'team-menu-click': teamMenuClick(d.id, d.menu); break;
+    case 'close-drawer': closeDrawer(); break;
+    case 'close-modal': state.modal=null; render(); break;
+    case 'review-show-return': reviewShowReturn(); break;
+    case 'review-cancel-return': reviewCancelReturn(); break;
+    case 'review-forward': reviewForward(); break;
+    case 'review-approve-exit': reviewApproveExit(); break;
+    case 'review-submit-return': reviewSubmitReturn(); break;
+    case 'confirm-forward': confirmForward(); break;
+    case 'confirm-approve-exit': confirmApproveExit(); break;
+    case 'open-team-add': openTeamAdd(); break;
+    case 'team-add-submit': teamAddSubmit(); break;
+    case 'confirm-team-add': confirmTeamAdd(); break;
+    case 'team-exit-submit': teamExitSubmit(); break;
+    case 'confirm-team-exit': confirmTeamExit(); break;
+    case 'toggle-attachment': toggleAttachment(d.key); break;
+    case 'dismiss-toast': state.toast=null; render(); break;
+  }
+});
+
+function init(){ render(); }
+init();
+</script>
+</body>
+</html>

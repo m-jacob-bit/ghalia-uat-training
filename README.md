@@ -6,8 +6,8 @@ Trainees are given a short scenario per task, perform it in a clickable mock of 
 
 ## Live pages
 
-- **Manuals:** [`docs/coordinator-manual.html`](docs/coordinator-manual.html) (for the coordinator) · [`docs/trainee-cda.html`](docs/trainee-cda.html) (CDA Staff trainees)
-- **Apps:** [`apps/cda-staff/`](apps/cda-staff/) (ready) · `apps/fc/`, `apps/apm/`, `apps/bs/` (in progress)
+- **Manuals:** [`docs/coordinator-manual.html`](docs/coordinator-manual.html) (for the coordinator) · [`docs/trainee-cda.html`](docs/trainee-cda.html) (CDA Staff trainees) · [`docs/trainee-fc.html`](docs/trainee-fc.html) (FC trainees)
+- **Apps:** [`apps/cda-staff/`](apps/cda-staff/) (ready) · [`apps/fc/`](apps/fc/) (ready) · `apps/apm/`, `apps/bs/` (in progress)
 
 Everything above is live at **https://m-jacob-bit.github.io/ghalia-uat-training/** — see the root `index.html` for a linked landing page.
 
