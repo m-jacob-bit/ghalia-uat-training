@@ -615,11 +615,13 @@ function renderRequestsBig(){
 }
 function renderBigRow(r){
   const open = state.kebabOpenFor===r.id;
-  let menu = `<button data-action="row-menu-click" data-id="${r.id}" data-menu="details">👁 عرض التفاصيل</button>`;
+  let menu;
   if(r.status==='new' && r.requestType==='entry'){
-    menu += `<button data-action="row-menu-click" data-id="${r.id}" data-menu="open-entry-big">📋 مراجعة الطلب</button>`;
+    menu = `<button data-action="row-menu-click" data-id="${r.id}" data-menu="open-entry-big">👁 عرض التفاصيل</button>`;
   } else if(r.status==='new' && r.requestType==='exit'){
-    menu += `<button data-action="row-menu-click" data-id="${r.id}" data-menu="open-exit-big">🚪 مراجعة طلب الخروج</button>`;
+    menu = `<button data-action="row-menu-click" data-id="${r.id}" data-menu="open-exit-big">👁 عرض التفاصيل</button>`;
+  } else {
+    menu = `<button data-action="row-menu-click" data-id="${r.id}" data-menu="details">👁 عرض التفاصيل</button>`;
   }
   const typeLabel = r.requestType==='exit'? 'خروج':'دخول';
   return `<tr>
@@ -649,8 +651,9 @@ function renderRequestsLittle(){
 function renderLittleRow(r){
   const open = state.kebabOpenFor===r.id;
   const checked = state.selectedIds.includes(r.id);
-  let menu = `<button data-action="row-menu-click" data-id="${r.id}" data-menu="details">👁 عرض التفاصيل</button>`;
-  if(r.status==='new') menu += `<button data-action="row-menu-click" data-id="${r.id}" data-menu="open-entry-little">📋 مراجعة الطلب</button>`;
+  let menu = r.status==='new'
+    ? `<button data-action="row-menu-click" data-id="${r.id}" data-menu="open-entry-little">👁 عرض التفاصيل</button>`
+    : `<button data-action="row-menu-click" data-id="${r.id}" data-menu="details">👁 عرض التفاصيل</button>`;
   return `<tr>
     <td>${r.status==='new'?`<input type="checkbox" class="row-check" data-action="toggle-select" data-id="${r.id}" ${checked?'checked':''}>`:''}</td>
     <td class="name-cell">${esc(r.name)}</td>
@@ -729,8 +732,9 @@ function renderTeam(){
 }
 function renderTeamRow(r){
   const open = state.kebabOpenFor===r.id;
-  let menu = `<button data-action="row-menu-click" data-id="${r.id}" data-menu="details">👁 عرض التفاصيل</button>`;
-  if(r.status==='new') menu += `<button data-action="row-menu-click" data-id="${r.id}" data-menu="open-team">📋 مراجعة الطلب</button>`;
+  let menu = r.status==='new'
+    ? `<button data-action="row-menu-click" data-id="${r.id}" data-menu="open-team">👁 عرض التفاصيل</button>`
+    : `<button data-action="row-menu-click" data-id="${r.id}" data-menu="details">👁 عرض التفاصيل</button>`;
   return `<tr>
     <td class="name-cell">${esc(r.name)}</td>
     <td>${esc(r.role)}</td>
@@ -845,6 +849,7 @@ function scoreSingleAction(m){
   const correctTarget = a.targetId===m.expected.targetId;
   const correctAction = a.actionType===m.expected.action;
   const items = [
+    {label:'فتح تفاصيل الطلب قبل اتخاذ القرار', ok: (state.flags.detailsViewedIds||[]).includes(m.expected.targetId), detail: (state.flags.detailsViewedIds||[]).includes(m.expected.targetId)?'':'اتُخذ القرار من غير فتح «عرض التفاصيل» للطلب أولًا — الخطوة الأولى دايمًا هي فتح الطلب من القائمة، ومراجعة بياناته كاملة، وبعدين اختيار الإجراء من جوه شاشة الطلب نفسها.'},
     {label:'التصرف في الطلب الصحيح ('+lookupNameSeed(m.expected.targetId)+')', ok: correctTarget, detail: correctTarget?'':`تصرّفتِ في طلب «${lookupNameSeed(a.targetId)||'لا شيء'}» بدل الطلب المطلوب. راجعي بيانات الحالة (خصوصًا الرقم القومي) قبل اختيار السجل، خصوصًا لو في أكتر من طلب بنفس الاسم.`},
     {label:'استخدام الإجراء الصحيح ('+actionLabelAr(m.expected.action)+')', ok: correctAction, detail: correctAction?'':`استخدمتِ إجراء «${actionLabelAr(a.actionType)}»، والإجراء الصحيح المطلوب في بيانات الحالة هو «${actionLabelAr(m.expected.action)}».`}
   ];
@@ -932,6 +937,8 @@ function openReview(kind, id){
   state.drawerMode='default';
   state.reviewForm = {reason:'', comment:''};
   state.kebabOpenFor = null;
+  state.flags.detailsViewedIds = state.flags.detailsViewedIds || [];
+  if(!state.flags.detailsViewedIds.includes(id)) state.flags.detailsViewedIds.push(id);
   render();
 }
 function rowMenuClick(id, menu){

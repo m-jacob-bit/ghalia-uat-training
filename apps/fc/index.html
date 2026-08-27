@@ -621,12 +621,13 @@ function renderRequestsBig(){
 }
 function renderBigRow(r){
   const open = state.kebabOpenFor===r.id;
-  let menu = `<button data-action="row-menu-click" data-id="${r.id}" data-menu="details">👁 عرض التفاصيل</button>`;
+  let menu;
   if(r.status==='new' && r.requestType==='entry'){
-    menu += `<button data-action="row-menu-click" data-id="${r.id}" data-menu="forward">↻ تقديم للمدير</button>`;
-    menu += `<button class="danger" data-action="row-menu-click" data-id="${r.id}" data-menu="return-big">↩ ارجاع الطلب</button>`;
+    menu = `<button data-action="row-menu-click" data-id="${r.id}" data-menu="review-entry-big">👁 عرض التفاصيل</button>`;
   } else if(r.status==='new' && r.requestType==='exit'){
-    menu += `<button data-action="row-menu-click" data-id="${r.id}" data-menu="approve-exit">✓ موافقة</button>`;
+    menu = `<button data-action="row-menu-click" data-id="${r.id}" data-menu="review-exit-big">👁 عرض التفاصيل</button>`;
+  } else {
+    menu = `<button data-action="row-menu-click" data-id="${r.id}" data-menu="details">👁 عرض التفاصيل</button>`;
   }
   const typeLabel = r.requestType==='exit'? 'خروج':'دخول';
   return `<tr>
@@ -651,11 +652,9 @@ function renderRequestsLittle(){
 }
 function renderLittleRow(r){
   const open = state.kebabOpenFor===r.id;
-  let menu = `<button data-action="row-menu-click" data-id="${r.id}" data-menu="details">👁 عرض التفاصيل</button>`;
-  if(r.status==='new'){
-    menu += `<button data-action="row-menu-click" data-id="${r.id}" data-menu="forward-little">↻ تقديم للمدير</button>`;
-    menu += `<button class="danger" data-action="row-menu-click" data-id="${r.id}" data-menu="return-little">↩ ارجاع الطلب</button>`;
-  }
+  let menu = r.status==='new'
+    ? `<button data-action="row-menu-click" data-id="${r.id}" data-menu="review-entry-little">👁 عرض التفاصيل</button>`
+    : `<button data-action="row-menu-click" data-id="${r.id}" data-menu="details">👁 عرض التفاصيل</button>`;
   return `<tr>
     <td class="name-cell">${esc(r.name)}</td>
     <td>${esc(r.governorate)} / ${esc(r.village)}</td>
@@ -945,11 +944,16 @@ function renderFinalReport(){
   </div></div>`;
 }
 
+function viewedDetailsItem(targetId){
+  const viewed = (state.flags.detailsViewedIds||[]).includes(targetId);
+  return {label:'فتح تفاصيل الطلب قبل اتخاذ القرار', ok: viewed, detail: viewed?'':'اتُخذ القرار من غير فتح «عرض التفاصيل» للطلب أولًا — الخطوة الأولى دايمًا هي فتح الطلب من القائمة، ومراجعة بياناته كاملة، وبعدين اختيار الإجراء من جوه شاشة الطلب نفسها.'};
+}
 function scoreReviewForward(m){
   const a = state.flags.lastAction||{};
   const correctTarget = a.targetId===m.expected.targetId;
   const correctAction = a.actionType==='forward';
   const items = [
+    viewedDetailsItem(m.expected.targetId),
     {label:'التصرف في الطلب الصحيح ('+lookupNameSeed(m.expected.targetId)+')', ok: correctTarget, detail: correctTarget?'':`تصرّفتِ في طلب «${lookupNameSeed(a.targetId)||'لا شيء'}» بدل الطلب المطلوب. راجعي بيانات الحالة (خصوصًا الرقم القومي) للتأكد من اختيار السجل الصحيح، خصوصًا لو في أكتر من طلب بنفس الاسم.`},
     {label:'استخدام «تقديم للمدير» كإجراء نهائي', ok: correctAction, detail: correctAction?'':`استخدمتِ إجراء «${a.actionType==='return'?'ارجاع الطلب':(a.actionType||'لا شيء')}»، والإجراء الصحيح المطلوب في بيانات الحالة هو «تقديم للمدير» — الطلب كان مكتملًا وسليمًا ولا يحتاج إرجاعًا.`}
   ];
@@ -962,6 +966,7 @@ function scoreReviewReturn(m){
   const correctAction = a.actionType==='return';
   const correctReason = correctAction && fieldsMatch(a.reason, m.expected.reason);
   const items = [
+    viewedDetailsItem(m.expected.targetId),
     {label:'التصرف في الطلب الصحيح ('+lookupNameSeed(m.expected.targetId)+')', ok: correctTarget, detail: correctTarget?'':`تصرّفتِ في طلب «${lookupNameSeed(a.targetId)||'لا شيء'}» بدل الطلب المطلوب. راجعي بيانات الحالة (خصوصًا الرقم القومي) للتأكد من اختيار السجل الصحيح.`},
     {label:'استخدام «ارجاع الطلب» كإجراء', ok: correctAction, detail: correctAction?'':`استخدمتِ إجراء «${a.actionType==='forward'?'تقديم للمدير':(a.actionType||'لا شيء')}»، لكن الطلب كان ناقصًا/فيه خطأ ويحتاج «ارجاع الطلب» لتعديله قبل تقديمه.`},
     {label:'اختيار سبب الإرجاع الصحيح', ok: correctReason, detail: correctReason?'':`اخترتِ السبب «${a.reason||'لم يُختر'}»، والسبب الصحيح المذكور في بيانات الحالة هو «${m.expected.reason}».`}
@@ -974,6 +979,7 @@ function scoreReviewExitApprove(m){
   const correctTarget = a.targetId===m.expected.targetId;
   const correctAction = a.actionType==='approve_exit';
   const items = [
+    viewedDetailsItem(m.expected.targetId),
     {label:'الموافقة على طلب الخروج الصحيح ('+lookupNameSeed(m.expected.targetId)+')', ok: correctTarget, detail: correctTarget?'':`تصرّفتِ في طلب «${lookupNameSeed(a.targetId)||'لا شيء'}» بدل الطلب المطلوب. تأكدي من الرقم القومي المذكور في بيانات الحالة قبل اختيار السجل.`},
     {label:'استخدام «موافقة» كإجراء نهائي', ok: correctAction, detail: correctAction?'':'لم تتم الموافقة على طلب الخروج — بيانات الحالة تطلب اعتماده مباشرة بلا إرجاع أو رفض.'}
   ];
@@ -1062,15 +1068,15 @@ function openReview(kind, id, returnMode){
   state.reviewReturnMode = !!returnMode;
   state.reviewForm = {reason:'', comment:''};
   state.kebabOpenFor = null;
+  state.flags.detailsViewedIds = state.flags.detailsViewedIds || [];
+  if(!state.flags.detailsViewedIds.includes(id)) state.flags.detailsViewedIds.push(id);
   render();
 }
 function rowMenuClick(id, menu){
   if(menu==='details'){ state.kebabOpenFor=null; toast('عرض التفاصيل: '+(lookupName(id)||'')); return; }
-  if(menu==='forward'){ openReview('review-big-entry', id, false); return; }
-  if(menu==='return-big'){ openReview('review-big-entry', id, true); return; }
-  if(menu==='approve-exit'){ openReview('review-big-exit', id, false); return; }
-  if(menu==='forward-little'){ openReview('review-little-entry', id, false); return; }
-  if(menu==='return-little'){ openReview('review-little-entry', id, true); return; }
+  if(menu==='review-entry-big'){ openReview('review-big-entry', id, false); return; }
+  if(menu==='review-exit-big'){ openReview('review-big-exit', id, false); return; }
+  if(menu==='review-entry-little'){ openReview('review-little-entry', id, false); return; }
   state.kebabOpenFor=null; render();
 }
 function closeDrawer(){ state.drawer=null; state.wizardData={}; render(); }
