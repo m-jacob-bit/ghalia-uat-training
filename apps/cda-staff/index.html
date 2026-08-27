@@ -681,6 +681,7 @@ function renderAppShell(){
   else if(state.drawer==='add-little') drawerHtml = renderWizardDrawer('little', false);
   else if(state.drawer==='complete-big') drawerHtml = renderWizardDrawer('big', true);
   else if(state.drawer==='exit-big') drawerHtml = renderExitDrawer();
+  else if(state.drawer==='view-details') drawerHtml = renderViewDetailsDrawer();
 
   return `
   <div class="shell">
@@ -1032,6 +1033,43 @@ function renderExitDrawer(){
         <div><button class="btn btn-outline" data-action="close-drawer">إلغاء</button></div>
         <button class="btn btn-primary" data-action="exit-submit" ${canSubmit?'':'disabled'}>إرسال</button>
       </div>
+    </div>
+  </div>`;
+}
+function renderViewDetailsDrawer(){
+  const rec = state.data.bigSisters.find(b=>b.id===state.activeTargetId) || state.data.littleSisters.find(l=>l.id===state.activeTargetId);
+  if(!rec) return '';
+  const isBig = !!state.data.bigSisters.find(b=>b.id===rec.id);
+  let body = `
+    <div class="field-grid" style="margin-bottom:16px">
+      <div class="field-group"><label class="field-label">الاسم رباعي</label><div class="readonly-field">${esc(rec.name)}</div></div>
+      <div class="field-group"><label class="field-label">الرقم القومي</label><div class="readonly-field">${esc(rec.nationalId)}</div></div>
+      <div class="field-group"><label class="field-label">تاريخ الميلاد</label><div class="readonly-field">${fmtDate(rec.dob)}</div></div>
+      <div class="field-group"><label class="field-label">رقم التواصل</label><div class="readonly-field">${esc(rec.phone||'—')}</div></div>
+      ${isBig?`<div class="field-group"><label class="field-label">البريد الإلكتروني</label><div class="readonly-field">${esc(rec.email||'—')}</div></div>`:''}
+      <div class="field-group"><label class="field-label">تاريخ الدخول</label><div class="readonly-field">${fmtDate(rec.entryDate)}</div></div>
+      <div class="field-group"><label class="field-label">المحافظة/المركز/القرية</label><div class="readonly-field">${esc(rec.governorate)} / ${esc(rec.center)} / ${esc(rec.village)}</div></div>
+    </div>`;
+  if(isBig){
+    body += `<div class="field-grid" style="margin-bottom:16px">
+      <div class="field-group"><label class="field-label">الجامعة/الكلية</label><div class="readonly-field">${esc(rec.university||'—')} / ${esc(rec.college||'—')}</div></div>
+      <div class="field-group"><label class="field-label">الدور/الدورة</label><div class="readonly-field">${esc(rec.role||'—')} / ${esc(rec.cycle||'—')}</div></div>
+    </div>`;
+  } else {
+    body += `<div class="field-grid" style="margin-bottom:16px">
+      <div class="field-group"><label class="field-label">المدرسة</label><div class="readonly-field">${esc(rec.school||'—')}</div></div>
+      <div class="field-group"><label class="field-label">الصف الدراسي</label><div class="readonly-field">${esc(rec.grade||'—')}</div></div>
+    </div>`;
+  }
+  if(rec.status==='returned' && rec.returnNote){
+    body += `<div class="field-group"><label class="field-label">سبب الإرجاع</label><div class="readonly-field">${esc(rec.returnNote)}</div></div>`;
+  }
+  return `
+  <div class="drawer-overlay" data-action="noop">
+    <div class="drawer">
+      <div class="drawer-header"><div class="drawer-title">👁 تفاصيل ${isBig?'الأخت الكبرى':'الأخت الصغرى'}</div><button class="close-x" data-action="close-drawer">✕</button></div>
+      <div class="drawer-body">${body}</div>
+      <div class="drawer-footer"><div><button class="btn btn-outline" data-action="close-drawer">إغلاق</button></div></div>
     </div>
   </div>`;
 }
@@ -1438,7 +1476,8 @@ function rowMenuClick(id, menu){
     openComplete(id);
     return;
   } else if(menu==='details'){
-    toast(`عرض تفاصيل: ${rec?rec.name:''}`);
+    state.activeTargetId = id;
+    state.drawer = 'view-details';
   } else if(menu==='resend'){
     toast('تم إرسال رسالة التفعيل');
   }
