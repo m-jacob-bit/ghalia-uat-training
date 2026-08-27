@@ -9,7 +9,7 @@ Trainees are given a short scenario per task, perform it in a clickable mock of 
 - **Manuals:** [`docs/coordinator-manual.html`](docs/coordinator-manual.html) (for the coordinator) · [`docs/trainee-cda.html`](docs/trainee-cda.html) (CDA Staff trainees)
 - **Apps:** [`apps/cda-staff/`](apps/cda-staff/) (ready) · `apps/fc/`, `apps/apm/`, `apps/bs/` (in progress)
 
-Once GitHub Pages is enabled, everything above is reachable at `https://m-jacob-bit.github.io/ghalia-uat-training/...` — see the root `index.html` for a linked landing page.
+Everything above is live at **https://m-jacob-bit.github.io/ghalia-uat-training/** — see the root `index.html` for a linked landing page.
 
 ## The approval cycle
 
@@ -22,7 +22,7 @@ FC can also originate its own requests (association work-team management) that g
 ## Setup still needed
 
 - [ ] Create a Google Form (two fields: Name, Result — paste box) for collecting trainee results, and paste its URL into the `GOOGLE_FORM_URL` constant near the top of each `apps/*/index.html`.
-- [ ] Enable GitHub Pages (Settings → Pages → branch `main`, folder `/`).
+- [x] GitHub Pages enabled (branch `main`, folder `/`).
 
 ## Repo layout
 
