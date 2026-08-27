@@ -242,6 +242,24 @@ tbody tr:hover{background:var(--surface-2)}
 .checklist-item .txt .t{font-weight:700;font-size:13.8px}
 .checklist-item .txt .d{font-size:12.8px;color:var(--text-muted);margin-top:2px}
 
+.report-mission{margin-bottom:26px;padding-bottom:22px;border-bottom:1px solid var(--border)}
+.report-mission:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.report-mission-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px}
+.report-mission-head .t{font-family:'Cairo',sans-serif;font-weight:700;font-size:15px}
+.report-mission-head .s{font-family:'Cairo',sans-serif;font-weight:800;font-size:15px}
+.report-actions{border-top:1px solid var(--border);padding-top:20px}
+
+@media print{
+  body *{visibility:hidden}
+  .print-area, .print-area *{visibility:visible}
+  .print-area{position:absolute;inset:0 auto auto 0;width:100%;margin:0;padding:0;max-width:none}
+  .no-print{display:none !important}
+  .card{box-shadow:none;border:none}
+  body{background:#fff;color:#000}
+  .checklist-item{break-inside:avoid;border-color:#ccc}
+  .report-mission{break-inside:avoid}
+}
+
 .mission-progress{display:flex;gap:6px;justify-content:center;margin-bottom:22px}
 .mp-dot{width:9px;height:9px;border-radius:50%;background:var(--surface-2)}
 .mp-dot.done{background:var(--success)}
@@ -297,7 +315,6 @@ tbody tr:hover{background:var(--surface-2)}
 
 const ASSOCIATION_NAME = 'جمعية النور للتنمية';
 /* TODO(Michael): paste your Google Form URL here once created — see docs/coordinator-manual.html for the 2 fields to add. */
-const GOOGLE_FORM_URL = 'https://forms.gle/GDMj5LD3DN5XDCyo9';
 
 const TEAM_ROLES = ['منسق الجمعية','إداري الجمعية'];
 const TEAM_EXIT_REASONS = [
@@ -478,7 +495,7 @@ function renderWelcome(){
         <div class="brand-text"><div class="ar">مشروع ابنتي الغالية</div><div class="en">Valuable Girl Project — UAT Assessment (FC)</div></div>
       </div>
       <h1>تقييم أداء منسّقة الميدان (FC)</h1>
-      <p class="lead">هذا نظام تدريبي يحاكي نظام «غالية» الحقيقي. ستُطلب منكِ أداء ٥ مهام كما تدرّبتِ عليها بالضبط. أدائكِ يُسجَّل تلقائيًا، وستشاهدين نتيجتكِ فور الانتهاء، مع خيار إرسالها للمنسّق.</p>
+      <p class="lead">هذا نظام تدريبي يحاكي نظام «غالية» الحقيقي. ستُطلب منكِ أداء ٥ مهام كما تدرّبتِ عليها بالضبط. أدائكِ يُسجَّل تلقائيًا، وستشاهدين نتيجتكِ فور الانتهاء، مع خيار حفظ تقريرك كملف PDF وإرساله لمديرة/مدير البرنامج.</p>
       <div class="field-group">
         <label class="field-label">اسمكِ الرباعي <span class="req">*</span></label>
         <input type="text" id="trainee-name-input" data-field="traineeName" placeholder="مثال: مارلين جرجس فوزي" value="${esc(state.traineeName)}">
@@ -898,7 +915,7 @@ function renderFinalReport(){
   const overall = Math.round(state.missionResults.reduce((s,r)=>s+r.score,0)/state.missionResults.length);
   const verdict = overall>=85? 'أداء ممتاز — جاهزة للعمل على النظام الفعلي' : overall>=60? 'أداء جيد — يُنصح بمراجعة بعض الخطوات' : 'يحتاج إلى تدريب إضافي قبل استخدام النظام الفعلي';
   return `
-  <div class="result-shell"><div class="result-wrap">
+  <div class="result-shell no-print-bg"><div class="result-wrap print-area">
     <div class="card">
       <div class="score-hero">
         <div style="font-size:13px;color:var(--text-faint);font-weight:700;margin-bottom:4px">${esc(state.traineeName)} — التقرير النهائي</div>
@@ -911,26 +928,22 @@ function renderFinalReport(){
         <div class="score-label" style="margin-top:10px;font-weight:700;color:${scoreColor(overall)}">${esc(verdict)}</div>
       </div>
       <div class="card-pad" style="padding-top:0">
-        <div class="checklist">
-          ${MISSIONS.map((m,i)=>{
-            const r = state.missionResults[i];
-            return `<div class="checklist-item ${r.score>=60?'ok':'bad'}"><div class="ic">${r.score}</div><div class="txt"><div class="t">${esc(m.title)}</div><div class="d">النتيجة: ${r.score}%</div></div></div>`;
-          }).join('')}
-        </div>
+        ${MISSIONS.map((m,i)=>{
+          const r = state.missionResults[i];
+          return `<div class="report-mission">
+            <div class="report-mission-head"><span class="t">${esc(m.title)}</span><span class="s" style="color:${scoreColor(r.score)}">${r.score}%</span></div>
+            <div class="checklist">
+              ${r.items.map(it=>`<div class="checklist-item ${it.ok?'ok':'bad'}"><div class="ic">${it.ok?'✓':'✕'}</div><div class="txt"><div class="t">${esc(it.label)}</div>${it.detail?`<div class="d">${esc(it.detail)}</div>`:''}</div></div>`).join('')}
+            </div>
+          </div>`;
+        }).join('')}
       </div>
-      <div class="card-pad" style="padding-top:0">
-        <p style="font-size:13.5px;color:var(--text-muted);margin-bottom:10px">اضغطي الزر لفتح نموذج إرسال النتيجة، والصقي النص الموجود تحته في الحقل المخصص للنتيجة.</p>
-        <textarea readonly style="min-height:110px;margin-bottom:14px" onclick="this.select()">${esc(buildReportText())}</textarea>
-        <a class="btn btn-primary btn-block" href="${GOOGLE_FORM_URL}" target="_blank" rel="noopener">إرسال النتيجة للمنسّق ↗</a>
+      <div class="card-pad report-actions no-print">
+        <p style="font-size:13.5px;color:var(--text-muted);margin-bottom:12px">اضغطي الزر لحفظ هذا التقرير كملف PDF (من نافذة الطباعة اختاري «حفظ كـ PDF» بدل الطابعة)، وابعتي الملف لمديرة/مدير البرنامج.</p>
+        <button class="btn btn-primary btn-block" data-action="print-report">حفظ التقرير كملف PDF 🖨</button>
       </div>
     </div>
   </div></div>`;
-}
-function buildReportText(){
-  const overall = Math.round(state.missionResults.reduce((s,r)=>s+r.score,0)/state.missionResults.length);
-  let t = `تقرير تقييم FC — ${state.traineeName}\nالنتيجة الإجمالية: ${overall}%\n\n`;
-  MISSIONS.forEach((m,i)=>{ t += `${m.title}: ${state.missionResults[i].score}%\n`; });
-  return t;
 }
 
 function scoreReviewForward(m){
@@ -938,8 +951,8 @@ function scoreReviewForward(m){
   const correctTarget = a.targetId===m.expected.targetId;
   const correctAction = a.actionType==='forward';
   const items = [
-    {label:'التصرف في الطلب الصحيح ('+lookupNameSeed(m.expected.targetId)+')', ok: correctTarget, detail: correctTarget?'':`تم التصرف في: ${lookupNameSeed(a.targetId)||'لا شيء'}`},
-    {label:'استخدام «تقديم للمدير» كإجراء نهائي', ok: correctAction, detail: correctAction?'':`الإجراء المستخدم: ${a.actionType==='return'?'ارجاع الطلب':(a.actionType||'لم يُتخذ أي إجراء')}`}
+    {label:'التصرف في الطلب الصحيح ('+lookupNameSeed(m.expected.targetId)+')', ok: correctTarget, detail: correctTarget?'':`تصرّفتِ في طلب «${lookupNameSeed(a.targetId)||'لا شيء'}» بدل الطلب المطلوب. راجعي بيانات الحالة (خصوصًا الرقم القومي) للتأكد من اختيار السجل الصحيح، خصوصًا لو في أكتر من طلب بنفس الاسم.`},
+    {label:'استخدام «تقديم للمدير» كإجراء نهائي', ok: correctAction, detail: correctAction?'':`استخدمتِ إجراء «${a.actionType==='return'?'ارجاع الطلب':(a.actionType||'لا شيء')}»، والإجراء الصحيح المطلوب في بيانات الحالة هو «تقديم للمدير» — الطلب كان مكتملًا وسليمًا ولا يحتاج إرجاعًا.`}
   ];
   const score = Math.round(items.filter(i=>i.ok).length/items.length*100);
   return {score, items};
@@ -950,9 +963,9 @@ function scoreReviewReturn(m){
   const correctAction = a.actionType==='return';
   const correctReason = correctAction && fieldsMatch(a.reason, m.expected.reason);
   const items = [
-    {label:'التصرف في الطلب الصحيح ('+lookupNameSeed(m.expected.targetId)+')', ok: correctTarget, detail: correctTarget?'':`تم التصرف في: ${lookupNameSeed(a.targetId)||'لا شيء'}`},
-    {label:'استخدام «ارجاع الطلب» كإجراء', ok: correctAction, detail: correctAction?'':`الإجراء المستخدم: ${a.actionType==='forward'?'تقديم للمدير':(a.actionType||'لم يُتخذ أي إجراء')}`},
-    {label:'اختيار سبب الإرجاع الصحيح', ok: correctReason, detail: correctReason?'':`السبب المُختار: ${a.reason||'—'}`}
+    {label:'التصرف في الطلب الصحيح ('+lookupNameSeed(m.expected.targetId)+')', ok: correctTarget, detail: correctTarget?'':`تصرّفتِ في طلب «${lookupNameSeed(a.targetId)||'لا شيء'}» بدل الطلب المطلوب. راجعي بيانات الحالة (خصوصًا الرقم القومي) للتأكد من اختيار السجل الصحيح.`},
+    {label:'استخدام «ارجاع الطلب» كإجراء', ok: correctAction, detail: correctAction?'':`استخدمتِ إجراء «${a.actionType==='forward'?'تقديم للمدير':(a.actionType||'لا شيء')}»، لكن الطلب كان ناقصًا/فيه خطأ ويحتاج «ارجاع الطلب» لتعديله قبل تقديمه.`},
+    {label:'اختيار سبب الإرجاع الصحيح', ok: correctReason, detail: correctReason?'':`اخترتِ السبب «${a.reason||'لم يُختر'}»، والسبب الصحيح المذكور في بيانات الحالة هو «${m.expected.reason}».`}
   ];
   const score = Math.round(items.filter(i=>i.ok).length/items.length*100);
   return {score, items};
@@ -962,8 +975,8 @@ function scoreReviewExitApprove(m){
   const correctTarget = a.targetId===m.expected.targetId;
   const correctAction = a.actionType==='approve_exit';
   const items = [
-    {label:'الموافقة على طلب الخروج الصحيح ('+lookupNameSeed(m.expected.targetId)+')', ok: correctTarget, detail: correctTarget?'':`تم التصرف في: ${lookupNameSeed(a.targetId)||'لا شيء'}`},
-    {label:'استخدام «موافقة» كإجراء نهائي', ok: correctAction, detail: correctAction?'':'لم تتم الموافقة على الطلب'}
+    {label:'الموافقة على طلب الخروج الصحيح ('+lookupNameSeed(m.expected.targetId)+')', ok: correctTarget, detail: correctTarget?'':`تصرّفتِ في طلب «${lookupNameSeed(a.targetId)||'لا شيء'}» بدل الطلب المطلوب. تأكدي من الرقم القومي المذكور في بيانات الحالة قبل اختيار السجل.`},
+    {label:'استخدام «موافقة» كإجراء نهائي', ok: correctAction, detail: correctAction?'':'لم تتم الموافقة على طلب الخروج — بيانات الحالة تطلب اعتماده مباشرة بلا إرجاع أو رفض.'}
   ];
   const score = Math.round(items.filter(i=>i.ok).length/items.length*100);
   return {score, items};
@@ -977,10 +990,11 @@ function scoreTeamAdd(m){
   const items = fields.map(([f,label])=>{
     const ok = submitted && fieldsMatch(finalData[f], exp[f]);
     if(ok) correct++;
-    return {label, ok, detail: ok?'':`المتوقع: ${exp[f]}${submitted?` — المُدخل: ${finalData[f]||'فارغ'}`:''}`};
+    const entered = submitted ? (finalData[f]||'(تُركت فارغة)') : '(لم تصل هذه الخانة لأنك لم ترسلي الطلب)';
+    return {label, ok, detail: ok?'':`أدخلتِ «${entered}»، والصحيح المطلوب في بيانات الحالة هو «${exp[f]}».`};
   });
   const accuracyPct = Math.round(correct/fields.length*100);
-  items.push({label:'إرسال الطلب فعليًا', ok:submitted, detail: submitted?'':'لم يتم إرسال طلب إضافة العضو'});
+  items.push({label:'إرسال الطلب فعليًا', ok:submitted, detail: submitted?'':'لم تُرسَل بيانات العضو الجديد — لازم تضغطي زر الإرسال النهائي بعد تعبئة النموذج.'});
   const score = submitted? Math.round(accuracyPct*0.85 + 15) : Math.round(accuracyPct*0.5);
   return {score, items};
 }
@@ -991,10 +1005,10 @@ function scoreTeamExit(m){
   const correctDate = state.flags.teamExitDateUsed===exp.exitDate;
   const submitted = !!state.flags.teamExitSubmitted;
   const items = [
-    {label:'اختيار العضو الصحيح ('+lookupNameSeed(exp.targetId)+')', ok: correctTarget, detail: correctTarget?'':'تم تقديم الطلب لعضو مختلف'},
-    {label:'اختيار سبب الخروج الصحيح ('+exp.reason+')', ok: correctReason, detail: correctReason?'':`السبب المُختار: ${state.flags.teamExitReasonUsed||'لم يُختر'}`},
-    {label:'إدخال تاريخ الخروج الصحيح', ok: correctDate, detail: correctDate?'':`التاريخ المُدخل: ${fmtDate(state.flags.teamExitDateUsed)}`},
-    {label:'إرسال الطلب وتأكيده', ok: submitted, detail: submitted?'':'لم يتم تأكيد إرسال الطلب'}
+    {label:'اختيار العضو الصحيح ('+lookupNameSeed(exp.targetId)+')', ok: correctTarget, detail: correctTarget?'':'قدّمتِ طلب الخروج لعضو مختلف عن المطلوب — راجعي بيانات الحالة وتأكدي من اسم العضو قبل تقديم الطلب.'},
+    {label:'اختيار سبب الخروج الصحيح ('+exp.reason+')', ok: correctReason, detail: correctReason?'':`اخترتِ السبب «${state.flags.teamExitReasonUsed||'لم يُختر'}»، والصحيح المذكور في بيانات الحالة هو «${exp.reason}».`},
+    {label:'إدخال تاريخ الخروج الصحيح', ok: correctDate, detail: correctDate?'':`أدخلتِ التاريخ «${fmtDate(state.flags.teamExitDateUsed)||'لم يُدخل'}»، والتاريخ الصحيح هو ${fmtDate(exp.exitDate)}.`},
+    {label:'إرسال الطلب وتأكيده', ok: submitted, detail: submitted?'':'تعبئة النموذج وحدها لا تكفي — لازم تضغطي زر الإرسال وتؤكدي طلب الخروج حتى يُحتسب.'}
   ];
   const score = Math.round(items.filter(i=>i.ok).length/items.length*100);
   return {score, items};
@@ -1198,6 +1212,7 @@ appEl.addEventListener('click', e=>{
     case 'begin-mission': beginMission(); break;
     case 'next-mission': nextMission(); break;
     case 'go-final-report': state.screen='final-report'; render(); break;
+    case 'print-report': window.print(); break;
     case 'nav':
       state.appScreen = d.screen;
       state.kebabOpenFor=null;
