@@ -350,13 +350,17 @@ function freshSeed(){
   return {
     bigSisters: [
       {id:'bs-heba', name:'هبة الله كمال يوسف عطية', nationalId:'29511150210335', dob:'1995-11-15', phone:'01098765432', email:'hebakamal95@gmail.com', entryDate:'2026-09-01', governorate:'أسيوط', center:'ديروط', village:'الحواتكة', association:ASSOCIATION_NAME, requestType:'entry', status:'new', requestDate:'2026-09-03'},
+      {id:'bs-heba-decoy', name:'هبة الله كمال يوسف عطية', nationalId:'29601200210442', dob:'1996-01-20', phone:'01098761122', email:'heba.k.2@example.com', entryDate:'2026-09-04', governorate:'المنيا', center:'مغاغة', village:'نزلة بلهاسة', association:ASSOCIATION_NAME, requestType:'entry', status:'new', requestDate:'2026-09-05'},
+      {id:'bs-heba-similar', name:'هبة الله سامي فوزي', nationalId:'29411300210663', dob:'1994-11-30', phone:'01098762233', email:'heba.samy@example.com', entryDate:'2026-09-04', governorate:'أسيوط', center:'ديروط', village:'الحواتكة', association:ASSOCIATION_NAME, requestType:'entry', status:'new', requestDate:'2026-09-05'},
       {id:'bs-maram', name:'مرام حسني توفيق شحاته', nationalId:'29408120210221', dob:'1994-08-12', phone:'01234567891', email:'maram.h@example.com', entryDate:'2026-09-03', governorate:'المنيا', center:'مغاغة', village:'نزلة بلهاسة', association:ASSOCIATION_NAME, requestType:'entry', status:'new', requestDate:'2026-09-03'},
       {id:'bs-dalia', name:'داليا عماد فؤاد جرجس', nationalId:'29306100210998', dob:'1993-06-10', phone:'01276543210', email:'dalia.f@example.com', entryDate:'2026-08-20', governorate:'أسيوط', center:'أسيوط', village:'—', association:ASSOCIATION_NAME, requestType:'entry', status:'approved', requestDate:'2026-08-20'},
       {id:'bs-niveen-exit', name:'نيفين رمزي إبراهيم صليب', nationalId:'29403122200187', dob:'1994-03-12', phone:'01122334455', email:'niveen.r@example.com', entryDate:'2025-02-10', governorate:'أسيوط', center:'ديروط', village:'الحواتكة', association:ASSOCIATION_NAME, requestType:'exit', status:'new', requestDate:'2026-09-19', exitReason:'الزواج', exitDate:'2026-09-30'},
+      {id:'bs-niveen-decoy', name:'نيفين رمزي إبراهيم صليب', nationalId:'29509280200214', dob:'1995-09-28', phone:'01122339988', email:'niveen.r2@example.com', entryDate:'2025-05-15', governorate:'المنيا', center:'مغاغة', village:'نزلة بلهاسة', association:ASSOCIATION_NAME, requestType:'exit', status:'new', requestDate:'2026-09-17', exitReason:'استقالة', exitDate:'2026-10-05'},
       {id:'bs-sara-exit', name:'سارة فؤاد لملوم جرجس', nationalId:'29208030200456', dob:'1992-08-03', phone:'01055667788', email:'sara.fouad@example.com', entryDate:'2025-01-20', governorate:'المنيا', center:'مغاغة', village:'نزلة بلهاسة', association:ASSOCIATION_NAME, requestType:'exit', status:'new', requestDate:'2026-09-18', exitReason:'عدم الالتزام بمتطلبات التطوع فى المشروع (الانتظام فى الجلسات، الالتزام بالخطة الشهرية)', exitDate:'2026-10-10'}
     ],
     littleSisters: [
       {id:'ls-dina', name:'دينا مينا لوقا جرجس', nationalId:'31805020200456', dob:'2018-05-02', phone:'01166778899', entryDate:'2025-02-01', governorate:'أسيوط', center:'ديروط', village:'الحمامية', association:ASSOCIATION_NAME, status:'new', requestDate:'2026-09-19'},
+      {id:'ls-dina-decoy', name:'دينا مينا لوقا جرجس', nationalId:'31911100200779', dob:'2019-11-10', phone:'', entryDate:'2026-09-05', governorate:'المنيا', center:'مغاغة', village:'نزلة بلهاسة', association:ASSOCIATION_NAME, status:'new', requestDate:'2026-09-20'},
       {id:'ls-nour', name:'نور محمد سيد إبراهيم', nationalId:'31705030210556', dob:'2017-05-03', phone:'', entryDate:'2026-09-02', governorate:'المنيا', center:'مغاغة', village:'نزلة بلهاسة', association:ASSOCIATION_NAME, status:'new', requestDate:'2026-09-19'},
       {id:'ls-bulk1', name:'مارتينا عادل صموئيل', nationalId:'31602010200111', dob:'2016-02-01', phone:'', entryDate:'2026-09-04', governorate:'أسيوط', center:'ديروط', village:'الحواتكة', association:ASSOCIATION_NAME, status:'new', requestDate:'2026-09-19'},
       {id:'ls-bulk2', name:'كاريس مينا فؤاد', nationalId:'31703020200222', dob:'2017-03-02', phone:'', entryDate:'2026-09-04', governorate:'أسيوط', center:'ديروط', village:'الحواتكة', association:ASSOCIATION_NAME, status:'new', requestDate:'2026-09-19'},
@@ -365,6 +369,7 @@ function freshSeed(){
     ],
     teamMembers: [
       {id:'team-target', name:'نسرين محمود عادل', role:'إداري الجمعية', phone:'01277104444', email:'nesreen.mahmoud@example.com', nationalId:'29003030200444', dob:'1990-03-03', entryDate:'2026-09-04', association:ASSOCIATION_NAME, status:'new', requestDate:'2026-09-19'},
+      {id:'team-target-decoy', name:'نسرين محمود عادل', role:'إداري الجمعية', phone:'01277109999', email:'nesreen.mahmoud2@example.com', nationalId:'29112050200991', dob:'1991-12-05', entryDate:'2026-09-06', association:ASSOCIATION_NAME, status:'new', requestDate:'2026-09-21'},
       {id:'team-decoy', name:'هبة صلاح رمزي', role:'منسق الجمعية', phone:'01277105555', email:'heba.salah@example.com', nationalId:'29104040200555', dob:'1991-04-04', entryDate:'2026-09-05', association:ASSOCIATION_NAME, status:'new', requestDate:'2026-09-20'},
       {id:'team-approved', name:'مريانا فؤاد لبيب', role:'منسق الجمعية', phone:'01277106666', email:'mariana.fouad@example.com', nationalId:'28905050200666', dob:'1989-05-05', entryDate:'2026-09-03', association:ASSOCIATION_NAME, status:'approved', requestDate:'2026-09-03'}
     ]
@@ -376,10 +381,11 @@ const MISSIONS = [
     id:'approve-bs-entry',
     title:'مهمة ١ — الموافقة النهائية على طلب دخول أخت كبرى',
     eyebrow:'الطلبات ← طلبات الأخت الكبرى',
-    story:'وافقت منسّقة الميدان (FC) على طلب «هبة الله كمال يوسف عطية» وحوّلته لمراجعتك النهائية. راجعي البيانات ووافقي على الطلب — احذري وجود طلبات أخرى في القائمة لسن جزءًا من هذه المهمة.',
+    story:'وافقت منسّقة الميدان (FC) على طلب «هبة الله كمال يوسف عطية» وحوّلته لمراجعتك النهائية. راجعي البيانات ووافقي على الطلب — احذري وجود أكتر من طلب بنفس الاسم في القائمة، وتأكدي من الرقم القومي قبل ما تتصرفي.',
     startAppScreen:'requests-big',
     caseFile:[
       ['الأخت الكبرى المطلوب اعتمادها','هبة الله كمال يوسف عطية'],
+      ['الرقم القومي','29511150210335'],
       ['الإجراء المطلوب','قبول الطلب (الموافقة النهائية)']
     ],
     expected:{ targetId:'bs-heba', action:'approve' }
@@ -388,10 +394,11 @@ const MISSIONS = [
     id:'return-ls-entry',
     title:'مهمة ٢ — إرجاع طلب دخول أخت صغرى للتعديل',
     eyebrow:'الطلبات ← طلبات الأخت الصغرى',
-    story:'طلب «دينا مينا لوقا جرجس» وصل لمراجعتك النهائية، لكن صورة بطاقة ولي الأمر غير مرفقة. أرجعي الطلب بالسبب الصحيح من القائمة.',
+    story:'طلب «دينا مينا لوقا جرجس» وصل لمراجعتك النهائية، لكن صورة بطاقة ولي الأمر غير مرفقة. أرجعي الطلب بالسبب الصحيح من القائمة — احذري وجود أكتر من طلب بنفس الاسم في القائمة، وتأكدي من الرقم القومي قبل ما تتصرفي.',
     startAppScreen:'requests-little',
     caseFile:[
       ['الأخت الصغرى المطلوب مراجعتها','دينا مينا لوقا جرجس'],
+      ['الرقم القومي','31805020200456'],
       ['سبب الإرجاع','بطاقة ولي الأمر غير موجودة.']
     ],
     expected:{ targetId:'ls-dina', action:'return', reason:'بطاقة ولي الأمر غير موجودة.' }
@@ -400,10 +407,12 @@ const MISSIONS = [
     id:'approve-bs-exit',
     title:'مهمة ٣ — الموافقة النهائية على طلب خروج أخت كبرى',
     eyebrow:'الطلبات ← طلبات الأخت الكبرى',
-    story:'وافقت FC على طلب خروج «نيفين رمزي إبراهيم صليب» وحوّلته لمراجعتك النهائية. راجعي السبب والتاريخ ووافقي على الطلب — احذري وجود طلب خروج آخر في نفس القائمة.',
+    story:'وافقت FC على طلب خروج «نيفين رمزي إبراهيم صليب» وحوّلته لمراجعتك النهائية. راجعي السبب والتاريخ ووافقي على الطلب — احذري وجود طلب خروج آخر بنفس الاسم بالظبط في نفس القائمة، وتأكدي من الرقم القومي وسبب الخروج قبل ما تتصرفي.',
     startAppScreen:'requests-big',
     caseFile:[
       ['الأخت الكبرى','نيفين رمزي إبراهيم صليب'],
+      ['الرقم القومي','29403122200187'],
+      ['سبب الخروج','الزواج'],
       ['الإجراء المطلوب','قبول طلب الخروج']
     ],
     expected:{ targetId:'bs-niveen-exit', action:'approve_exit' }
@@ -412,10 +421,11 @@ const MISSIONS = [
     id:'reject-team',
     title:'مهمة ٤ — رفض طلب انضمام عضو لفريق العمل',
     eyebrow:'فريق عمل الجمعية',
-    story:'تقدمت «نسرين محمود عادل» للانضمام لفريق عمل الجمعية، لكن تبيّن أنها قريبة لعضو مجلس إدارة الجمعية — ما يمثل تضارب مصالح. ارفضي الطلب بالسبب الصحيح — احذري وجود طلبات أخرى في القائمة.',
+    story:'تقدمت «نسرين محمود عادل» للانضمام لفريق عمل الجمعية، لكن تبيّن أنها قريبة لعضو مجلس إدارة الجمعية — ما يمثل تضارب مصالح. ارفضي الطلب بالسبب الصحيح — احذري وجود طلب تاني بنفس الاسم بالظبط في القائمة، وتأكدي من الرقم القومي قبل ما تختاري الطلب.',
     startAppScreen:'team',
     caseFile:[
       ['العضو المطلوب رفضه','نسرين محمود عادل'],
+      ['الرقم القومي','29003030200444'],
       ['سبب الرفض','تضارب في المصالح إذا تم تعيين المرشح للوظيفة.']
     ],
     expected:{ targetId:'team-target', action:'reject', reason:'تضارب في المصالح إذا تم تعيين المرشح للوظيفة.' }
