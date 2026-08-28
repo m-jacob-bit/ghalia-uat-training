@@ -405,9 +405,9 @@ const LITTLE_ATTACHMENTS = [
 function freshSeed(){
   return {
     bigSisters: [
-      {id:'bs-niveen', name:'نيفين رمزي إبراهيم صليب', nationalId:'29403122200187', dob:'1994-03-12', phone:'01122334455', email:'niveen.r@example.com', entryDate:'2025-02-10', governorate:'أسيوط', center:'ديروط', village:'الحواتكة', uniType:'حكومى', university:'أسيوط', college:'كلية الآداب', department:'تاريخ', year:'رابعة جامعة (4)', participatedBefore:'لا', role:'أخت كبرى', cycle:'2024/2026', status:'approved', attachments:{idFront:true,idBack:true,collegeCard:true,photoConsent:true,guardianConsent:true,childProtection:true}},
-      {id:'bs-sara', name:'سارة فؤاد لملوم جرجس', nationalId:'29208030200456', dob:'1992-08-03', phone:'01055667788', email:'sara.fouad@example.com', entryDate:'2025-01-20', governorate:'المنيا', center:'مغاغة', village:'نزلة بلهاسة', uniType:'حكومى', university:'المنيا', college:'كلية التجارة', department:'لغة عربية', year:'ثالثة جامعة (3)', participatedBefore:'نعم', role:'أخت كبرى', cycle:'2024/2026', status:'approved', attachments:{idFront:true,idBack:true,collegeCard:true,photoConsent:true,guardianConsent:true,childProtection:true}},
-      {id:'bs-mariam', name:'مريم عادل نصيف كامل', nationalId:'29509140200321', dob:'1995-09-14', phone:'01234567890', email:'mariam.adel@example.com', entryDate:'2025-03-05', governorate:'أسيوط', center:'ديروط', village:'بني عديات', uniType:'حكومى', university:'أسيوط', college:'كلية العلوم', department:'جغرافيا', year:'ثانية جامعة (2)', participatedBefore:'لا', role:'أخت كبرى', cycle:'2024/2026', status:'returned', returnNote:'صورة بطاقة الرقم القومي (وجه البطاقة) غير واضحة، برجاء رفع صورة جديدة', attachments:{idFront:false,idBack:true,collegeCard:true,photoConsent:true,guardianConsent:true,childProtection:true}}
+      {id:'bs-niveen', name:'نيفين رمزي إبراهيم صليب', nationalId:'30311052500202', dob:'2003-11-05', phone:'01122334455', email:'niveen.r@example.com', entryDate:'2025-02-10', governorate:'أسيوط', center:'ديروط', village:'الحواتكة', uniType:'حكومى', university:'أسيوط', college:'كلية الآداب', department:'تاريخ', year:'رابعة جامعة (4)', participatedBefore:'لا', role:'أخت كبرى', cycle:'2024/2026', status:'approved', attachments:{idFront:true,idBack:true,collegeCard:true,photoConsent:true,guardianConsent:true,childProtection:true}},
+      {id:'bs-sara', name:'سارة فؤاد لملوم جرجس', nationalId:'30408152400300', dob:'2004-08-15', phone:'01055667788', email:'sara.fouad@example.com', entryDate:'2025-01-20', governorate:'المنيا', center:'مغاغة', village:'نزلة بلهاسة', uniType:'حكومى', university:'المنيا', college:'كلية التجارة', department:'لغة عربية', year:'ثالثة جامعة (3)', participatedBefore:'نعم', role:'أخت كبرى', cycle:'2024/2026', status:'approved', attachments:{idFront:true,idBack:true,collegeCard:true,photoConsent:true,guardianConsent:true,childProtection:true}},
+      {id:'bs-mariam', name:'مريم عادل نصيف كامل', nationalId:'30509102500409', dob:'2005-09-10', phone:'01234567890', email:'mariam.adel@example.com', entryDate:'2025-03-05', governorate:'أسيوط', center:'ديروط', village:'بني عديات', uniType:'حكومى', university:'أسيوط', college:'كلية العلوم', department:'جغرافيا', year:'ثانية جامعة (2)', participatedBefore:'لا', role:'أخت كبرى', cycle:'2024/2026', status:'returned', returnNote:'صورة بطاقة الرقم القومي (وجه البطاقة) غير واضحة، برجاء رفع صورة جديدة', attachments:{idFront:false,idBack:true,collegeCard:true,photoConsent:true,guardianConsent:true,childProtection:true}}
     ],
     littleSisters: [
       {id:'ls-dina', name:'دينا مينا لوقا جرجس', nationalId:'31805020200456', dob:'2018-05-02', phone:'01166778899', entryDate:'2025-02-01', governorate:'أسيوط', center:'ديروط', village:'الحمامية', school:'مدرسة ديروط الإعدادية', grade:'أولى ابتدائي (1)', firstTestScore:'38', participatedBefore:'لا', status:'approved'}
@@ -426,8 +426,8 @@ const MISSIONS = [
     startAppScreen:'girls-big',
     caseFile:[
       ['اسم الأخت رباعي','هبة الله كمال يوسف عطية'],
-      ['الرقم القومي','29511150210335'],
-      ['تاريخ الميلاد','١٥ / ١١ / ١٩٩٥'],
+      ['الرقم القومي','30501202500109'],
+      ['تاريخ الميلاد','٢٠ / ٠١ / ٢٠٠٥'],
       ['رقم التواصل','01098765432'],
       ['البريد الإلكتروني','hebakamal95@gmail.com'],
       ['تاريخ الدخول','٠١ / ٠٩ / ٢٠٢٦'],
@@ -438,7 +438,7 @@ const MISSIONS = [
       ['الدورة','2026/2028']
     ],
     expected:{
-      name:'هبة الله كمال يوسف عطية', nationalId:'29511150210335', dob:'1995-11-15', phone:'01098765432', email:'hebakamal95@gmail.com',
+      name:'هبة الله كمال يوسف عطية', nationalId:'30501202500109', dob:'2005-01-20', phone:'01098765432', email:'hebakamal95@gmail.com',
       entryDate:'2026-09-01', governorate:'أسيوط', center:'ديروط', village:'الحواتكة', uniType:'حكومى', university:'أسيوط',
       college:'كلية الآداب', department:'علم نفس', year:'رابعة جامعة (4)', participatedBefore:'لا', role:'أخت كبرى', cycle:'2026/2028'
     },
