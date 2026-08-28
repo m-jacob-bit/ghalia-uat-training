@@ -303,11 +303,20 @@ tbody tr:hover{background:var(--surface-2)}
 .report-actions{border-top:1px solid var(--border);padding-top:20px}
 
 @media print{
+  :root{
+    --bg:#f7f7fb !important; --surface:#ffffff !important; --surface-2:#f1f1f8 !important;
+    --border:#e3e3ee !important; --text:#1c1b29 !important; --text-muted:#6b6b7f !important; --text-faint:#9a99ad !important;
+    --primary:#4338ca !important; --primary-soft:#eef0fd !important;
+    --success:#16a34a !important; --success-soft:#dcfce7 !important;
+    --warning:#d97706 !important; --warning-soft:#fef3c7 !important;
+    --danger:#dc2626 !important; --danger-soft:#fee2e2 !important;
+    --neutral:#6b7280 !important; --neutral-soft:#e5e7eb !important;
+  }
   body *{visibility:hidden}
   .print-area, .print-area *{visibility:visible}
   .print-area{position:absolute;inset:0 auto auto 0;width:100%;margin:0;padding:0;max-width:none}
   .no-print{display:none !important}
-  .card{box-shadow:none;border:none}
+  .card{box-shadow:none;border:1px solid #e3e3ee}
   body{background:#fff;color:#000}
   .checklist-item{break-inside:avoid;border-color:#ccc}
   .report-mission{break-inside:avoid}
