@@ -286,8 +286,14 @@ tbody tr:hover{background:var(--surface-2)}
 .checklist-item .ic{width:22px;height:22px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;margin-top:1px}
 .checklist-item.ok .ic{background:var(--success)}
 .checklist-item.bad .ic{background:var(--danger)}
+.checklist-item.critical{border-color:var(--danger);background:var(--danger-soft)}
+.checklist-item.critical .ic{background:var(--danger)}
 .checklist-item .txt .t{font-weight:700;font-size:13.8px}
 .checklist-item .txt .d{font-size:12.8px;color:var(--text-muted);margin-top:2px}
+.critical-tag{display:inline-block;font-family:'Cairo',sans-serif;font-size:10.5px;font-weight:800;color:#fff;background:var(--danger);padding:2px 8px;border-radius:999px;margin-inline-start:6px;vertical-align:middle}
+.readiness-badge{display:inline-flex;align-items:center;gap:6px;font-family:'Cairo',sans-serif;font-weight:800;font-size:13.5px;padding:8px 16px;border-radius:999px}
+.readiness-badge.ready{background:var(--success-soft);color:var(--success)}
+.readiness-badge.not-ready{background:var(--danger-soft);color:var(--danger)}
 
 .report-mission{margin-bottom:26px;padding-bottom:22px;border-bottom:1px solid var(--border)}
 .report-mission:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
@@ -472,7 +478,7 @@ const MISSIONS = [
     id:'link',
     title:'مهمة ٣ — ربط الأخت الكبرى بالأخت الصغرى',
     eyebrow:'بيانات الربط',
-    story:'بعد اعتماد الطلبَين، عليكِ ربط «هبة الله» (الأخت الكبرى) بـ«ياسمين» (الأخت الصغرى) بما أنهما من نفس القرية — احذري وجود أسماء أخرى في القائمة لسن جزءًا من هذه المهمة.',
+    story:'راجعت منسّقة الميدان (FC) طلبَي «هبة الله» و«ياسمين» ووافقت عليهما مديرة المنطقة (APM) بين المهمتين — الطلبان الآن معتمدان بالكامل. عليكِ ربط «هبة الله» (الأخت الكبرى) بـ«ياسمين» (الأخت الصغرى) بما أنهما من نفس القرية — احذري وجود أسماء أخرى في القائمة لسن جزءًا من هذه المهمة، ولاحظي إن قائمة الاختيار بتعرض السجلات المعتمدة فقط.',
     startAppScreen:'link-list',
     caseFile:[
       ['الأخت الكبرى المطلوب ربطها','هبة الله كمال يوسف عطية'],
@@ -1147,8 +1153,8 @@ function renderLinkList(){
     ${!links.length?`<div class="empty-state"><div class="ic">🔗</div>لم يتم إضافة بيانات ربط بعد</div>`:''}
   </div>`;
 }
-function eligibleBig(){ return state.data.bigSisters; }
-function eligibleLittle(){ return state.data.littleSisters; }
+function eligibleBig(){ return state.data.bigSisters.filter(b=>b.status==='approved'); }
+function eligibleLittle(){ return state.data.littleSisters.filter(l=>l.status==='approved'); }
 function renderLinkForm(){
   const lp = state.linkPicker;
   const bigList = eligibleBig().filter(b=>!lp.pairs.some(p=>p.bigId===b.id) && b.name.includes(lp.bigQuery));
@@ -1232,7 +1238,7 @@ function scoreAddMission(kind, mission){
   const completion = submitted? 100 : (state.flags['draft_'+mission.id]? 50 : 0);
   const overall = submitted ? Math.round(accuracyPct*0.8 + completion*0.2) : Math.round(accuracyPct*0.5);
   items.push({label:'إرسال الطلب فعليًا (وليس حفظه كمسودة فقط)', ok:submitted, detail: submitted? '' : (state.flags['draft_'+mission.id]?'حفظتِ البيانات كمسودة وتوقفتِ هناك — لازم تضغطي زر الإرسال النهائي عشان يُعتبر الطلب مكتملًا ويُحتسب لكِ.':'لم تبدئي إرسال الطلب أصلًا — افتحي شاشة التسجيل واملئي البيانات ثم أرسليها.')});
-  return {score: overall, items};
+  return {score: overall, items, critical: deriveCritical(items)};
 }
 function scoreLinkMission(mission){
   const exp = mission.expected;
@@ -1240,26 +1246,28 @@ function scoreLinkMission(mission){
   const correctPair = links.find(l=>l.bigId===exp.bigId && l.littleId===exp.littleId);
   const extraWrong = links.filter(l=>!(l.bigId===exp.bigId && l.littleId===exp.littleId));
   const items = [
-    {label:'ربط الأخت الكبرى الصحيحة بالأخت الصغرى الصحيحة', ok: !!correctPair, detail: correctPair? `تم ربط "${exp.bigName}" بـ"${exp.littleName}" بنجاح.` : `المطلوب: ربط "${exp.bigName}" بـ"${exp.littleName}". لم يتم إنشاء هذا الربط بالتحديد — تأكدي من اختيار نفس السجلين اللي سجّلتيهم في المهمتين السابقتين.`},
-    {label:'عدم إنشاء روابط إضافية غير مطلوبة', ok: extraWrong.length===0, detail: extraWrong.length? `تم إنشاء ${extraWrong.length} رابط إضافي (${extraWrong.map(l=>`"${l.bigName}" × "${l.littleName}"`).join('، ')}) غير مطلوب في هذه المهمة — الرابط المطلوب واحد بس.` : ''},
+    {label:'ربط الأخت الكبرى الصحيحة بالأخت الصغرى الصحيحة', ok: !!correctPair, critical:true, detail: correctPair? `تم ربط "${exp.bigName}" بـ"${exp.littleName}" بنجاح.` : `المطلوب: ربط "${exp.bigName}" بـ"${exp.littleName}". لم يتم إنشاء هذا الربط بالتحديد — تأكدي من اختيار نفس السجلين اللي سجّلتيهم في المهمتين السابقتين.`},
+    {label:'عدم إنشاء روابط إضافية غير مطلوبة', ok: extraWrong.length===0, critical:true, detail: extraWrong.length? `تم إنشاء ${extraWrong.length} رابط إضافي (${extraWrong.map(l=>`"${l.bigName}" × "${l.littleName}"`).join('، ')}) غير مطلوب في هذه المهمة — الرابط المطلوب واحد بس.` : ''},
+    {label:'عدم محاولة ربط سجل غير معتمد', ok: !state.flags.linkedNonApprovedAttempt, critical:true, detail: state.flags.linkedNonApprovedAttempt? 'تمت محاولة ربط سجل لم تكن حالته «معتمد» بعد — الروابط يجب أن تتم فقط بين سجلات معتمدة.' : ''},
     {label:'تأكيد الربط (تأكيد الربط ✈)', ok: !!state.flags.linkConfirmed, detail: state.flags.linkConfirmed? '' : 'تم إنشاء الرابط لكن لم يتم الضغط على «تأكيد الربط» — الربط لسه مش نهائي.'}
   ];
   let score = 0;
-  if(correctPair) score += 55;
-  if(extraWrong.length===0) score += 20;
+  if(correctPair) score += 45;
+  if(extraWrong.length===0) score += 15;
+  if(!state.flags.linkedNonApprovedAttempt) score += 15;
   if(state.flags.linkConfirmed) score += 25;
-  return {score, items};
+  return {score, items, critical: deriveCritical(items)};
 }
 function scoreCompleteMission(mission){
   const rec = state.data.bigSisters.find(b=>b.id===mission.expected.targetId);
   const items = [
-    {label:'فتح الطلب الصحيح (مريم عادل نصيف كامل — معاد للتعديل)', ok: !!state.flags.completeOpenedCorrect, detail: state.flags.completeOpenedCorrect? '' : 'لم يتم فتح الطلب الصحيح — في قائمة الطلبات، ابحثي عن «مريم عادل نصيف كامل» بحالة «معاد للتعديل» وافتحيه، مش أي طلب تاني.'},
+    {label:'فتح الطلب الصحيح (مريم عادل نصيف كامل — معاد للتعديل)', ok: !!state.flags.completeOpenedCorrect, critical:true, detail: state.flags.completeOpenedCorrect? '' : 'لم يتم فتح الطلب الصحيح — في قائمة الطلبات، ابحثي عن «مريم عادل نصيف كامل» بحالة «معاد للتعديل» وافتحيه، مش أي طلب تاني.'},
     {label:'استخدام إجراء «استكمال الطلب» وليس «عرض التفاصيل» فقط', ok: !!state.flags.completeUsedRightMenu, detail: state.flags.completeUsedRightMenu? '' : 'مجرد عرض تفاصيل الطلب لا يكفي لتعديله — لازم تختاري تحديدًا خيار «استكمال الطلب» من قائمة الإجراءات.'},
     {label:'استبدال صورة بطاقة الرقم القومي الناقصة', ok: !!(rec && rec.attachments && rec.attachments.idFront), detail: (rec && rec.attachments && rec.attachments.idFront)? '' : 'الطلب أُعيد للتعديل بسبب نقص صورة بطاقة الرقم القومي — كان لازم ترفعي الصورة الناقصة قبل إعادة الإرسال.'},
     {label:'إعادة إرسال الطلب', ok: !!state.flags.completeSubmitted, detail: state.flags.completeSubmitted? '' : 'بعد تعديل الطلب، لازم تضغطي زر إعادة الإرسال — التعديل وحده من غير إرسال لا يُحدّث حالة الطلب.'}
   ];
   const score = Math.round(items.filter(i=>i.ok).length / items.length * 100);
-  return {score, items};
+  return {score, items, critical: deriveCritical(items)};
 }
 function scoreExitMission(mission){
   const exp = mission.expected;
@@ -1269,13 +1277,13 @@ function scoreExitMission(mission){
   const correctDate = state.flags.exitDateUsed===exp.exitDate;
   const submitted = !!state.flags.exitSubmitted;
   const items = [
-    {label:'اختيار الأخت الكبرى الصحيحة (نيفين رمزي إبراهيم صليب)', ok: correctTarget, detail: correctTarget? '' : 'تم تقديم طلب الخروج لسجل مختلف عن المطلوب — تأكدي من الرقم القومي المذكور في بيانات الحالة قبل اختيار السجل، خصوصًا لو في أكتر من سجل بنفس الاسم.'},
+    {label:'اختيار الأخت الكبرى الصحيحة (نيفين رمزي إبراهيم صليب)', ok: correctTarget, critical:true, detail: correctTarget? '' : 'تم تقديم طلب الخروج لسجل مختلف عن المطلوب — تأكدي من الرقم القومي المذكور في بيانات الحالة قبل اختيار السجل، خصوصًا لو في أكتر من سجل بنفس الاسم.'},
     {label:'اختيار سبب الخروج الصحيح (الزواج)', ok: correctReason, detail: correctReason? '' : `اخترتِ السبب «${state.flags.exitReasonUsed||'لم يُختر أي سبب'}»، والصحيح المطلوب في بيانات الحالة هو «الزواج».`},
     {label:'إدخال تاريخ الخروج الصحيح (30/09/2026)', ok: correctDate, detail: correctDate? '' : `أدخلتِ التاريخ «${fmtDate(state.flags.exitDateUsed)||'لم يُدخل'}»، والتاريخ الصحيح المذكور في بيانات الحالة هو 30/09/2026.`},
     {label:'إرسال الطلب وتأكيده', ok: submitted, detail: submitted? '' : 'تعبئة النموذج وحدها لا تكفي — لازم تضغطي زر الإرسال وتؤكدي طلب الخروج حتى يُحتسب.'}
   ];
   const score = Math.round(items.filter(i=>i.ok).length / items.length * 100);
-  return {score, items};
+  return {score, items, critical: deriveCritical(items)};
 }
 function computeMissionScore(idx){
   const m = MISSIONS[idx];
@@ -1287,6 +1295,7 @@ function computeMissionScore(idx){
 }
 
 /* ---------- mission result / final report ---------- */
+function deriveCritical(items){ return items.some(i=>i.critical && !i.ok); }
 function scoreColor(score){
   if(score>=85) return 'var(--success)';
   if(score>=60) return 'var(--warning)';
@@ -1302,6 +1311,14 @@ function ringSvg(score, size){
     <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="var(--surface-2)" stroke-width="9"/>
     <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${color}" stroke-width="9" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${off}" transform="rotate(-90 ${size/2} ${size/2})"/>
   </svg>`;
+}
+function checklistItemHtml(it){
+  const cls = it.ok? 'ok' : (it.critical? 'critical':'bad');
+  const icon = it.ok? '✓' : (it.critical? '⚠':'✕');
+  return `<div class="checklist-item ${cls}"><div class="ic">${icon}</div><div class="txt"><div class="t">${esc(it.label)}${(!it.ok && it.critical)?' <span class="critical-tag">خطأ حرج</span>':''}</div>${it.detail?`<div class="d">${esc(it.detail)}</div>`:''}</div></div>`;
+}
+function readinessBadgeHtml(ready, anyCritical){
+  return `<div class="readiness-badge ${ready?'ready':'not-ready'}">${ready?'✅ جاهزة للعمل على النظام الفعلي':(anyCritical?'⛔ غير جاهزة — يوجد خطأ حرج':'⛔ غير جاهزة بعد')}</div>`;
 }
 function renderMissionResult(){
   const idx = state.missionIdx;
@@ -1321,10 +1338,11 @@ function renderMissionResult(){
           </div>
         </div>
         <div class="score-label">نتيجة هذه المهمة</div>
+        ${res.critical?`<div class="readiness-badge not-ready" style="margin-top:10px">⚠ هذه المهمة فيها خطأ حرج</div>`:''}
       </div>
       <div class="card-pad" style="padding-top:0">
         <div class="checklist">
-          ${res.items.map(it=>`<div class="checklist-item ${it.ok?'ok':'bad'}"><div class="ic">${it.ok?'✓':'✕'}</div><div class="txt"><div class="t">${esc(it.label)}</div>${it.detail?`<div class="d">${esc(it.detail)}</div>`:''}</div></div>`).join('')}
+          ${res.items.map(checklistItemHtml).join('')}
         </div>
       </div>
       <div class="story-foot">
@@ -1335,7 +1353,9 @@ function renderMissionResult(){
 }
 function renderFinalReport(){
   const overall = Math.round(state.missionResults.reduce((s,r)=>s+r.score,0)/state.missionResults.length);
-  const verdict = overall>=85? 'أداء ممتاز — جاهزة للعمل على النظام الفعلي' : overall>=60? 'أداء جيد — يُنصح بمراجعة بعض الخطوات' : 'يحتاج إلى تدريب إضافي قبل استخدام النظام الفعلي';
+  const anyCritical = state.missionResults.some(r=>r.critical);
+  const ready = overall>=85 && !anyCritical;
+  const verdict = ready? 'أداء ممتاز — جاهزة للعمل على النظام الفعلي' : anyCritical? 'غير جاهزة — يوجد خطأ حرج واحد على الأقل، بغض النظر عن النسبة الإجمالية' : (overall>=60? 'أداء جيد — يُنصح بمراجعة بعض الخطوات' : 'يحتاج إلى تدريب إضافي قبل استخدام النظام الفعلي');
   return `
   <div class="result-shell no-print-bg"><div class="result-wrap print-area">
     <div class="card">
@@ -1347,15 +1367,16 @@ function renderFinalReport(){
             <div class="score-num" style="font-size:34px;color:${scoreColor(overall)}">${overall}%</div>
           </div>
         </div>
+        ${readinessBadgeHtml(ready, anyCritical)}
         <div class="score-label" style="margin-top:10px;font-weight:700;color:${scoreColor(overall)}">${esc(verdict)}</div>
       </div>
       <div class="card-pad" style="padding-top:0">
         ${MISSIONS.map((m,i)=>{
           const r = state.missionResults[i];
           return `<div class="report-mission">
-            <div class="report-mission-head"><span class="t">${esc(m.title)}</span><span class="s" style="color:${scoreColor(r.score)}">${r.score}%</span></div>
+            <div class="report-mission-head"><span class="t">${esc(m.title)}${r.critical?' <span class="critical-tag">خطأ حرج</span>':''}</span><span class="s" style="color:${scoreColor(r.score)}">${r.score}%</span></div>
             <div class="checklist">
-              ${r.items.map(it=>`<div class="checklist-item ${it.ok?'ok':'bad'}"><div class="ic">${it.ok?'✓':'✕'}</div><div class="txt"><div class="t">${esc(it.label)}</div>${it.detail?`<div class="d">${esc(it.detail)}</div>`:''}</div></div>`).join('')}
+              ${r.items.map(checklistItemHtml).join('')}
             </div>
           </div>`;
         }).join('')}
@@ -1379,10 +1400,24 @@ function startAssessment(){
 }
 function beginMission(){
   const m = MISSIONS[state.missionIdx];
+  if(m.id==='link') ensureCanonicalLinkRecords();
   state.screen='app';
   state.appScreen=m.startAppScreen;
   state.drawer=null;
   render();
+}
+function ensureCanonicalLinkRecords(){
+  const hebaExp = MISSIONS.find(x=>x.id==='add-big').expected;
+  const bigAttachments = {idFront:true,idBack:true,collegeCard:true,photoConsent:true,guardianConsent:true,childProtection:true};
+  let heba = state.data.bigSisters.find(b=>b.id==='bs-heba');
+  if(heba){ Object.assign(heba, hebaExp); heba.status='approved'; heba.attachments=bigAttachments; delete heba.returnNote; }
+  else { state.data.bigSisters.push(Object.assign({id:'bs-heba', status:'approved', attachments:bigAttachments}, hebaExp)); }
+
+  const yasminExp = MISSIONS.find(x=>x.id==='add-little').expected;
+  const littleAttachments = {guardianIdFront:true,guardianIdBack:true,birthCert:true,guardianConsent:true,photoConsent:true};
+  let yasmin = state.data.littleSisters.find(l=>l.id==='ls-yasmin');
+  if(yasmin){ Object.assign(yasmin, yasminExp); yasmin.status='approved'; yasmin.attachments=littleAttachments; }
+  else { state.data.littleSisters.push(Object.assign({id:'ls-yasmin', status:'approved', attachments:littleAttachments}, yasminExp)); }
 }
 function finishCurrentMission(){
   const res = computeMissionScore(state.missionIdx);
@@ -1572,6 +1607,13 @@ function doLink(){
   const big = state.data.bigSisters.find(b=>b.id===lp.bigId);
   const little = state.data.littleSisters.find(l=>l.id===lp.littleId);
   if(!big||!little) return;
+  if(big.status!=='approved' || little.status!=='approved'){
+    state.flags.linkValidationMsg = 'لا يمكن ربط سجل لم تتم الموافقة عليه بعد — تأكدي من أن حالة كل من الأخت الكبرى والأخت الصغرى «معتمد» قبل الربط.';
+    state.flags.linkedNonApprovedAttempt = true;
+    render();
+    return;
+  }
+  state.flags.linkValidationMsg=null;
   lp.pairs.push({bigId:big.id, bigName:big.name, littleId:little.id, littleName:little.name});
   lp.bigId=null; lp.littleId=null; lp.bigQuery=''; lp.littleQuery='';
   toast(`تم ربط الأخت الكبرى "${big.name}" بالأخت الصغرى "${little.name}"`);
@@ -1581,6 +1623,17 @@ function confirmLinkAttempt(){
   const lp = state.linkPicker;
   if(lp.pairs.length < 1){
     state.flags.linkValidationMsg = 'يجب إنشاء رابط واحد على الأقل قبل تأكيد الربط.';
+    render();
+    return;
+  }
+  const invalidPair = lp.pairs.find(p=>{
+    const big = state.data.bigSisters.find(b=>b.id===p.bigId);
+    const little = state.data.littleSisters.find(l=>l.id===p.littleId);
+    return !big || !little || big.status!=='approved' || little.status!=='approved';
+  });
+  if(invalidPair){
+    state.flags.linkValidationMsg = 'أحد الروابط يشير لسجل لم تعد حالته «معتمد» — احذفي هذا الرابط قبل تأكيد الربط.';
+    state.flags.linkedNonApprovedAttempt = true;
     render();
     return;
   }
