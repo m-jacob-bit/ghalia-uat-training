@@ -1233,7 +1233,9 @@ function scoreAddMission(kind, mission){
     const ok = submitted && fieldsMatch(finalData[f], exp[f]);
     if(ok) correct++;
     const entered = submitted ? (finalData[f]||'(تُركت فارغة)') : '(لم تصل هذه الخانة لأنك لم ترسلي الطلب)';
-    return {label, ok, detail: ok? '' : `أدخلتِ «${entered}»، والصحيح المطلوب في بيانات الحالة هو «${exp[f]}». راجعي بيانات الحالة قبل تعبئة هذه الخانة.`};
+    const item = {label, ok, detail: ok? '' : `أدخلتِ «${entered}»، والصحيح المطلوب في بيانات الحالة هو «${exp[f]}». راجعي بيانات الحالة قبل تعبئة هذه الخانة.`};
+    if(f==='nationalId') item.critical = true;
+    return item;
   });
   const accuracyPct = Math.round((correct/fieldChecks.length)*100);
   const completion = submitted? 100 : (state.flags['draft_'+mission.id]? 50 : 0);
