@@ -239,8 +239,14 @@ tbody tr:hover{background:var(--surface-2)}
 .checklist-item .ic{width:22px;height:22px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;margin-top:1px}
 .checklist-item.ok .ic{background:var(--success)}
 .checklist-item.bad .ic{background:var(--danger)}
+.checklist-item.critical{border-color:var(--danger);background:var(--danger-soft)}
+.checklist-item.critical .ic{background:var(--danger)}
 .checklist-item .txt .t{font-weight:700;font-size:13.8px}
 .checklist-item .txt .d{font-size:12.8px;color:var(--text-muted);margin-top:2px}
+.critical-tag{display:inline-block;font-family:'Cairo',sans-serif;font-size:10.5px;font-weight:800;color:#fff;background:var(--danger);padding:2px 8px;border-radius:999px;margin-inline-start:6px;vertical-align:middle}
+.readiness-badge{display:inline-flex;align-items:center;gap:6px;font-family:'Cairo',sans-serif;font-weight:800;font-size:13.5px;padding:8px 16px;border-radius:999px}
+.readiness-badge.ready{background:var(--success-soft);color:var(--success)}
+.readiness-badge.not-ready{background:var(--danger-soft);color:var(--danger)}
 
 .report-mission{margin-bottom:26px;padding-bottom:22px;border-bottom:1px solid var(--border)}
 .report-mission:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
@@ -353,9 +359,9 @@ function freshSeed(){
       {id:'bs-sara-exit', name:'سارة فؤاد لملوم جرجس', nationalId:'30408152400300', dob:'2004-08-15', phone:'01055667788', email:'sara.fouad@example.com', entryDate:'2025-01-20', governorate:'المنيا', center:'مغاغة', village:'نزلة بلهاسة', association:ASSOCIATION_NAME, requestType:'exit', status:'new', requestDate:'2026-09-18', exitReason:'عدم الالتزام بمتطلبات التطوع فى المشروع (الانتظام فى الجلسات، الالتزام بالخطة الشهرية)', exitDate:'2026-10-10'}
     ],
     littleSisters: [
-      {id:'ls-yasmin', name:'ياسمين علاء الدين محمود', nationalId:'31606080210789', dob:'2016-06-08', phone:'01212345678', entryDate:'2026-09-01', governorate:'أسيوط', center:'ديروط', village:'الحواتكة', association:ASSOCIATION_NAME, status:'new', requestDate:'2026-09-02'},
-      {id:'ls-yasmin-decoy', name:'ياسمين علاء الدين محمود', nationalId:'31709120210335', dob:'2017-09-12', phone:'', entryDate:'2026-09-03', governorate:'المنيا', center:'مغاغة', village:'نزلة بلهاسة', association:ASSOCIATION_NAME, status:'new', requestDate:'2026-09-03'},
-      {id:'ls-yasmin-similar', name:'ياسمين حسام الدين فايز', nationalId:'31803050210221', dob:'2018-03-05', phone:'', entryDate:'2026-09-03', governorate:'أسيوط', center:'ديروط', village:'الحواتكة', association:ASSOCIATION_NAME, status:'new', requestDate:'2026-09-03'},
+      {id:'ls-marina', name:'مارينا عماد لبيب', nationalId:'31707222401009', dob:'2017-07-22', phone:'', entryDate:'2026-09-01', governorate:'المنيا', center:'مغاغة', village:'نزلة بلهاسة', association:ASSOCIATION_NAME, status:'new', requestDate:'2026-09-02'},
+      {id:'ls-marina-decoy', name:'مارينا عماد لبيب', nationalId:'31610052501105', dob:'2016-10-05', phone:'', entryDate:'2026-09-03', governorate:'أسيوط', center:'ديروط', village:'الحواتكة', association:ASSOCIATION_NAME, status:'new', requestDate:'2026-09-03'},
+      {id:'ls-marina-similar', name:'مارينا سامي غبريال', nationalId:'31801302401205', dob:'2018-01-30', phone:'', entryDate:'2026-09-03', governorate:'المنيا', center:'مغاغة', village:'نزلة بلهاسة', association:ASSOCIATION_NAME, status:'new', requestDate:'2026-09-03'},
       {id:'ls-nour', name:'نور محمد سيد إبراهيم', nationalId:'31705030210556', dob:'2017-05-03', phone:'', entryDate:'2026-09-02', governorate:'المنيا', center:'مغاغة', village:'نزلة بلهاسة', association:ASSOCIATION_NAME, status:'new', requestDate:'2026-09-02'},
       {id:'ls-dina', name:'دينا مينا لوقا جرجس', nationalId:'31805020200456', dob:'2018-05-02', phone:'01166778899', entryDate:'2025-02-01', governorate:'أسيوط', center:'ديروط', village:'الحمامية', association:ASSOCIATION_NAME, status:'pending_apm', requestDate:'2025-02-01'}
     ],
@@ -387,14 +393,14 @@ const MISSIONS = [
     id:'return-ls-entry',
     title:'مهمة ٢ — إرجاع طلب دخول أخت صغرى للتعديل',
     eyebrow:'الطلبات ← طلبات الأخت الصغرى',
-    story:'طلب تسجيل «ياسمين علاء الدين محمود» ناقص — شهادة الميلاد غير مرفقة. أرجعي الطلب للجمعية بالسبب الصحيح من القائمة — احذري وجود أكتر من طلب بنفس الاسم في القائمة، وتأكدي من الرقم القومي قبل ما تتصرفي.',
+    story:'طلب تسجيل «مارينا عماد لبيب» ناقص — شهادة الميلاد غير مرفقة. أرجعي الطلب للجمعية بالسبب الصحيح من القائمة — احذري وجود أكتر من طلب بنفس الاسم في القائمة، وتأكدي من الرقم القومي قبل ما تتصرفي.',
     startAppScreen:'requests-little',
     caseFile:[
-      ['الأخت الصغرى المطلوب مراجعتها','ياسمين علاء الدين محمود'],
-      ['الرقم القومي','31606080210789'],
+      ['الأخت الصغرى المطلوب مراجعتها','مارينا عماد لبيب'],
+      ['الرقم القومي','31707222401009'],
       ['سبب الإرجاع','شهادة الميلاد غير موجودة.']
     ],
-    expected:{ targetId:'ls-yasmin', action:'return', reason:'شهادة الميلاد غير موجودة.' }
+    expected:{ targetId:'ls-marina', action:'return', reason:'شهادة الميلاد غير موجودة.' }
   },
   {
     id:'approve-bs-exit',
@@ -754,7 +760,7 @@ function renderReviewDrawer(){
   } else if(state.reviewReturnMode){
     footer = `<div><button class="btn btn-outline" data-action="review-cancel-return">رجوع</button></div><button class="btn btn-primary" data-action="review-submit-return" ${state.reviewForm.reason?'':'disabled'}>ارجاع</button>`;
   } else {
-    footer = `<div><button class="btn btn-danger" data-action="review-show-return">ارجاع الطلب</button></div><button class="btn btn-primary" data-action="review-forward">تقديم للمدير</button>`;
+    footer = `<div><button class="btn btn-danger" data-action="review-show-return">ارجاع الطلب</button></div><button class="btn btn-primary" data-action="review-forward">تقديم لمديرة المنطقة</button>`;
   }
   return `
   <div class="drawer-overlay" data-action="noop">
@@ -915,6 +921,15 @@ function renderConfirmModal(title, body, name, confirmAction){
   </div></div>`;
 }
 
+function deriveCritical(items){ return items.some(i=>i.critical && !i.ok); }
+function checklistItemHtml(it){
+  const cls = it.ok? 'ok' : (it.critical? 'critical':'bad');
+  const icon = it.ok? '✓' : (it.critical? '⚠':'✕');
+  return `<div class="checklist-item ${cls}"><div class="ic">${icon}</div><div class="txt"><div class="t">${esc(it.label)}${(!it.ok && it.critical)?' <span class="critical-tag">خطأ حرج</span>':''}</div>${it.detail?`<div class="d">${esc(it.detail)}</div>`:''}</div></div>`;
+}
+function readinessBadgeHtml(ready, anyCritical){
+  return `<div class="readiness-badge ${ready?'ready':'not-ready'}">${ready?'✅ جاهزة للعمل على النظام الفعلي':(anyCritical?'⛔ غير جاهزة — يوجد خطأ حرج':'⛔ غير جاهزة بعد')}</div>`;
+}
 function scoreColor(score){
   if(score>=85) return 'var(--success)';
   if(score>=60) return 'var(--warning)';
@@ -949,10 +964,11 @@ function renderMissionResult(){
           </div>
         </div>
         <div class="score-label">نتيجة هذه المهمة</div>
+        ${res.critical?`<div class="readiness-badge not-ready" style="margin-top:10px">⚠ هذه المهمة فيها خطأ حرج</div>`:''}
       </div>
       <div class="card-pad" style="padding-top:0">
         <div class="checklist">
-          ${res.items.map(it=>`<div class="checklist-item ${it.ok?'ok':'bad'}"><div class="ic">${it.ok?'✓':'✕'}</div><div class="txt"><div class="t">${esc(it.label)}</div>${it.detail?`<div class="d">${esc(it.detail)}</div>`:''}</div></div>`).join('')}
+          ${res.items.map(checklistItemHtml).join('')}
         </div>
       </div>
       <div class="story-foot">
@@ -963,7 +979,9 @@ function renderMissionResult(){
 }
 function renderFinalReport(){
   const overall = Math.round(state.missionResults.reduce((s,r)=>s+r.score,0)/state.missionResults.length);
-  const verdict = overall>=85? 'أداء ممتاز — جاهزة للعمل على النظام الفعلي' : overall>=60? 'أداء جيد — يُنصح بمراجعة بعض الخطوات' : 'يحتاج إلى تدريب إضافي قبل استخدام النظام الفعلي';
+  const anyCritical = state.missionResults.some(r=>r.critical);
+  const ready = overall>=85 && !anyCritical;
+  const verdict = ready? 'أداء ممتاز — جاهزة للعمل على النظام الفعلي' : anyCritical? 'غير جاهزة — يوجد خطأ حرج واحد على الأقل، بغض النظر عن النسبة الإجمالية' : (overall>=60? 'أداء جيد — يُنصح بمراجعة بعض الخطوات' : 'يحتاج إلى تدريب إضافي قبل استخدام النظام الفعلي');
   return `
   <div class="result-shell no-print-bg"><div class="result-wrap print-area">
     <div class="card">
@@ -975,15 +993,16 @@ function renderFinalReport(){
             <div class="score-num" style="font-size:34px;color:${scoreColor(overall)}">${overall}%</div>
           </div>
         </div>
+        ${readinessBadgeHtml(ready, anyCritical)}
         <div class="score-label" style="margin-top:10px;font-weight:700;color:${scoreColor(overall)}">${esc(verdict)}</div>
       </div>
       <div class="card-pad" style="padding-top:0">
         ${MISSIONS.map((m,i)=>{
           const r = state.missionResults[i];
           return `<div class="report-mission">
-            <div class="report-mission-head"><span class="t">${esc(m.title)}</span><span class="s" style="color:${scoreColor(r.score)}">${r.score}%</span></div>
+            <div class="report-mission-head"><span class="t">${esc(m.title)}${r.critical?' <span class="critical-tag">خطأ حرج</span>':''}</span><span class="s" style="color:${scoreColor(r.score)}">${r.score}%</span></div>
             <div class="checklist">
-              ${r.items.map(it=>`<div class="checklist-item ${it.ok?'ok':'bad'}"><div class="ic">${it.ok?'✓':'✕'}</div><div class="txt"><div class="t">${esc(it.label)}</div>${it.detail?`<div class="d">${esc(it.detail)}</div>`:''}</div></div>`).join('')}
+              ${r.items.map(checklistItemHtml).join('')}
             </div>
           </div>`;
         }).join('')}
@@ -1006,11 +1025,11 @@ function scoreReviewForward(m){
   const correctAction = a.actionType==='forward';
   const items = [
     viewedDetailsItem(m.expected.targetId),
-    {label:'التصرف في الطلب الصحيح ('+lookupNameSeed(m.expected.targetId)+')', ok: correctTarget, detail: correctTarget?'':`تصرّفتِ في طلب «${lookupNameSeed(a.targetId)||'لا شيء'}» بدل الطلب المطلوب. راجعي بيانات الحالة (خصوصًا الرقم القومي) للتأكد من اختيار السجل الصحيح، خصوصًا لو في أكتر من طلب بنفس الاسم.`},
-    {label:'استخدام «تقديم للمدير» كإجراء نهائي', ok: correctAction, detail: correctAction?'':`استخدمتِ إجراء «${a.actionType==='return'?'ارجاع الطلب':(a.actionType||'لا شيء')}»، والإجراء الصحيح المطلوب في بيانات الحالة هو «تقديم للمدير» — الطلب كان مكتملًا وسليمًا ولا يحتاج إرجاعًا.`}
+    {label:'التصرف في الطلب الصحيح ('+lookupNameSeed(m.expected.targetId)+')', ok: correctTarget, critical:true, detail: correctTarget?'':`تصرّفتِ في طلب «${lookupNameSeed(a.targetId)||'لا شيء'}» بدل الطلب المطلوب. راجعي بيانات الحالة (خصوصًا الرقم القومي) للتأكد من اختيار السجل الصحيح، خصوصًا لو في أكتر من طلب بنفس الاسم.`},
+    {label:'استخدام «تقديم لمديرة المنطقة» كإجراء نهائي', ok: correctAction, critical:true, detail: correctAction?'':`استخدمتِ إجراء «${a.actionType==='return'?'ارجاع الطلب':(a.actionType||'لا شيء')}»، والإجراء الصحيح المطلوب في بيانات الحالة هو «تقديم لمديرة المنطقة» — الطلب كان مكتملًا وسليمًا ولا يحتاج إرجاعًا.`}
   ];
   const score = Math.round(items.filter(i=>i.ok).length/items.length*100);
-  return {score, items};
+  return {score, items, critical: deriveCritical(items)};
 }
 function scoreReviewReturn(m){
   const a = state.flags.lastAction||{};
@@ -1019,12 +1038,12 @@ function scoreReviewReturn(m){
   const correctReason = correctAction && fieldsMatch(a.reason, m.expected.reason);
   const items = [
     viewedDetailsItem(m.expected.targetId),
-    {label:'التصرف في الطلب الصحيح ('+lookupNameSeed(m.expected.targetId)+')', ok: correctTarget, detail: correctTarget?'':`تصرّفتِ في طلب «${lookupNameSeed(a.targetId)||'لا شيء'}» بدل الطلب المطلوب. راجعي بيانات الحالة (خصوصًا الرقم القومي) للتأكد من اختيار السجل الصحيح.`},
-    {label:'استخدام «ارجاع الطلب» كإجراء', ok: correctAction, detail: correctAction?'':`استخدمتِ إجراء «${a.actionType==='forward'?'تقديم للمدير':(a.actionType||'لا شيء')}»، لكن الطلب كان ناقصًا/فيه خطأ ويحتاج «ارجاع الطلب» لتعديله قبل تقديمه.`},
+    {label:'التصرف في الطلب الصحيح ('+lookupNameSeed(m.expected.targetId)+')', ok: correctTarget, critical:true, detail: correctTarget?'':`تصرّفتِ في طلب «${lookupNameSeed(a.targetId)||'لا شيء'}» بدل الطلب المطلوب. راجعي بيانات الحالة (خصوصًا الرقم القومي) للتأكد من اختيار السجل الصحيح.`},
+    {label:'استخدام «ارجاع الطلب» كإجراء', ok: correctAction, critical:true, detail: correctAction?'':`استخدمتِ إجراء «${a.actionType==='forward'?'تقديم لمديرة المنطقة':(a.actionType||'لا شيء')}»، لكن الطلب كان ناقصًا/فيه خطأ ويحتاج «ارجاع الطلب» لتعديله قبل تقديمه.`},
     {label:'اختيار سبب الإرجاع الصحيح', ok: correctReason, detail: correctReason?'':`اخترتِ السبب «${a.reason||'لم يُختر'}»، والسبب الصحيح المذكور في بيانات الحالة هو «${m.expected.reason}».`}
   ];
   const score = Math.round(items.filter(i=>i.ok).length/items.length*100);
-  return {score, items};
+  return {score, items, critical: deriveCritical(items)};
 }
 function scoreReviewExitApprove(m){
   const a = state.flags.lastAction||{};
@@ -1032,11 +1051,11 @@ function scoreReviewExitApprove(m){
   const correctAction = a.actionType==='approve_exit';
   const items = [
     viewedDetailsItem(m.expected.targetId),
-    {label:'الموافقة على طلب الخروج الصحيح ('+lookupNameSeed(m.expected.targetId)+')', ok: correctTarget, detail: correctTarget?'':`تصرّفتِ في طلب «${lookupNameSeed(a.targetId)||'لا شيء'}» بدل الطلب المطلوب. تأكدي من الرقم القومي المذكور في بيانات الحالة قبل اختيار السجل.`},
-    {label:'استخدام «موافقة» كإجراء نهائي', ok: correctAction, detail: correctAction?'':'لم تتم الموافقة على طلب الخروج — بيانات الحالة تطلب اعتماده مباشرة بلا إرجاع أو رفض.'}
+    {label:'الموافقة على طلب الخروج الصحيح ('+lookupNameSeed(m.expected.targetId)+')', ok: correctTarget, critical:true, detail: correctTarget?'':`تصرّفتِ في طلب «${lookupNameSeed(a.targetId)||'لا شيء'}» بدل الطلب المطلوب. تأكدي من الرقم القومي المذكور في بيانات الحالة قبل اختيار السجل.`},
+    {label:'استخدام «موافقة» كإجراء نهائي', ok: correctAction, critical:true, detail: correctAction?'':'لم تتم الموافقة على طلب الخروج — بيانات الحالة تطلب اعتماده مباشرة بلا إرجاع أو رفض.'}
   ];
   const score = Math.round(items.filter(i=>i.ok).length/items.length*100);
-  return {score, items};
+  return {score, items, critical: deriveCritical(items)};
 }
 function scoreTeamAdd(m){
   const exp = m.expected;
@@ -1053,7 +1072,7 @@ function scoreTeamAdd(m){
   const accuracyPct = Math.round(correct/fields.length*100);
   items.push({label:'إرسال الطلب فعليًا', ok:submitted, detail: submitted?'':'لم تُرسَل بيانات العضو الجديد — لازم تضغطي زر الإرسال النهائي بعد تعبئة النموذج.'});
   const score = submitted? Math.round(accuracyPct*0.85 + 15) : Math.round(accuracyPct*0.5);
-  return {score, items};
+  return {score, items, critical: deriveCritical(items)};
 }
 function scoreTeamExit(m){
   const exp = m.expected;
@@ -1062,13 +1081,13 @@ function scoreTeamExit(m){
   const correctDate = state.flags.teamExitDateUsed===exp.exitDate;
   const submitted = !!state.flags.teamExitSubmitted;
   const items = [
-    {label:'اختيار العضو الصحيح ('+lookupNameSeed(exp.targetId)+')', ok: correctTarget, detail: correctTarget?'':'قدّمتِ طلب الخروج لعضو مختلف عن المطلوب — راجعي بيانات الحالة وتأكدي من اسم العضو قبل تقديم الطلب.'},
+    {label:'اختيار العضو الصحيح ('+lookupNameSeed(exp.targetId)+')', ok: correctTarget, critical:true, detail: correctTarget?'':'قدّمتِ طلب الخروج لعضو مختلف عن المطلوب — راجعي بيانات الحالة وتأكدي من اسم العضو قبل تقديم الطلب.'},
     {label:'اختيار سبب الخروج الصحيح ('+exp.reason+')', ok: correctReason, detail: correctReason?'':`اخترتِ السبب «${state.flags.teamExitReasonUsed||'لم يُختر'}»، والصحيح المذكور في بيانات الحالة هو «${exp.reason}».`},
     {label:'إدخال تاريخ الخروج الصحيح', ok: correctDate, detail: correctDate?'':`أدخلتِ التاريخ «${fmtDate(state.flags.teamExitDateUsed)||'لم يُدخل'}»، والتاريخ الصحيح هو ${fmtDate(exp.exitDate)}.`},
     {label:'إرسال الطلب وتأكيده', ok: submitted, detail: submitted?'':'تعبئة النموذج وحدها لا تكفي — لازم تضغطي زر الإرسال وتؤكدي طلب الخروج حتى يُحتسب.'}
   ];
   const score = Math.round(items.filter(i=>i.ok).length/items.length*100);
-  return {score, items};
+  return {score, items, critical: deriveCritical(items)};
 }
 function lookupNameSeed(id){
   const seed = freshSeed();
