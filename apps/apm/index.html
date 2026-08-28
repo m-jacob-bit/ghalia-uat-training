@@ -413,7 +413,7 @@ const MISSIONS = [
     id:'approve-bs-exit',
     title:'مهمة ٣ — الموافقة النهائية على طلب خروج أخت كبرى',
     eyebrow:'الطلبات ← طلبات الأخت الكبرى',
-    story:'وافقت FC على طلب خروج «نيفين رمزي إبراهيم صليب» وحوّلته لمراجعتك النهائية. راجعي السبب والتاريخ ووافقي على الطلب — احذري وجود طلب خروج آخر بنفس الاسم بالظبط في نفس القائمة، وتأكدي من الرقم القومي وسبب الخروج قبل ما تتصرفي.',
+    story:'وافقت منسّقة الميدان (FC) على طلب خروج «نيفين رمزي إبراهيم صليب» وحوّلته لمراجعتك النهائية. راجعي السبب والتاريخ ووافقي على الطلب — احذري وجود طلب خروج آخر بنفس الاسم بالظبط في نفس القائمة، وتأكدي من الرقم القومي وسبب الخروج قبل ما تتصرفي.',
     startAppScreen:'requests-big',
     caseFile:[
       ['الأخت الكبرى','نيفين رمزي إبراهيم صليب'],
@@ -472,7 +472,7 @@ function initialState(){
 let state = initialState();
 
 /* ---------- progress persistence (survives accidental refresh) ---------- */
-const STORAGE_KEY = 'ghalia-progress-apm-v1';
+const STORAGE_KEY = 'ghalia-progress-apm-v2';
 function saveProgress(){
   try{
     localStorage.setItem(STORAGE_KEY, JSON.stringify({
@@ -486,6 +486,7 @@ function saveProgress(){
   }catch(e){}
 }
 function loadProgress(){
+  try{ localStorage.removeItem('ghalia-progress-apm-v1'); }catch(e){}
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
     if(!raw) return false;

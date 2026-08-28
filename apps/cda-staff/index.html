@@ -543,7 +543,7 @@ function initialState(){
 let state = initialState();
 
 /* ---------- progress persistence (survives accidental refresh) ---------- */
-const STORAGE_KEY = 'ghalia-progress-cda-staff-v1';
+const STORAGE_KEY = 'ghalia-progress-cda-staff-v2';
 function saveProgress(){
   try{
     localStorage.setItem(STORAGE_KEY, JSON.stringify({
@@ -557,6 +557,7 @@ function saveProgress(){
   }catch(e){}
 }
 function loadProgress(){
+  try{ localStorage.removeItem('ghalia-progress-cda-staff-v1'); }catch(e){}
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
     if(!raw) return false;
