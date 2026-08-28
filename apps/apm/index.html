@@ -239,8 +239,14 @@ tbody tr:hover{background:var(--surface-2)}
 .checklist-item .ic{width:22px;height:22px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;margin-top:1px}
 .checklist-item.ok .ic{background:var(--success)}
 .checklist-item.bad .ic{background:var(--danger)}
+.checklist-item.critical{border-color:var(--danger);background:var(--danger-soft)}
+.checklist-item.critical .ic{background:var(--danger)}
 .checklist-item .txt .t{font-weight:700;font-size:13.8px}
 .checklist-item .txt .d{font-size:12.8px;color:var(--text-muted);margin-top:2px}
+.critical-tag{display:inline-block;font-family:'Cairo',sans-serif;font-size:10.5px;font-weight:800;color:#fff;background:var(--danger);padding:2px 8px;border-radius:999px;margin-inline-start:6px;vertical-align:middle}
+.readiness-badge{display:inline-flex;align-items:center;gap:6px;font-family:'Cairo',sans-serif;font-weight:800;font-size:13.5px;padding:8px 16px;border-radius:999px}
+.readiness-badge.ready{background:var(--success-soft);color:var(--success)}
+.readiness-badge.not-ready{background:var(--danger-soft);color:var(--danger)}
 
 .report-mission{margin-bottom:26px;padding-bottom:22px;border-bottom:1px solid var(--border)}
 .report-mission:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
@@ -809,6 +815,15 @@ function renderConfirmBulkModal(){
   </div></div>`;
 }
 
+function deriveCritical(items){ return items.some(i=>i.critical && !i.ok); }
+function checklistItemHtml(it){
+  const cls = it.ok? 'ok' : (it.critical? 'critical':'bad');
+  const icon = it.ok? '✓' : (it.critical? '⚠':'✕');
+  return `<div class="checklist-item ${cls}"><div class="ic">${icon}</div><div class="txt"><div class="t">${esc(it.label)}${(!it.ok && it.critical)?' <span class="critical-tag">خطأ حرج</span>':''}</div>${it.detail?`<div class="d">${esc(it.detail)}</div>`:''}</div></div>`;
+}
+function readinessBadgeHtml(ready, anyCritical){
+  return `<div class="readiness-badge ${ready?'ready':'not-ready'}">${ready?'✅ جاهزة للعمل على النظام الفعلي':(anyCritical?'⛔ غير جاهزة — يوجد خطأ حرج':'⛔ غير جاهزة بعد')}</div>`;
+}
 function scoreColor(score){
   if(score>=85) return 'var(--success)';
   if(score>=60) return 'var(--warning)';
@@ -843,10 +858,11 @@ function renderMissionResult(){
           </div>
         </div>
         <div class="score-label">نتيجة هذه المهمة</div>
+        ${res.critical?`<div class="readiness-badge not-ready" style="margin-top:10px">⚠ هذه المهمة فيها خطأ حرج</div>`:''}
       </div>
       <div class="card-pad" style="padding-top:0">
         <div class="checklist">
-          ${res.items.map(it=>`<div class="checklist-item ${it.ok?'ok':'bad'}"><div class="ic">${it.ok?'✓':'✕'}</div><div class="txt"><div class="t">${esc(it.label)}</div>${it.detail?`<div class="d">${esc(it.detail)}</div>`:''}</div></div>`).join('')}
+          ${res.items.map(checklistItemHtml).join('')}
         </div>
       </div>
       <div class="story-foot">
@@ -857,7 +873,9 @@ function renderMissionResult(){
 }
 function renderFinalReport(){
   const overall = Math.round(state.missionResults.reduce((s,r)=>s+r.score,0)/state.missionResults.length);
-  const verdict = overall>=85? 'أداء ممتاز — جاهزة للعمل على النظام الفعلي' : overall>=60? 'أداء جيد — يُنصح بمراجعة بعض الخطوات' : 'يحتاج إلى تدريب إضافي قبل استخدام النظام الفعلي';
+  const anyCritical = state.missionResults.some(r=>r.critical);
+  const ready = overall>=85 && !anyCritical;
+  const verdict = ready? 'أداء ممتاز — جاهزة للعمل على النظام الفعلي' : anyCritical? 'غير جاهزة — يوجد خطأ حرج واحد على الأقل، بغض النظر عن النسبة الإجمالية' : (overall>=60? 'أداء جيد — يُنصح بمراجعة بعض الخطوات' : 'يحتاج إلى تدريب إضافي قبل استخدام النظام الفعلي');
   return `
   <div class="result-shell no-print-bg"><div class="result-wrap print-area">
     <div class="card">
@@ -869,15 +887,16 @@ function renderFinalReport(){
             <div class="score-num" style="font-size:34px;color:${scoreColor(overall)}">${overall}%</div>
           </div>
         </div>
+        ${readinessBadgeHtml(ready, anyCritical)}
         <div class="score-label" style="margin-top:10px;font-weight:700;color:${scoreColor(overall)}">${esc(verdict)}</div>
       </div>
       <div class="card-pad" style="padding-top:0">
         ${MISSIONS.map((m,i)=>{
           const r = state.missionResults[i];
           return `<div class="report-mission">
-            <div class="report-mission-head"><span class="t">${esc(m.title)}</span><span class="s" style="color:${scoreColor(r.score)}">${r.score}%</span></div>
+            <div class="report-mission-head"><span class="t">${esc(m.title)}${r.critical?' <span class="critical-tag">خطأ حرج</span>':''}</span><span class="s" style="color:${scoreColor(r.score)}">${r.score}%</span></div>
             <div class="checklist">
-              ${r.items.map(it=>`<div class="checklist-item ${it.ok?'ok':'bad'}"><div class="ic">${it.ok?'✓':'✕'}</div><div class="txt"><div class="t">${esc(it.label)}</div>${it.detail?`<div class="d">${esc(it.detail)}</div>`:''}</div></div>`).join('')}
+              ${r.items.map(checklistItemHtml).join('')}
             </div>
           </div>`;
         }).join('')}
@@ -898,36 +917,29 @@ function scoreSingleAction(m){
   const correctAction = a.actionType===m.expected.action;
   const items = [
     {label:'فتح تفاصيل الطلب قبل اتخاذ القرار', ok: (state.flags.detailsViewedIds||[]).includes(m.expected.targetId), detail: (state.flags.detailsViewedIds||[]).includes(m.expected.targetId)?'':'اتُخذ القرار من غير فتح «عرض التفاصيل» للطلب أولًا — الخطوة الأولى دايمًا هي فتح الطلب من القائمة، ومراجعة بياناته كاملة، وبعدين اختيار الإجراء من جوه شاشة الطلب نفسها.'},
-    {label:'التصرف في الطلب الصحيح ('+lookupNameSeed(m.expected.targetId)+')', ok: correctTarget, detail: correctTarget?'':`تصرّفتِ في طلب «${lookupNameSeed(a.targetId)||'لا شيء'}» بدل الطلب المطلوب. راجعي بيانات الحالة (خصوصًا الرقم القومي) قبل اختيار السجل، خصوصًا لو في أكتر من طلب بنفس الاسم.`},
-    {label:'استخدام الإجراء الصحيح ('+actionLabelAr(m.expected.action)+')', ok: correctAction, detail: correctAction?'':`استخدمتِ إجراء «${actionLabelAr(a.actionType)}»، والإجراء الصحيح المطلوب في بيانات الحالة هو «${actionLabelAr(m.expected.action)}».`}
+    {label:'التصرف في الطلب الصحيح ('+lookupNameSeed(m.expected.targetId)+')', ok: correctTarget, critical:true, detail: correctTarget?'':`تصرّفتِ في طلب «${lookupNameSeed(a.targetId)||'لا شيء'}» بدل الطلب المطلوب. راجعي بيانات الحالة (خصوصًا الرقم القومي) قبل اختيار السجل، خصوصًا لو في أكتر من طلب بنفس الاسم.`},
+    {label:'استخدام الإجراء الصحيح ('+actionLabelAr(m.expected.action)+')', ok: correctAction, critical:true, detail: correctAction?'':`استخدمتِ إجراء «${actionLabelAr(a.actionType)}»، والإجراء الصحيح المطلوب في بيانات الحالة هو «${actionLabelAr(m.expected.action)}».`}
   ];
   if(m.expected.reason!==undefined){
     const correctReason = correctAction && fieldsMatch(a.reason, m.expected.reason);
     items.push({label:'اختيار السبب الصحيح', ok: correctReason, detail: correctReason?'':`اخترتِ السبب «${a.reason||'لم يُختر'}»، والسبب الصحيح المذكور في بيانات الحالة هو «${m.expected.reason}».`});
   }
   const score = Math.round(items.filter(i=>i.ok).length/items.length*100);
-  return {score, items};
+  return {score, items, critical: deriveCritical(items)};
 }
 function scoreBulk(m){
   const expected = m.expected.targetIds.slice().sort();
   const actual = (state.flags.bulkApprovedIds||[]).slice().sort();
-  const exact = expected.length===actual.length && expected.every((id,i)=>id===actual[i]);
   const usedBulk = !!state.flags.bulkUsed;
   const missing = expected.filter(id=>!actual.includes(id)).map(lookupNameSeed);
   const extra = actual.filter(id=>!expected.includes(id)).map(lookupNameSeed);
-  let bulkDetail = '';
-  if(!exact){
-    const parts=[];
-    if(missing.length) parts.push(`نسيتِ تحديد: ${missing.join('، ')}`);
-    if(extra.length) parts.push(`حدّدتِ بالخطأ طلبات غير مطلوبة: ${extra.join('، ')}`);
-    bulkDetail = parts.join(' — ') || `تم اختيار ${actual.length} من أصل ${expected.length} مطلوبين.`;
-  }
   const items = [
     {label:'استخدام «الموافقة الجماعية» بدل الموافقة الفردية', ok: usedBulk, detail: usedBulk?'':'تم استخدام إجراء فردي أو لم يتم اتخاذ أي إجراء — بيانات الحالة تطلب تحديدًا استخدام الموافقة الجماعية لهذه الدفعة من الطلبات.'},
-    {label:'تحديد كل الطلبات المعلّقة بالضبط (لا أكثر ولا أقل)', ok: exact, detail: bulkDetail}
+    {label:'عدم تضمين أي طلب غير مطلوب في الموافقة الجماعية', ok: extra.length===0, critical:true, detail: extra.length? `تمت الموافقة بالخطأ على طلب غير مطلوب: ${extra.join('، ')} — الموافقة الجماعية يجب أن تشمل فقط الطلبات المذكورة في بيانات الحالة.` : ''},
+    {label:'تحديد كل الطلبات المطلوبة بدون نسيان أي منها', ok: missing.length===0, detail: missing.length? `نسيتِ تحديد: ${missing.join('، ')}.` : ''}
   ];
   const score = Math.round(items.filter(i=>i.ok).length/items.length*100);
-  return {score, items};
+  return {score, items, critical: deriveCritical(items)};
 }
 function lookupNameSeed(id){
   const seed = freshSeed();
